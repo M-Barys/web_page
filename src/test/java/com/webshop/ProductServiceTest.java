@@ -2,6 +2,7 @@ package com.webshop;
 
 
 import com.webshop.model.Product;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,7 @@ public class ProductServiceTest {
         productService.addProduct(product);
 
         System.out.println(productService.getAllProducts());
+
+        Assertions.assertThat(productService.getAllProducts()).hasSize(1);
     }
 }

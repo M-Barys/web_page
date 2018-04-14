@@ -14,12 +14,12 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addProduct(Product product){
-        productService.addProduct(product);
+    public Product addProduct(Product product) {
+        return productService.addProduct(product);
     }
 
-    @RequestMapping(value="/productList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Product> getAllProducts(){
+    @RequestMapping(value = "/productList", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
