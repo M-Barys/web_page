@@ -2,28 +2,53 @@ package com.webshop;
 
 import com.webshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Product addProduct(Product product) {
-        return productService.addProduct(product);
-    }
-
-    @RequestMapping(value = "/productList", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public Product addProduct(Product product) {
+        return productService.addProduct(product);
+    }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Product updateProduct(@RequestBody Product updatedProduct, @PathVariable Long id) {
+        Product product = productService.getProduct(id);
+        product.setName(updatedProduct.getName());
+        product.setDescription(updatedProduct.getDescription());
+        return productService.addProduct(product);
+    }
+
+    @RequestMapping("/show/{id}")
+    public Product getProduct(@PathVariable Long id) {
+        return productService.getProduct(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class })
+    public void handleNotFound() { }
 }
 
 

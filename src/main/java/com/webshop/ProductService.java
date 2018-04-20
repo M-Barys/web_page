@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -22,20 +23,22 @@ public class ProductService {
         return Lists.newArrayList(productRepository.findAll());
     }
 
-//    public Product getProduct(Long id){
- //       return productRepository.findOne(id);
- //   }
+    public Product getProduct(Long id){
+        Optional<Product> found = productRepository.findById(id);
+        return found.get();
+
+    }
 
     public Product addProduct(Product product){
         productRepository.save(product);
         return product;
     }
 
- //   public void deleteProduct(Long id) {
- //       productRepository.delete(id);
-//   }
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+   }
 
-    public Product saveOrUpdateProductForm(Product product) {
+    public Product updateProduct(Product product) {
         Product savedProduct = addProduct(product);
         return savedProduct;
     }
