@@ -1,6 +1,6 @@
 package com.webshop.controller;
 
-import com.webshop.ProductService;
+import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
 import com.webshop.WebShopApplication;
 import com.webshop.builders.ProductBuilder;
@@ -20,8 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-
 public class ItemControllerIT {
     private static final String NAME_FIELD = "name";
     private static final String DESCRIPTION_FIELD = "description";
@@ -59,6 +57,8 @@ public class ItemControllerIT {
         firstItem = productrepository.save(FIRST_ITEM);
         secondItem = productrepository.save(SECOND_ITEM);
         RestAssured.port = serverPort;
+        RestAssured.config = config()
+                .logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
     }
 
     @Test
