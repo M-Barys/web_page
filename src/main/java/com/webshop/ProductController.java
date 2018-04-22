@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -47,7 +48,7 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class })
+    @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class })
     public void handleNotFound() { }
 }
 

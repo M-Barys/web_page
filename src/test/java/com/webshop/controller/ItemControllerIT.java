@@ -86,6 +86,8 @@ public class ItemControllerIT {
 
     @Test
     public void addProductShouldReturnBadRequestWithoutBody() {
+        given()
+                .contentType(ContentType.JSON).
            when()
                 .post(ITEMS_RESOURCE)
                 .then()
