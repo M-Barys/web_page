@@ -25,7 +25,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+       return productService.addProduct(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

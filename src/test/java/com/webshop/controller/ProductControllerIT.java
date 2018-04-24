@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ItemControllerIT {
+public class ProductControllerIT {
     private static final String NAME_FIELD = "name";
     private static final String DESCRIPTION_FIELD = "description";
     private static final String ITEMS_RESOURCE = "/products";

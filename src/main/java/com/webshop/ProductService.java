@@ -26,7 +26,6 @@ public class ProductService {
     public Product getProduct(Long id){
         Optional<Product> found = productRepository.findById(id);
         return found.get();
-
     }
 
     public Product addProduct(Product product){
@@ -38,24 +37,9 @@ public class ProductService {
         productRepository.deleteById(id);
    }
 
-    public Product updateProduct(Product product) {
+    public Product updateProduct(Product product, Long checkedItemId) {
         Product savedProduct = addProduct(product);
         return savedProduct;
     }
 
-    public  List<Product> filterName(String name){
-        return getAllProducts().stream()
-                .filter(p -> name.equals(p.getName()) )
-                .collect(Collectors.toList());
-    }
-    public List<Product> filterButton(){
-        return getAllProducts().stream()
-                .filter(distinctByKey(Product::getName))
-                .collect(Collectors.toList());
-    }
-
-    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
-        Map<Object,String> seen = new ConcurrentHashMap<>();
-        return t -> seen.put(keyExtractor.apply(t), "") == null;
-    }
 }
