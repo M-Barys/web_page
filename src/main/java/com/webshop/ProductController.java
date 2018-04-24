@@ -33,7 +33,7 @@ public class ProductController {
         Product product = productService.getProduct(id);
         product.setName(updatedProduct.getName());
         product.setDescription(updatedProduct.getDescription());
-        return productService.addProduct(product);
+        return productService.updateProduct(product);
     }
 
     @RequestMapping("/show/{id}")

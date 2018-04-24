@@ -1,5 +1,6 @@
 package com.webshop;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.webshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +30,17 @@ public class ProductService {
     }
 
     public Product addProduct(Product product){
-        productRepository.save(product);
-        return product;
+        Preconditions.checkArgument(product.getId() == null, "A new product can not have a ID setup");
+        return productRepository.save(product);
     }
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
    }
 
-    public Product updateProduct(Product product, Long checkedItemId) {
-        Product savedProduct = addProduct(product);
-        return savedProduct;
+    public Product updateProduct(Product product) {
+        Preconditions.checkArgument(product.getId() != null, "Only update products already inserted with an valid ID");
+        return productRepository.save(product);
     }
 
 }

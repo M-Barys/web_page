@@ -3,7 +3,6 @@ package com.webshop.controller;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
 import com.webshop.WebShopApplication;
-import com.webshop.builders.ProductBuilder;
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
@@ -32,15 +31,15 @@ public class ProductControllerIT {
     private static final String SECOND_ITEM_DESCRIPTION = "Second item";
     private static final String THIRD_ITEM_NAME = "Third item name";
     private static final String THIRD_ITEM_DESCRIPTION = "Third item";
-    private static final Product FIRST_ITEM = new ProductBuilder()
+    private static final Product FIRST_ITEM = Product.builder()
             .name(FIRST_ITEM_NAME)
             .description(FIRST_ITEM_DESCRIPTION)
             .build();
-    private static final Product SECOND_ITEM = new ProductBuilder()
+    private static final Product SECOND_ITEM = Product.builder()
             .name(SECOND_ITEM_NAME)
             .description(SECOND_ITEM_DESCRIPTION)
             .build();
-    private static final Product THIRD_ITEM = new ProductBuilder()
+    private static final Product THIRD_ITEM = Product.builder()
             .name(THIRD_ITEM_NAME)
             .description(THIRD_ITEM_DESCRIPTION)
             .build();
@@ -107,7 +106,7 @@ public class ProductControllerIT {
     @Test
     public void updateProductShouldReturnUpdatedProduct() {
         // Given an unchecked first item
-        Product product = new ProductBuilder()
+        Product product = Product.builder()
                 .name(FIRST_ITEM_NAME)
                 .description(FIRST_ITEM_DESCRIPTION)
                 .build();
