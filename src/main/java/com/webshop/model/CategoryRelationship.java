@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class CategoryRelationShip {
+//@Entity
+public class CategoryRelationship {
     private Long parentId;
     private Long categoryId;
-    private List<Long> childrens;
+    private List<Long> children;
 }

@@ -36,7 +36,7 @@ public class ProductController {
         return productService.updateProduct(product);
     }
 
-    @RequestMapping("/show/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }

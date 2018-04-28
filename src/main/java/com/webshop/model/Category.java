@@ -23,7 +23,7 @@ public class Category {
     private Long id;
     @NotNull
     private String name;
-    @Pattern(regexp="[a-zA-Z0-9]*")
+    //@Pattern(regexp="[a-zA-Z0-9]*")
     @Size(min=2, max=20)
     @NotNull
     private String slug;
