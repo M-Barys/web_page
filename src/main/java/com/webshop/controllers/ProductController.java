@@ -48,7 +48,8 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    //TODO check mapping between exceptions and status code
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class })
     public void handleNotFound() { }
 }

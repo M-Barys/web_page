@@ -51,7 +51,7 @@ public class CategoryController {
         categoryService.deleteCategory(id);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})
     public void handleNotFound() {
     }

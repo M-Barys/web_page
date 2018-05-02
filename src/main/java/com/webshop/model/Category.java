@@ -27,6 +27,7 @@ public class Category {
     @Size(min=2, max=20)
     @NotNull
     private String slug;
+    @Lob
     private String description;
 
     private Status status;

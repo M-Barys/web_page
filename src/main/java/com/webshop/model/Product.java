@@ -19,6 +19,7 @@ public class Product {
     @Column(name = "id")
     private Long id;
     private String name;
+    @Lob
     private String description;
 
 }
