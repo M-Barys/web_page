@@ -1,4 +1,4 @@
-package com.webshop;
+package com.webshop.repositories;
 
 import com.webshop.model.Product;
 import org.springframework.data.repository.CrudRepository;

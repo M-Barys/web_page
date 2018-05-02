@@ -3,7 +3,7 @@ package com.webshop.controller;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.config.LogConfig;
 import com.jayway.restassured.http.ContentType;
-import com.webshop.CategoryRepository;
+import com.webshop.repositories.CategoryRepository;
 import com.webshop.WebShopApplication;
 import com.webshop.model.Category;
 import com.webshop.model.Status;

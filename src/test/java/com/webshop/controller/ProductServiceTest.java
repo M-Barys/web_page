@@ -1,7 +1,7 @@
 package com.webshop.controller;
 
-import com.webshop.ProductRepository;
-import com.webshop.ProductService;
+import com.webshop.repositories.ProductRepository;
+import com.webshop.services.ProductService;
 import com.webshop.model.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;

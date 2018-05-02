@@ -6,7 +6,7 @@ import com.webshop.WebShopApplication;
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
-import com.webshop.ProductRepository;
+import com.webshop.repositories.ProductRepository;
 import com.webshop.model.Product;
 import org.apache.http.HttpStatus;
 import org.junit.Before;

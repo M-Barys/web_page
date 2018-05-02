@@ -1,18 +1,14 @@
-package com.webshop;
+package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.webshop.repositories.ProductRepository;
 import com.webshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {

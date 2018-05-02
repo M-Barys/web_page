@@ -1,7 +1,8 @@
-package com.webshop;
+package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.webshop.repositories.CategoryRepository;
 import com.webshop.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

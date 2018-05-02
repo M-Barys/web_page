@@ -1,5 +1,6 @@
-package com.webshop;
+package com.webshop.controllers;
 
+import com.webshop.services.CategoryService;
 import com.webshop.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,8 +25,9 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody Category addCategory(@RequestBody Category category) {
-       return categoryService.addCategory(category);
+    public @ResponseBody
+    Category addCategory(@RequestBody Category category) {
+        return categoryService.addCategory(category);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -45,13 +47,15 @@ public class CategoryController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteCategory(@PathVariable Long id){
+    public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class })
-    public void handleNotFound() { }
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})
+    public void handleNotFound() {
+    }
+
 }
 
 
