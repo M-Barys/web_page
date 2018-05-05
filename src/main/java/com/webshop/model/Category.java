@@ -24,7 +24,7 @@ public class Category {
     @NotNull
     private String name;
     //@Pattern(regexp="[a-zA-Z0-9]*")
-    @Size(min=2, max=20)
+    @Size(min = 2, max = 20)
     @NotNull
     private String slug;
     @Lob
@@ -32,4 +32,10 @@ public class Category {
 
     private Status status;
 
+    public static final Category categoryRoot = Category.builder()
+            .id(0L)
+            .name("root")
+            .description("root")
+            .slug("")
+            .build();
 }

@@ -1,5 +1,6 @@
 package com.webshop.controllers;
 
+import com.webshop.model.tree.CategoryTreeNode;
 import com.webshop.services.CategoryService;
 import com.webshop.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class CategoryController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Category getCategory(@PathVariable Long id) {
         return categoryService.getCategory(id);
+    }
+
+    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+    public CategoryTreeNode getCategoryTree(){
+        return CategoryTreeNode.builder().build();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
