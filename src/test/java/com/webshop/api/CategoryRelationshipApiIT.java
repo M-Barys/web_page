@@ -80,7 +80,7 @@ public class CategoryRelationshipApiIT {
                                 ImmutableList.of(
                                         CategoryTreeNode.builder().value(c1).build()
                                 )
-                        ).build()
+                        ).build(),CategoryTreeNode.builder().value(c1).build()
                 ))
                 .build();
         CategoryTreeNode result = given()

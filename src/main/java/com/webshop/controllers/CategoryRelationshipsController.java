@@ -1,6 +1,8 @@
 package com.webshop.controllers;
 
+import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.CategoryRelationship;
+import com.webshop.model.tree.CategoryTreeNode;
 import com.webshop.services.CategoryRelationshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,11 +21,17 @@ public class CategoryRelationshipsController {
     @Autowired
     private CategoryRelationshipService categoryRelationshipService;
 
-    @RequestMapping(value = "/{categoryId}/relationships/categories",method = RequestMethod.POST)
-    public CategoryRelationship createRelationship(CategoryRelationship categoryRelationship){
-        return categoryRelationshipService.crateCategoryRelationship(categoryRelationship);
+
+    @RequestMapping(value = "/{id}/relationships/categories",method = RequestMethod.POST)
+    public @ResponseBody CategoryTreeNode createRelation(@PathVariable Long id, @RequestBody RelationParams relation){
+        System.out.println(categoryRelationshipService.createRelation(id, relation));
+        return categoryRelationshipService.createRelation(id, relation);
     }
 
+//    @RequestMapping(value = "/tree", method = RequestMethod.GET)
+//    public CategoryTreeNode getTree(){
+//        return categoryRelationshipService.getTree();
+//    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})

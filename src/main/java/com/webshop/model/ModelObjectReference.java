@@ -1,11 +1,15 @@
 package com.webshop.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ModelObjectReference {
-    private final Long objectID;
-    private final ModelObjectType type;
+    private Long objectID;
+    private ModelObjectType type;
 }
