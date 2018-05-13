@@ -46,11 +46,6 @@ public class CategoryController {
         return categoryService.getCategory(id);
     }
 
-    @RequestMapping(value = "/tree", method = RequestMethod.GET)
-    public CategoryTreeNode getCategoryTree(){
-        return CategoryTreeNode.builder().build();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {

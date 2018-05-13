@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.webshop.model.Category.categoryRoot;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
@@ -47,7 +48,7 @@ public class CategoryRelationshipApiIT {
     private String categoriesEndpoint = "/categories";
     private String categoriesTreeEndpoint = "/categories/tree";
     private String categoryByIDEndpoint = "/categories/{id}";
-    private String categoryByIDRelationEndpoint = "/categories/{id}/relationships/categories";
+    private String categoryByIDRelationEndpoint = "/categories/{mainCategoryId}/relationships/categories";
 
     @Test
     public void createCategoryTree() {
@@ -63,6 +64,14 @@ public class CategoryRelationshipApiIT {
                         .type(ModelObjectType.CATEGORY)
                         .build())
                 .build();
+
+        RelationParams relation2 = RelationParams.builder()
+                .parent(ModelObjectReference.builder()
+                        .objectID(categoryRoot.getId())
+                        .type(ModelObjectType.CATEGORY)
+                        .build())
+                .build();
+
         //When
         given()
                 .body(relation)
@@ -72,15 +81,21 @@ public class CategoryRelationshipApiIT {
                 .post(categoryByIDRelationEndpoint, c1.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
+        given()
+                .body(relation2)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post(categoryByIDRelationEndpoint, c2.getId());
         //Then
         CategoryTreeNode expected = CategoryTreeNode.builder()
-                .value(Category.categoryRoot)
+                .value(categoryRoot)
                 .childrens(ImmutableList.of(
                         CategoryTreeNode.builder().value(c2).childrens(
                                 ImmutableList.of(
                                         CategoryTreeNode.builder().value(c1).build()
                                 )
-                        ).build(),CategoryTreeNode.builder().value(c1).build()
+                        ).build()
                 ))
                 .build();
         CategoryTreeNode result = given()

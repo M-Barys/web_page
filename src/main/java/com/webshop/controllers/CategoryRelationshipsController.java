@@ -21,7 +21,7 @@ public class CategoryRelationshipsController {
     @Autowired
     private CategoryRelationshipService categoryRelationshipService;
 
-    @RequestMapping(value = "/{id}/relationships/categories",method = RequestMethod.POST)
+    @RequestMapping(value = "/{mainCategoryId}/relationships/categories",method = RequestMethod.POST)
     public @ResponseBody void createRelation(@PathVariable Long mainCategoryId, @RequestBody RelationParams relation){
         categoryRelationshipService.createRelation(mainCategoryId, relation);
     }
