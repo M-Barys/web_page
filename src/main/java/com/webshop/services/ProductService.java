@@ -7,6 +7,7 @@ import com.webshop.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,12 @@ public class ProductService {
 
     public Product getProduct(Long id){
         Optional<Product> found = productRepository.findById(id);
-        return found.get();
+        if(found.isPresent()) {
+            return found.get();
+        } else {
+            throw new EntityNotFoundException();
+        }
+
     }
 
     public Product addProduct(Product product){

@@ -21,14 +21,10 @@ public class CategoryRelationshipService {
     private CategoryService categoryService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private CategoryRelationshipRepository categoryRelationshipRepository;
 
     public void createRelation(Long mainCategoryId, RelationParams relation) {
         Preconditions.checkArgument(relation.getParent().getType().compareTo(ModelObjectType.CATEGORY) == 0);
-        //TODO check that tree make sense
         CategoryRelationship data = CategoryRelationship.builder()
                 .categoryId(mainCategoryId)
                 .parentId(relation.getParent().getObjectID())
@@ -49,7 +45,7 @@ public class CategoryRelationshipService {
                                             Category localRoot, CategoryTreeNode categoryTreeNode) {
         categoryTreeNode.setValue(localRoot);
 
-        List<CategoryTreeNode> children = new ArrayList<CategoryTreeNode>();
+        List<CategoryTreeNode> children = new ArrayList<>();
         for (CategoryRelationship o : relations) {
             if (o.getParentId() == localRoot.getId()) {
                 CategoryTreeNode child = CategoryTreeNode.builder()
@@ -60,14 +56,14 @@ public class CategoryRelationshipService {
             }
         }
 
-        if(children.size()==0){
+        if (children.size() == 0) {
             categoryTreeNode.setChildrens(null);
-                  }else {
+        } else {
 
             categoryTreeNode.setChildrens(children);
         }
 
-        for(CategoryTreeNode c : children){
+        for (CategoryTreeNode c : children) {
             Category newRoot = c.getValue();
             createTreeFrom(relations, newRoot, c);
         }

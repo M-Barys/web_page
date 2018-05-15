@@ -44,12 +44,6 @@ public class CategoryRelationshipApiIT {
     }
 
 
-    //TODO create single place for API endpoints
-    private String categoriesEndpoint = "/categories";
-    private String categoriesTreeEndpoint = "/categories/tree";
-    private String categoryByIDEndpoint = "/categories/{id}";
-    private String categoryByIDRelationEndpoint = "/categories/{mainCategoryId}/relationships/categories";
-
     @Test
     public void createCategoryTree() {
         //given
@@ -78,7 +72,7 @@ public class CategoryRelationshipApiIT {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .post(categoryByIDRelationEndpoint, c1.getId())
+                .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, c1.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
         given()
@@ -86,7 +80,7 @@ public class CategoryRelationshipApiIT {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .post(categoryByIDRelationEndpoint, c2.getId());
+                .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, c2.getId());
         //Then
         CategoryTreeNode expected = CategoryTreeNode.builder()
                 .value(categoryRoot)
@@ -100,7 +94,7 @@ public class CategoryRelationshipApiIT {
                 .build();
         CategoryTreeNode result = given()
                 .when()
-                .get(categoriesTreeEndpoint)
+                .get(ApiEndpointSpecification.categoriesTreeEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(CategoryTreeNode.class);
@@ -109,13 +103,15 @@ public class CategoryRelationshipApiIT {
 
     }
 
+    //TODO make test case to check that cycles are not allowed.
+
     private Category createCategory(Category categoryData) {
         return given()
                 .body(categoryData)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .post(categoriesEndpoint)
+                .post(ApiEndpointSpecification.categoriesEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);

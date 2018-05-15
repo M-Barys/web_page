@@ -25,8 +25,9 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody Product addProduct(@RequestBody Product product) {
-       return productService.addProduct(product);
+    public @ResponseBody
+    Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -44,14 +45,16 @@ public class ProductController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable Long id){
+    public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
 
-    //TODO check mapping between exceptions and status code
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = { EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class })
-    public void handleNotFound() { }
+    @ExceptionHandler(value = {
+            EmptyResultDataAccessException.class,
+            EntityNotFoundException.class})
+    public void handleNotFound() {
+    }
 }
 
 
