@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Category {
+public class Category extends LanguageAwareEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

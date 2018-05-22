@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Product {
+public class Product extends LanguageAwareEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

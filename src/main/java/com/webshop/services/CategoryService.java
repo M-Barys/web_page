@@ -2,6 +2,7 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.webshop.model.StoreLanguage;
 import com.webshop.repositories.CategoryRepository;
 import com.webshop.model.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public List<Category> getAllCategories() {
-        return Lists.newArrayList(categoryRepository.findAll());
+        return Lists.newArrayList(categoryRepository.findByLanguage(StoreLanguage.EN));
     }
 
     public Category getCategory(Long id){
