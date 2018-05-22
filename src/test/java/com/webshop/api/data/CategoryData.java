@@ -2,7 +2,7 @@ package com.webshop.api.data;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.text.TextProducer;
-import com.webshop.model.Category;
+import com.webshop.model.entity.Category;
 import com.webshop.model.Status;
 
 public class CategoryData {

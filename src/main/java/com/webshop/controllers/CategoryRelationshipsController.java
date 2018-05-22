@@ -1,8 +1,7 @@
 package com.webshop.controllers;
 
 import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.CategoryRelationship;
-import com.webshop.model.tree.CategoryTreeNode;
+import com.webshop.model.view.CategoryTreeNode;
 import com.webshop.services.CategoryRelationshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 

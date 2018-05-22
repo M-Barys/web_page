@@ -3,8 +3,7 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.ProductData;
-import com.webshop.model.Product;
-import com.webshop.repositories.ProductRepository;
+import com.webshop.model.entity.Product;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -13,7 +12,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

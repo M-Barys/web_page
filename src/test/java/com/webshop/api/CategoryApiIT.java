@@ -2,8 +2,7 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryData;
-import com.webshop.model.Category;
-import com.webshop.model.Product;
+import com.webshop.model.entity.Category;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;

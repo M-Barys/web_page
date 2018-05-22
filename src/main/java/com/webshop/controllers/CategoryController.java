@@ -1,8 +1,7 @@
 package com.webshop.controllers;
 
-import com.webshop.model.tree.CategoryTreeNode;
 import com.webshop.services.CategoryService;
-import com.webshop.model.Category;
+import com.webshop.model.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;

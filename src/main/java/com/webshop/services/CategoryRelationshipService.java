@@ -2,12 +2,11 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.Category;
-import com.webshop.model.CategoryRelationship;
-import com.webshop.model.ModelObjectType;
-import com.webshop.model.tree.CategoryTreeNode;
+import com.webshop.model.entity.Category;
+import com.webshop.model.entity.CategoryRelationship;
+import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.model.view.CategoryTreeNode;
 import com.webshop.repositories.CategoryRelationshipRepository;
-import com.webshop.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

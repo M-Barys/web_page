@@ -5,10 +5,10 @@ import com.google.common.collect.ImmutableList;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryData;
 import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.Category;
-import com.webshop.model.ModelObjectReference;
-import com.webshop.model.ModelObjectType;
-import com.webshop.model.tree.CategoryTreeNode;
+import com.webshop.model.entity.Category;
+import com.webshop.controllers.params.ModelObjectReference;
+import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static com.webshop.model.Category.categoryRoot;
+import static com.webshop.model.entity.Category.categoryRoot;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 

@@ -1,7 +1,7 @@
 package com.webshop.controllers;
 
 import com.webshop.services.ProductService;
-import com.webshop.model.Product;
+import com.webshop.model.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @RestController

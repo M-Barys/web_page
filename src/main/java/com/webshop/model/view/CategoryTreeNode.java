@@ -1,6 +1,6 @@
-package com.webshop.model.tree;
+package com.webshop.model.view;
 
-import com.webshop.model.Category;
+import com.webshop.model.entity.Category;
 import lombok.*;
 
 import java.util.List;

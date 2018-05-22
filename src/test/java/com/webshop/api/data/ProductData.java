@@ -2,7 +2,7 @@ package com.webshop.api.data;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.text.TextProducer;
-import com.webshop.model.Product;
+import com.webshop.model.entity.Product;
 
 public class ProductData {
     private final Fairy fairy = Fairy.create();

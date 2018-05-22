@@ -1,4 +1,4 @@
-package com.webshop.model;
+package com.webshop.controllers.params;
 
 public enum ModelObjectType {
     PRODUCT,CATEGORY

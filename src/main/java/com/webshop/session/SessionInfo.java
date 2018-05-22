@@ -1,9 +1,8 @@
 package com.webshop.session;
 
-import com.webshop.model.SessionInfoView;
+import com.webshop.model.view.SessionInfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpSession;

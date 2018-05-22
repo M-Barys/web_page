@@ -1,4 +1,4 @@
-package com.webshop.model;
+package com.webshop.controllers.params;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
