@@ -3,7 +3,7 @@ package com.webshop.services;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.webshop.repositories.CategoryRepository;
-import com.webshop.model.entity.Category;
+import com.webshop.model.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +16,27 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories() {
+    public List<CategoryEntity> getAllCategories() {
         return Lists.newArrayList(categoryRepository.findAll());
     }
 
-    public Category getCategory(Long id){
-        Optional<Category> found = categoryRepository.findById(id);
+    public CategoryEntity getCategory(Long id){
+        Optional<CategoryEntity> found = categoryRepository.findById(id);
         return found.get();
     }
 
-    public Category addCategory(Category category){
-        Preconditions.checkArgument(category.getId() == null, "A new product can not have a ID setup");
-        return categoryRepository.save(category);
+    public CategoryEntity addCategory(CategoryEntity categoryEntity){
+        Preconditions.checkArgument(categoryEntity.getId() == null, "A new product can not have a ID setup");
+        return categoryRepository.save(categoryEntity);
     }
 
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
    }
 
-    public Category updateCategory(Category category) {
-        Preconditions.checkArgument(category.getId() != null, "Only update products already inserted with an valid ID");
-        return categoryRepository.save(category);
+    public CategoryEntity updateCategory(CategoryEntity categoryEntity) {
+        Preconditions.checkArgument(categoryEntity.getId() != null, "Only update products already inserted with an valid ID");
+        return categoryRepository.save(categoryEntity);
     }
 
 }

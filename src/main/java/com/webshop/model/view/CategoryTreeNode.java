@@ -1,6 +1,6 @@
 package com.webshop.model.view;
 
-import com.webshop.model.entity.Category;
+import com.webshop.model.entity.CategoryEntity;
 import lombok.*;
 
 import java.util.List;
@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryTreeNode {
-    private Category value;
+    private CategoryEntity value;
     private List<CategoryTreeNode> childrens;
 }

@@ -2,7 +2,7 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.entity.Category;
+import com.webshop.model.entity.CategoryEntity;
 import com.webshop.model.entity.CategoryRelationship;
 import com.webshop.controllers.params.ModelObjectType;
 import com.webshop.model.view.CategoryTreeNode;
@@ -35,13 +35,13 @@ public class CategoryRelationshipService {
     public CategoryTreeNode getTree() {
 
         Iterable<CategoryRelationship> relations = categoryRelationshipRepository.findAll();
-        Category localRoot = Category.categoryRoot;
+        CategoryEntity localRoot = CategoryEntity.CATEGORY_ENTITY_ROOT;
         CategoryTreeNode categoryTreeNode = new CategoryTreeNode();
         return createTreeFrom(relations, localRoot, categoryTreeNode);
     }
 
     private CategoryTreeNode createTreeFrom(Iterable<CategoryRelationship> relations,
-                                            Category localRoot, CategoryTreeNode categoryTreeNode) {
+                                            CategoryEntity localRoot, CategoryTreeNode categoryTreeNode) {
         categoryTreeNode.setValue(localRoot);
 
         List<CategoryTreeNode> children = new ArrayList<>();
@@ -63,7 +63,7 @@ public class CategoryRelationshipService {
         }
 
         for (CategoryTreeNode c : children) {
-            Category newRoot = c.getValue();
+            CategoryEntity newRoot = c.getValue();
             createTreeFrom(relations, newRoot, c);
         }
         System.out.print(categoryTreeNode);

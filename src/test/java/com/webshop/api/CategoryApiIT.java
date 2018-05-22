@@ -2,7 +2,7 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryData;
-import com.webshop.model.entity.Category;
+import com.webshop.model.entity.CategoryEntity;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -44,25 +44,25 @@ public class CategoryApiIT {
     @Test
     public void testCrud() {
         //given
-        Category newCategory = categoryData.createRandomCategory();
+        CategoryEntity newCategoryEntity = categoryData.createRandomCategory();
         //Create
-        Category created = given()
-                .body(newCategory)
+        CategoryEntity created = given()
+                .body(newCategoryEntity)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .post(categoriesEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Category.class);
-        Assertions.assertThat(newCategory).isEqualToIgnoringGivenFields(created, "id");
+                .extract().body().as(CategoryEntity.class);
+        Assertions.assertThat(newCategoryEntity).isEqualToIgnoringGivenFields(created, "id");
         Long createdId = created.getId();
         //Read
-        Category loaded = loadByID(createdId);
+        CategoryEntity loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Update
-        Category toUpdate = categoryData.createRandomCategoryWithID(loaded.getId());
-        Category updated = given()
+        CategoryEntity toUpdate = categoryData.createRandomCategoryWithID(loaded.getId());
+        CategoryEntity updated = given()
                 .body(toUpdate)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -70,7 +70,7 @@ public class CategoryApiIT {
                 .put(categoryByIDEndpoint, createdId)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Category.class);
+                .extract().body().as(CategoryEntity.class);
         Assertions.assertThat(updated)
                 .isEqualTo(toUpdate)
                 .isEqualTo(loadByID(createdId));
@@ -85,7 +85,7 @@ public class CategoryApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private Category loadByID(Long id) {
+    private CategoryEntity loadByID(Long id) {
         return given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -93,7 +93,7 @@ public class CategoryApiIT {
                 .get(categoryByIDEndpoint, id)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Category.class);
+                .extract().body().as(CategoryEntity.class);
     }
 
 
