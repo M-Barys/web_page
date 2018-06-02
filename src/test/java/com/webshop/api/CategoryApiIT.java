@@ -1,8 +1,9 @@
 package com.webshop.api;
 
 import com.webshop.WebShopApplication;
-import com.webshop.api.data.CategoryData;
+import com.webshop.api.data.CategoryDataTest;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.model.instance.Category;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -25,7 +26,7 @@ public class CategoryApiIT {
 
     @Value("${local.server.port}")
     private int serverPort;
-    private final CategoryData categoryData = new CategoryData();
+    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
 
     @Before
     public void setUp() {
@@ -44,7 +45,7 @@ public class CategoryApiIT {
     @Test
     public void testCrud() {
         //given
-        CategoryEntity newCategoryEntity = categoryData.createRandomCategory();
+        CategoryEntity newCategoryEntity = categoryDataTest.createRandomCategoryWithID(1L);
         //Create
         CategoryEntity created = given()
                 .body(newCategoryEntity)
@@ -53,7 +54,7 @@ public class CategoryApiIT {
                 .when()
                 .post(categoriesEndpoint)
                 .then()
-                .statusCode(HttpStatus.SC_OK)
+                //.statusCode(HttpStatus.SC_OK)
                 .extract().body().as(CategoryEntity.class);
         Assertions.assertThat(newCategoryEntity).isEqualToIgnoringGivenFields(created, "id");
         Long createdId = created.getId();
@@ -61,7 +62,7 @@ public class CategoryApiIT {
         CategoryEntity loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Update
-        CategoryEntity toUpdate = categoryData.createRandomCategoryWithID(loaded.getId());
+        CategoryEntity toUpdate = categoryDataTest.createRandomCategoryWithID(loaded.getId());
         CategoryEntity updated = given()
                 .body(toUpdate)
                 .contentType(ContentType.JSON)

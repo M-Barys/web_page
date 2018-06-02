@@ -37,6 +37,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Category updateCategory(@RequestBody CategoryData data, @PathVariable Long id, HttpServletRequest request) {
+
         CategoryEntity categoryEntity = categoryService.getCategory(id);
         String json = categoryEntity.getCategoryData();
         Gson gson = new Gson();
@@ -70,7 +71,8 @@ public class CategoryController {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class,
+            NoSuchElementException.class})
     public void handleNotFound() {
     }
 

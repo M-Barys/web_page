@@ -11,7 +11,6 @@ import lombok.Data;
 public class Category {
 
     private PerLanguageData<CategoryData> data;
-
     private String slug;
     private Status status;
 
