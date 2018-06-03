@@ -25,22 +25,22 @@ public class CategoryDataTest {
     private CategoryEntity.CategoryEntityBuilder generate() {
         TextProducer text = fairy.textProducer();
 
-        PerLanguageData<CategoryData> perLanguage = new PerLanguageData<>();
-        CategoryData testCategoryData = CategoryData.builder()
+        CategoryData randomCategoryData = CategoryData.builder()
                 .description(text.paragraph())
                 .name(text.latinWord())
                 .build();
 
-        perLanguage.update(StoreLanguage.EN, testCategoryData);
+        PerLanguageData<CategoryData> savedToMap = new PerLanguageData<>();
+        savedToMap.update(StoreLanguage.EN, randomCategoryData);
 
-        Category c1 = Category.builder()
-                .data(perLanguage)
+        Category randomCategory = Category.builder()
+                .data(savedToMap)
                 .slug(text.randomString(fairy.baseProducer().randomBetween(2, 20)))
                 .status(Status.draft)
                 .build();
 
         Gson gson = new Gson();
-        String json = gson.toJson(c1);
+        String json = gson.toJson(randomCategory);
 
         return CategoryEntity.builder().categoryData(json);
     }

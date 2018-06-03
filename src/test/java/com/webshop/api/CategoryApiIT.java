@@ -2,6 +2,7 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryDataTest;
+import com.webshop.model.StoreLanguage;
 import com.webshop.model.entity.CategoryEntity;
 import com.webshop.model.instance.Category;
 import io.restassured.RestAssured;
@@ -54,7 +55,7 @@ public class CategoryApiIT {
                 .when()
                 .post(categoriesEndpoint)
                 .then()
-                //.statusCode(HttpStatus.SC_OK)
+                .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(CategoryEntity.class);
         Assertions.assertThat(newCategoryEntity).isEqualToIgnoringGivenFields(created, "id");
         Long createdId = created.getId();
