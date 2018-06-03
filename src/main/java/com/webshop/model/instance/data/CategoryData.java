@@ -8,7 +8,6 @@ import lombok.Data;
 public class CategoryData {
 
     private String description;
-
     private String name;
 
 }

@@ -20,10 +20,10 @@ public class CategoryEntity {
     private Long id;
 
     @Lob
-    private String categoryData;
+    private String category;
 
     public static final CategoryEntity CATEGORY_ENTITY_ROOT = CategoryEntity.builder()
             .id(0L)
-            .categoryData(null)
+            .category(null)
             .build();
 }

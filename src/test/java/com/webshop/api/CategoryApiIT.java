@@ -1,8 +1,11 @@
 package com.webshop.api;
 
 import com.webshop.WebShopApplication;
-import com.webshop.api.data.CategoryData;
+import com.webshop.api.data.CategoryDataTest;
+import com.webshop.api.data.CategoryTest;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.model.instance.Category;
+import com.webshop.model.instance.data.CategoryData;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -25,7 +28,8 @@ public class CategoryApiIT {
 
     @Value("${local.server.port}")
     private int serverPort;
-    private final CategoryData categoryData = new CategoryData();
+    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
+    private final CategoryTest categoryTest = new CategoryTest();
 
     @Before
     public void setUp() {
@@ -44,7 +48,8 @@ public class CategoryApiIT {
     @Test
     public void testCrud() {
         //given
-        CategoryEntity newCategoryEntity = categoryData.createRandomCategory();
+        CategoryData newCategoryData = categoryDataTest.createRandomCategoryData();
+        Category newCategory = categoryTest.createRandomCategory();
         //Create
         CategoryEntity created = given()
                 .body(newCategoryEntity)
@@ -61,7 +66,7 @@ public class CategoryApiIT {
         CategoryEntity loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Update
-        CategoryEntity toUpdate = categoryData.createRandomCategoryWithID(loaded.getId());
+        CategoryEntity toUpdate = categoryDataTest.createRandomCategoryWithID(loaded.getId());
         CategoryEntity updated = given()
                 .body(toUpdate)
                 .contentType(ContentType.JSON)

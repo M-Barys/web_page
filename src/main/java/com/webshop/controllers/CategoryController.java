@@ -30,15 +30,28 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody
-    CategoryEntity addCategory(@RequestBody CategoryEntity categoryEntity) {
+    public @ResponseBody CategoryEntity addCategory(@RequestBody CategoryData categoryData,
+                                                    @RequestBody Category category,
+                                                    @RequestBody StoreLanguage language) {
+
+        category.getData().update(language, categoryData);
+
+        Gson gson = new Gson();
+        String newCategory = gson.toJson(category);
+
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setCategory(newCategory);
+
         return categoryService.addCategory(categoryEntity);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Category updateCategory(@RequestBody CategoryData data, @PathVariable Long id, HttpServletRequest request) {
+    public Category updateCategory(@RequestBody CategoryData updatedCategoryData,
+                                   @RequestBody Category updatedCategory,
+                                   @PathVariable Long id, HttpServletRequest request) {
+
         CategoryEntity categoryEntity = categoryService.getCategory(id);
-        String json = categoryEntity.getCategoryData();
+        String json = categoryEntity.getCategory();
         Gson gson = new Gson();
         Category currentState = gson.fromJson(json, Category.class);
 
@@ -47,14 +60,15 @@ public class CategoryController {
         if (header != null && header.compareTo("en") == 0) {
             language = StoreLanguage.EN;
         }
-        currentState.getData().update(language, data);
+
+        currentState.getData().update(language, updatedCategoryData);
+        currentState.setSlug(updatedCategory.getSlug());
+        currentState.setStatus(updatedCategory.getStatus());
+
         String updated = gson.toJson(currentState);
-        categoryEntity.setCategoryData(updated);
-//        categoryEntity.setName(updatedCategoryEntity.getName());
-//        categoryEntity.setSlug(updatedCategoryEntity.getSlug());
-//        categoryEntity.setDescription(updatedCategoryEntity.getDescription());
-//        categoryEntity.setStatus(updatedCategoryEntity.getStatus());
+        categoryEntity.setCategory(updated);
         categoryService.updateCategory(categoryEntity);
+
         return currentState;
     }
 
