@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webshop.model.StoreLanguage;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.Category;
+import com.webshop.model.view.CategoryView;
 import com.webshop.services.CategoryService;
 import com.webshop.model.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +26,20 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<CategoryEntity> getAllCategories() {
+    public List<CategoryView> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    CategoryEntity addCategory(@RequestBody CategoryEntity categoryEntity) {
-        return categoryService.addCategory(categoryEntity);
+    CategoryView addCategory(@RequestBody CategoryView categoryView) {
+
+        StoreLanguage language = StoreLanguage.PL; //TODO
+        return categoryService.addCategory(categoryView, language);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Category updateCategory(@RequestBody CategoryData data, @PathVariable Long id, HttpServletRequest request) {
+    public CategoryView updateCategory(@RequestBody CategoryData data, @PathVariable Long id, HttpServletRequest request) {
 
         CategoryEntity categoryEntity = categoryService.getCategory(id);
         String json = categoryEntity.getCategoryData();
@@ -51,12 +54,8 @@ public class CategoryController {
         currentState.getData().update(language, data);
         String updated = gson.toJson(currentState);
         categoryEntity.setCategoryData(updated);
-//        categoryEntity.setName(updatedCategoryEntity.getName());
-//        categoryEntity.setSlug(updatedCategoryEntity.getSlug());
-//        categoryEntity.setDescription(updatedCategoryEntity.getDescription());
-//        categoryEntity.setStatus(updatedCategoryEntity.getStatus());
         categoryService.updateCategory(categoryEntity);
-        return currentState;
+        return CategoryView.fromCategory(currentState, language);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

@@ -10,6 +10,7 @@ import lombok.Data;
 @Builder
 public class Category {
 
+    private Long id;
     private PerLanguageData<CategoryData> data;
     private String slug;
     private Status status;

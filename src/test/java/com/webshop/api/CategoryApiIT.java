@@ -46,7 +46,7 @@ public class CategoryApiIT {
     @Test
     public void testCrud() {
         //given
-        CategoryEntity newCategoryEntity = categoryDataTest.createRandomCategoryWithID(1L);
+        CategoryEntity newCategoryEntity = categoryDataTest.createRandomCategory();
         //Create
         CategoryEntity created = given()
                 .body(newCategoryEntity)

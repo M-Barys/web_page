@@ -13,4 +13,11 @@ public class PerLanguageData<T> {
         perLanguage.put(language, data);
     }
 
+    public Map<StoreLanguage, T> getPerLanguage() {
+        return perLanguage;
+    }
+
+    public void setPerLanguage(Map<StoreLanguage, T> perLanguage) {
+        this.perLanguage = perLanguage;
+    }
 }
