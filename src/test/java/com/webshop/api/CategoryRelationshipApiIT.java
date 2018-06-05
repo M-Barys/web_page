@@ -5,9 +5,9 @@ import com.google.common.collect.ImmutableList;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryDataTest;
 import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.entity.CategoryEntity;
 import com.webshop.controllers.params.ModelObjectReference;
 import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.model.instance.Category;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static com.webshop.model.entity.CategoryEntity.CATEGORY_ENTITY_ROOT;
+import static com.webshop.model.instance.Category.CATEGORY_ROOT;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
@@ -47,10 +47,10 @@ public class CategoryRelationshipApiIT {
     @Test
     public void createCategoryTree() {
         //given
-        CategoryEntity categoryEntityOne = categoryDataTest.createRandomCategory();
-        CategoryEntity categoryEntityTwo = categoryDataTest.createRandomCategory();
-        CategoryEntity c1 = createCategory(categoryEntityOne);
-        CategoryEntity c2 = createCategory(categoryEntityTwo);
+        Category categoryOne = categoryDataTest.createRandomCategory();
+        Category categoryTwo = categoryDataTest.createRandomCategory();
+        Category c1 = createCategory(categoryOne);
+        Category c2 = createCategory(categoryTwo);
 
         RelationParams relation = RelationParams.builder()
                 .parent(ModelObjectReference.builder()
@@ -61,7 +61,7 @@ public class CategoryRelationshipApiIT {
 
         RelationParams relation2 = RelationParams.builder()
                 .parent(ModelObjectReference.builder()
-                        .objectID(CATEGORY_ENTITY_ROOT.getId())
+                        .objectID(CATEGORY_ROOT.getId())
                         .type(ModelObjectType.CATEGORY)
                         .build())
                 .build();
@@ -83,7 +83,7 @@ public class CategoryRelationshipApiIT {
                 .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, c2.getId());
         //Then
         CategoryTreeNode expected = CategoryTreeNode.builder()
-                .value(CATEGORY_ENTITY_ROOT)
+                .value(CATEGORY_ROOT)
                 .childrens(ImmutableList.of(
                         CategoryTreeNode.builder().value(c2).childrens(
                                 ImmutableList.of(
@@ -105,16 +105,16 @@ public class CategoryRelationshipApiIT {
 
     //TODO make test case to check that cycles are not allowed.
 
-    private CategoryEntity createCategory(CategoryEntity categoryEntityData) {
+    private Category createCategory(Category categoryData) {
         return given()
-                .body(categoryEntityData)
+                .body(categoryData)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .post(ApiEndpointSpecification.categoriesEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(CategoryEntity.class);
+                .extract().body().as(Category.class);
     }
 
 }

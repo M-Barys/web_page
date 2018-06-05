@@ -22,8 +22,8 @@ public class CategoryEntity {
     @Lob
     private String categoryData;
 
-    public static final CategoryEntity CATEGORY_ENTITY_ROOT = CategoryEntity.builder()
-            .id(0L)
-            .categoryData(null)
-            .build();
+    //Internal Map<StoreLanguage, CategoryInfo> blob store
+    @Lob
+    private String categoryInfoBlob;
+
 }

@@ -1,6 +1,5 @@
-package com.webshop.model.instance.data;
+package com.webshop.model.instance.info;
 
-import com.webshop.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryData {
-
-    private String slug;
-    private Status status;
-
+public class CategoryInfo {
+    private String description;
+    private String name;
 }

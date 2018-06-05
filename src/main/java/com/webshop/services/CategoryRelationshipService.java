@@ -5,6 +5,7 @@ import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.entity.CategoryEntity;
 import com.webshop.model.entity.CategoryRelationship;
 import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.model.instance.Category;
 import com.webshop.model.view.CategoryTreeNode;
 import com.webshop.repositories.CategoryRelationshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,14 @@ public class CategoryRelationshipService {
     }
 
     public CategoryTreeNode getTree() {
-
         Iterable<CategoryRelationship> relations = categoryRelationshipRepository.findAll();
-        CategoryEntity localRoot = CategoryEntity.CATEGORY_ENTITY_ROOT;
+        Category localRoot = Category.CATEGORY_ROOT;
         CategoryTreeNode categoryTreeNode = new CategoryTreeNode();
         return createTreeFrom(relations, localRoot, categoryTreeNode);
     }
 
     private CategoryTreeNode createTreeFrom(Iterable<CategoryRelationship> relations,
-                                            CategoryEntity localRoot, CategoryTreeNode categoryTreeNode) {
+                                            Category localRoot, CategoryTreeNode categoryTreeNode) {
         categoryTreeNode.setValue(localRoot);
 
         List<CategoryTreeNode> children = new ArrayList<>();
@@ -63,7 +63,7 @@ public class CategoryRelationshipService {
         }
 
         for (CategoryTreeNode c : children) {
-            CategoryEntity newRoot = c.getValue();
+            Category newRoot = c.getValue();
             createTreeFrom(relations, newRoot, c);
         }
         System.out.print(categoryTreeNode);
