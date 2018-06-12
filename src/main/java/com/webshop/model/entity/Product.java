@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +22,8 @@ public class Product {
     private String name;
     @Lob
     private String description;
+
+    @OneToMany
+    private List<Picture> pictures;
 
 }
