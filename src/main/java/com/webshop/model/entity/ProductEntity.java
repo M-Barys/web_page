@@ -23,9 +23,13 @@ public class ProductEntity {
     @Lob
     private String productData;
 
-    //Internal Map<StoreLanguage, CategoryInfo> blob store
+    //Internal Map<StoreLanguage, ProductInfo> blob store
     @Lob
     private String productInfoBlob;
 
+
+// TODO ad pictures reference to entity storage model.
+//    @OneToMany
+//    private List<Picture> pictures;
 
 }
