@@ -5,7 +5,7 @@ import com.webshop.model.StoreLanguage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PerLanguageData<T> {
+public class PerLanguageCategoryData<T> {
 
     private Map<StoreLanguage, T> perLanguage = new HashMap<>();
 

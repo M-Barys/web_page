@@ -1,29 +1,24 @@
-package com.webshop.model.entity;
+package com.webshop.model.instance.info;
 
+import com.webshop.model.entity.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-    private String name;
+public class ProductInfo {
     @Lob
     private String description;
+    private String name;
 
     @OneToMany
     private List<Picture> pictures;
-
 }

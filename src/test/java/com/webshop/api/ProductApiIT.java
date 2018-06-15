@@ -3,7 +3,7 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.ProductData;
-import com.webshop.model.entity.Product;
+import com.webshop.model.entity.ProductEntity;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -47,25 +47,25 @@ public class ProductApiIT {
     @Test
     public void testCrud() {
         //given
-        Product newProduct = productData.randomNewProduct();
+        ProductEntity newProductEntity = productData.randomNewProduct();
         //Create
-        Product created = given()
-                .body(newProduct)
+        ProductEntity created = given()
+                .body(newProductEntity)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .post(productsEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Product.class);
-        Assertions.assertThat(newProduct).isEqualToIgnoringGivenFields(created, "id");
+                .extract().body().as(ProductEntity.class);
+        Assertions.assertThat(newProductEntity).isEqualToIgnoringGivenFields(created, "id");
         Long createdId = created.getId();
         //Read
-        Product loaded = loadByID(createdId);
+        ProductEntity loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Update
-        Product toUpdate = productData.randomProductWithID(loaded.getId());
-        Product updated = given()
+        ProductEntity toUpdate = productData.randomProductWithID(loaded.getId());
+        ProductEntity updated = given()
                 .body(toUpdate)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -73,7 +73,7 @@ public class ProductApiIT {
                 .put(productByIDEndpoint, createdId)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Product.class);
+                .extract().body().as(ProductEntity.class);
         Assertions.assertThat(updated)
                 .isEqualTo(toUpdate)
                 .isEqualTo(loadByID(createdId));
@@ -88,7 +88,7 @@ public class ProductApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private Product loadByID(Long id) {
+    private ProductEntity loadByID(Long id) {
         return given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -96,7 +96,7 @@ public class ProductApiIT {
                 .get(productByIDEndpoint, id)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Product.class);
+                .extract().body().as(ProductEntity.class);
     }
 
 

@@ -2,23 +2,23 @@ package com.webshop.api.data;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.text.TextProducer;
-import com.webshop.model.entity.Product;
+import com.webshop.model.entity.ProductEntity;
 
 public class ProductData {
     private final Fairy fairy = Fairy.create();
 
-    public Product randomProductWithID(Long id) {
+    public ProductEntity randomProductWithID(Long id) {
         TextProducer textProducer = fairy.textProducer();
-        return Product.builder()
+        return ProductEntity.builder()
                 .id(id)
                 .name(textProducer.latinWord())
                 .description(textProducer.paragraph())
                 .build();
     }
 
-    public Product randomNewProduct() {
+    public ProductEntity randomNewProduct() {
         TextProducer textProducer = fairy.textProducer();
-        return Product.builder()
+        return ProductEntity.builder()
                 .name(textProducer.latinWord())
                 .description(textProducer.paragraph())
                 .build();
