@@ -1,6 +1,7 @@
 package com.webshop.controllers;
 
-import com.webshop.model.entity.ProductEntity;
+import com.google.common.base.Preconditions;
+import com.webshop.model.instance.Product;
 import com.webshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -8,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @RestController
@@ -19,26 +22,24 @@ public class ProductController {
     private ProductService productService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<ProductEntity> getAllProducts() {
+    public List<Product> getAllProduct() {
         return productService.getAllProducts();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    ProductEntity addProduct(@RequestBody ProductEntity productEntity) {
-        return productService.addProduct(productEntity);
+    Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ProductEntity updateProduct(@RequestBody ProductEntity updatedProductEntity, @PathVariable Long id) {
-        ProductEntity productEntity = productService.getProduct(id);
-        productEntity.setName(updatedProductEntity.getName());
-        productEntity.setDescription(updatedProductEntity.getDescription());
-        return productService.updateProduct(productEntity);
+    public Product updateProduct(@RequestBody Product data, @NotNull @PathVariable Long id) {
+        Preconditions.checkArgument(id.compareTo(data.getId()) == 0);
+        return productService.updateProduct(data);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ProductEntity getProduct(@PathVariable Long id) {
+    public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
 
@@ -49,9 +50,8 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = {
-            EmptyResultDataAccessException.class,
-            EntityNotFoundException.class})
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class,
+            NoSuchElementException.class})
     public void handleNotFound() {
     }
 }

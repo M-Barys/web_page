@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/session","/categories","/categories/**").anonymous()
+                .antMatchers("/session","/categories","/categories/**","/products","/products/**").anonymous()
                 .anyRequest().authenticated()
                 .and().httpBasic();
         //TODO configure basic auth

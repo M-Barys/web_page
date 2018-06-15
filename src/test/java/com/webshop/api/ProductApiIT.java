@@ -2,8 +2,12 @@ package com.webshop.api;
 
 
 import com.webshop.WebShopApplication;
-import com.webshop.api.data.ProductData;
+import com.webshop.api.data.CategoryDataTest;
+import com.webshop.api.data.ProductDataTest;
+import com.webshop.model.StoreLanguage;
 import com.webshop.model.entity.ProductEntity;
+import com.webshop.model.instance.Category;
+import com.webshop.model.instance.Product;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -23,15 +27,12 @@ import static io.restassured.RestAssured.*;
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductApiIT {
 
-//    @Autowired
-//    private ProductRepository productrepository;
     @Value("${local.server.port}")
     private int serverPort;
-    private final ProductData productData = new ProductData();
+    private final ProductDataTest productDataTest = new ProductDataTest();
 
     @Before
     public void setUp() {
-//        productrepository.deleteAll();
         RestAssured.port = serverPort;
         config = config()
                 .logConfig(LogConfig
@@ -40,42 +41,54 @@ public class ProductApiIT {
                 );
     }
 
-    //CRUD operations
-    private String productsEndpoint = "/products";
+
+    private String productEndpoint = "/products";
     private String productByIDEndpoint = "/products/{id}";
+
+
+    @Test
+    public void testLanguageData() {
+        //given
+        Product newProduct = productDataTest.createRandomProduct();
+        Product created = createNewProduct(newProduct);
+        //when
+        Product loadedEN = loadByID(created.getId(), StoreLanguage.EN);
+        //then the information is null, because it was not setup on EN
+        Assertions.assertThat(loadedEN.getId()).isEqualTo(created.getId());
+        Assertions.assertThat(loadedEN.getData()).isEqualTo(created.getData());
+        Assertions.assertThat(loadedEN.getInfo()).isNull();
+
+        //when
+        Product loadedPL = loadByID(created.getId(), StoreLanguage.PL);
+        //then the information on PL match the created values
+        Assertions.assertThat(loadedPL).isEqualTo(created);
+
+    }
 
     @Test
     public void testCrud() {
         //given
-        ProductEntity newProductEntity = productData.randomNewProduct();
+        Product newProduct = productDataTest.createRandomProduct();
         //Create
-        ProductEntity created = given()
-                .body(newProductEntity)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .post(productsEndpoint)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(ProductEntity.class);
-        Assertions.assertThat(newProductEntity).isEqualToIgnoringGivenFields(created, "id");
+        Product created = createNewProduct(newProduct);
+        Assertions.assertThat(newProduct).isEqualToIgnoringGivenFields(created, "id");
         Long createdId = created.getId();
         //Read
-        ProductEntity loaded = loadByID(createdId);
+        Product loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Update
-        ProductEntity toUpdate = productData.randomProductWithID(loaded.getId());
-        ProductEntity updated = given()
-                .body(toUpdate)
+        Product updateInput = productDataTest.createRandomProductWithID(loaded.getId());
+        Product updated = given()
+                .body(updateInput)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .put(productByIDEndpoint, createdId)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(ProductEntity.class);
+                .extract().body().as(Product.class);
         Assertions.assertThat(updated)
-                .isEqualTo(toUpdate)
+                .isEqualTo(updateInput)
                 .isEqualTo(loadByID(createdId));
         //Delete
         when()
@@ -88,15 +101,32 @@ public class ProductApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private ProductEntity loadByID(Long id) {
+    private Product createNewProduct(Product newProduct) {
+        return given()
+                .body(newProduct)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post(productEndpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+    }
+
+    private Product loadByID(Long id) {
+        return loadByID(id, StoreLanguage.PL);
+    }
+
+    private Product loadByID(Long id, StoreLanguage language) {
         return given()
                 .contentType(ContentType.JSON)
+                .header(StoreLanguage.languageHeader, language.name())
                 .accept(ContentType.JSON)
                 .when()
                 .get(productByIDEndpoint, id)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(ProductEntity.class);
+                .extract().body().as(Product.class);
     }
 
 
