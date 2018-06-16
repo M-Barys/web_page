@@ -29,7 +29,7 @@ public class ProductEntity {
 
 
 // TODO ad pictures reference to entity storage model.
-//    @OneToMany
-//    private List<Picture> pictures;
+    @OneToMany
+    private List<Picture> pictures;
 
 }

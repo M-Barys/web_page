@@ -45,6 +45,7 @@ public class ProductMapping {
                 .id(productEntity.getId())
                 .data(configuration.getGson().fromJson(productEntity.getProductData(), ProductData.class))
                 .info(info.get(language))
+                .pictures(productEntity.getPictures())
                 .build();
     }
 
@@ -56,6 +57,7 @@ public class ProductMapping {
                 .id(product.getId())
                 .productData(jsonCategory)
                 .productInfoBlob(infoJson)
+                .pictures(product.getPictures())
                 .build();
     }
 

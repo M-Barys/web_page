@@ -15,13 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductInfo {
-
-    //TODO Delete jpa annotations from model
-    @Lob
     private String description;
     private String name;
 
-    //TODO Do not use JPA entities on model.
-    @OneToMany
-    private List<Picture> pictures;
+
 }
