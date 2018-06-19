@@ -29,7 +29,8 @@ public class ProductEntity {
 
 
 // TODO ad pictures reference to entity storage model.
-    @OneToMany
-    private List<Picture> pictures;
+   @OneToMany(cascade = CascadeType.ALL)
+   @JoinColumn(name="product_id", referencedColumnName="id")
+   private List<Picture> pictures;
 
 }

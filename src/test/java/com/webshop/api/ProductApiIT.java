@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.webshop.api.ApiEndpointSpecification.productByIDEndpoint;
+import static com.webshop.api.ApiEndpointSpecification.productEndpoint;
 import static io.restassured.RestAssured.*;
 
 
@@ -41,9 +43,6 @@ public class ProductApiIT {
                 );
     }
 
-
-    private String productEndpoint = "/products";
-    private String productByIDEndpoint = "/products/{id}";
 
 
     @Test

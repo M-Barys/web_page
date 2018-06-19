@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.webshop.api.ApiEndpointSpecification.categoriesEndpoint;
+import static com.webshop.api.ApiEndpointSpecification.categoryByIDEndpoint;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -37,10 +39,6 @@ public class CategoryApiIT {
                         .enableLoggingOfRequestAndResponseIfValidationFails()
                 );
     }
-
-
-    private String categoriesEndpoint = "/categories";
-    private String categoryByIDEndpoint = "/categories/{id}";
 
 
     @Test

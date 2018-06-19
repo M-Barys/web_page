@@ -33,7 +33,9 @@ public class ProductDataTest {
                 .data(ProductData.builder()
                         .slug(text.randomString(fairy.baseProducer().randomBetween(2, 20)))
                         .status(Status.draft)
-                        .build());
+                        .build())
+                .pictures(ImmutableList.of());
+
     }
 
 

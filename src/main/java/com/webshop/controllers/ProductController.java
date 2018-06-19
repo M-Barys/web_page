@@ -55,5 +55,3 @@ public class ProductController {
     public void handleNotFound() {
     }
 }
-
-
