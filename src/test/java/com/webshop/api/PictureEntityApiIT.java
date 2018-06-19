@@ -3,10 +3,8 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.PictureDataTest;
-import com.webshop.api.data.ProductDataTest;
-import com.webshop.model.StoreLanguage;
-import com.webshop.model.entity.Picture;
-import com.webshop.model.instance.Product;
+import com.webshop.model.entity.PictureEntity;
+import com.webshop.model.instance.PictureRef;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
@@ -25,7 +23,7 @@ import static io.restassured.RestAssured.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PictureApiIT {
+public class PictureEntityApiIT {
 
     @Value("${local.server.port}")
     private int serverPort;
@@ -44,13 +42,13 @@ public class PictureApiIT {
     @Test
     public void testCrud() {
         //given
-        Picture newPicture = pictureDataTest.createRandomPicture();
+        PictureRef newPictureEntity = null; // pictureDataTest.createRandomPicture();
         //Create
-        Picture created = createNewPicture(newPicture);
-        Assertions.assertThat(newPicture).isEqualToIgnoringGivenFields(created, "pictureID");
+        PictureEntity created = createNewPicture(newPictureEntity);
+        Assertions.assertThat(newPictureEntity).isEqualToIgnoringGivenFields(created, "pictureID");
         Long createdId = created.getPictureID();
         //Read
-        Picture loaded = loadByID(createdId);
+        PictureEntity loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Delete
         when()
@@ -63,19 +61,19 @@ public class PictureApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private Picture createNewPicture(Picture newPicture) {
+    private PictureEntity createNewPicture(PictureRef newPictureEntity) {
         return given()
-                .body(newPicture)
+                .body(newPictureEntity)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .post(pictureEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Picture.class);
+                .extract().body().as(PictureEntity.class);
     }
 
-    private Picture loadByID(Long pictureID) {
+    private PictureEntity loadByID(Long pictureID) {
         return given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -83,7 +81,7 @@ public class PictureApiIT {
                 .get(pictureByIDEndpoint, pictureID)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(Picture.class);
+                .extract().body().as(PictureEntity.class);
     }
 
 

@@ -1,19 +1,19 @@
 package com.webshop.api.data;
 
-import com.webshop.model.entity.Picture;
+import com.webshop.model.entity.PictureEntity;
 
 public class PictureDataTest {
-
-    public Picture createRandomPicture() {
-        return generate().build();
-    }
-
-    public Picture createRandomPictureWithID(Long id) {
-        return generate().pictureID(id).build();
-    }
-
-    private Picture.PictureBuilder generate() {
-       return Picture.builder()
-                .imageData(null);
-    }
+//
+//    public PictureEntity createRandomPicture() {
+//        return generate().build();
+//    }
+//
+//    public PictureEntity createRandomPictureWithID(Long id) {
+//        return generate().pictureID(id).build();
+//    }
+//
+//    private PictureEntity.PictureBuilder generate() {
+//       return PictureEntity.builder()
+//                .imageData(null);
+//    }
 }

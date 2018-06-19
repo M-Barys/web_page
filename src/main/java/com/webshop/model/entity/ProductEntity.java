@@ -27,10 +27,8 @@ public class ProductEntity {
     @Lob
     private String productInfoBlob;
 
-
-// TODO ad pictures reference to entity storage model.
-   @OneToMany(cascade = CascadeType.ALL)
-   @JoinColumn(name="product_id", referencedColumnName="id")
-   private List<Picture> pictures;
+    @ManyToMany()
+//   @JoinColumn(name="product_id", referencedColumnName="id")
+    private List<PictureEntity> pictureEntities;
 
 }

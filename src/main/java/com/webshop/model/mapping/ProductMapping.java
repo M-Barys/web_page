@@ -24,10 +24,13 @@ public class ProductMapping {
 
     private final ConfigurationService configuration;
 
+    private final PictureMapping pictureMapping;
+
     @Autowired
-    public ProductMapping(ConfigurationService configuration, HttpServletRequest request) {
+    public ProductMapping(ConfigurationService configuration, HttpServletRequest request, PictureMapping pictureMapping) {
         this.configuration = configuration;
         this.language = StoreLanguage.fromHeader(request.getHeader("X-API-Lang"));
+        this.pictureMapping = pictureMapping;
     }
 
     public ProductEntity createEntity(Product product) {
@@ -45,8 +48,9 @@ public class ProductMapping {
                 .id(productEntity.getId())
                 .data(configuration.getGson().fromJson(productEntity.getProductData(), ProductData.class))
                 .info(info.get(language))
-                .pictures(productEntity.getPictures())
-                .build();
+                .pictures(
+                        pictureMapping.mapToRef(productEntity.getPictureEntities())
+                ).build();
     }
 
     private ProductEntity internalCreate(Product product, Map<StoreLanguage, ProductInfo> info) {
@@ -57,7 +61,9 @@ public class ProductMapping {
                 .id(product.getId())
                 .productData(jsonCategory)
                 .productInfoBlob(infoJson)
-                .pictures(product.getPictures())
+                .pictureEntities(
+                        pictureMapping.mapToEntity(product.getPictures())
+                )
                 .build();
     }
 
