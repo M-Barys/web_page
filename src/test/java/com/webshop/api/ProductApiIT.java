@@ -2,11 +2,8 @@ package com.webshop.api;
 
 
 import com.webshop.WebShopApplication;
-import com.webshop.api.data.CategoryDataTest;
 import com.webshop.api.data.ProductDataTest;
 import com.webshop.model.StoreLanguage;
-import com.webshop.model.entity.ProductEntity;
-import com.webshop.model.instance.Category;
 import com.webshop.model.instance.Product;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;

@@ -1,6 +1,5 @@
 package com.webshop.api.data;
 
-import com.webshop.model.entity.PictureEntity;
 
 public class PictureDataTest {
 //

@@ -3,7 +3,6 @@ package com.webshop.api;
 
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.PictureDataTest;
-import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.instance.PictureRef;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -44,11 +43,11 @@ public class PictureEntityApiIT {
         //given
         PictureRef newPictureEntity = null; // pictureDataTest.createRandomPicture();
         //Create
-        PictureEntity created = createNewPicture(newPictureEntity);
+        PictureRef created = createNewPicture(newPictureEntity);
         Assertions.assertThat(newPictureEntity).isEqualToIgnoringGivenFields(created, "pictureID");
         Long createdId = created.getPictureID();
         //Read
-        PictureEntity loaded = loadByID(createdId);
+        PictureRef loaded = loadByID(createdId);
         Assertions.assertThat(loaded).isEqualTo(created);
         //Delete
         when()
@@ -61,19 +60,19 @@ public class PictureEntityApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private PictureEntity createNewPicture(PictureRef newPictureEntity) {
+    private PictureRef createNewPicture(PictureRef newPicture) {
         return given()
-                .body(newPictureEntity)
+                .body(newPicture)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .post(pictureEndpoint)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PictureEntity.class);
+                .extract().body().as(PictureRef.class);
     }
 
-    private PictureEntity loadByID(Long pictureID) {
+    private PictureRef loadByID(Long pictureID) {
         return given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -81,7 +80,7 @@ public class PictureEntityApiIT {
                 .get(pictureByIDEndpoint, pictureID)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PictureEntity.class);
+                .extract().body().as(PictureRef.class);
     }
 
 

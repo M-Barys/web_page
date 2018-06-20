@@ -29,7 +29,7 @@ public class PictureController {
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     PictureRef addPicture(@RequestBody PictureRef picture, @RequestParam("file") MultipartFile file) {
-
+        //TODO
         return pictureService.addPicture(null);
     }
 
