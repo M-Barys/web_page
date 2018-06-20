@@ -8,6 +8,8 @@ public class ApiEndpointSpecification {
 
     public static String productEndpoint = "/products";
     public static String productByIDEndpoint = "/products/{id}";
+    public static String productByIDAddPictureEndpoint = "/products/{id}/addPicture";
+    public static String productByIDDeletePictureEndpoint = "/products/{id}/deletePicture";
 
     public static String pictureEndpoint = "/pictures";
     public static String pictureByIDEndpoint = "/pictures/{id}";

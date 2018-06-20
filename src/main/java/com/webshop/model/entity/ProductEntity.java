@@ -28,7 +28,6 @@ public class ProductEntity {
     private String productInfoBlob;
 
     @ManyToMany()
-//   @JoinColumn(name="product_id", referencedColumnName="id")
     private List<PictureEntity> pictureEntities;
 
 }

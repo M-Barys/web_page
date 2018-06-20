@@ -17,8 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static com.webshop.api.ApiEndpointSpecification.productByIDEndpoint;
-import static com.webshop.api.ApiEndpointSpecification.productEndpoint;
+import static com.webshop.api.ApiEndpointSpecification.*;
 import static io.restassured.RestAssured.*;
 
 
@@ -41,6 +40,26 @@ public class ProductApiIT {
     }
 
 
+    @Test
+    public void managePictureRelation() {
+        Product newProduct = productDataTest.createRandomProduct();
+        Product created = createNewProduct(newProduct);
+
+        //TODO create picture on database. Add util method to use here and on PictureTests
+
+        Product updated = given()
+                .queryParam("pictureID", 1l) //TODO use pictureID from database
+                .when()
+                .put(productByIDAddPictureEndpoint, created.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(updated.getPictures()).hasSize(1);
+
+        //TODO Add 1 more picture
+        //TODO Delete one picture
+    }
 
     @Test
     public void testLanguageData() {

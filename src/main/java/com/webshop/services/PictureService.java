@@ -9,6 +9,7 @@ import com.webshop.repositories.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -37,7 +38,8 @@ public class PictureService {
 
     //TODO migrate to streams
     public byte[] getPictureContent(Long id) {
-        Blob imageData = pictureRepository.findById(id).get().getImageData();
+        PictureEntity pictureEntity = pictureRepository.findById(id).get();
+        Blob imageData = pictureEntity.getImageData();
         try {
             return imageData.getBytes(1, (int) imageData.length());
         } catch (SQLException e) {
@@ -47,11 +49,19 @@ public class PictureService {
         }
     }
 
-    public PictureRef addPicture(PictureEntity pictureEntity) {
-        Preconditions.checkArgument(pictureEntity.getPictureID() == null, "A new picture can not have a ID setup");
-        return pictureMapping.loadFromEntity(
-                pictureRepository.save(pictureEntity)
-        );
+    public PictureRef addPicture(byte[] imageData) {
+        try {
+            PictureEntity pictureEntity = PictureEntity.builder()
+                    .imageData(new SerialBlob(imageData))
+                    .build();
+            return pictureMapping.loadFromEntity(
+                    pictureRepository.save(pictureEntity)
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO
+            throw new IllegalStateException("TODO");
+        }
     }
 
     public void deletePicture(Long id) {

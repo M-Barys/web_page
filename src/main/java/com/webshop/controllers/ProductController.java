@@ -32,6 +32,16 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    @RequestMapping(value = "/{id}/addPicture", method = RequestMethod.PUT)
+    Product addPictureToProduct(@NotNull @PathVariable Long id, @RequestParam("pictureID") Long pictureID) {
+        return productService.getProduct(id);
+    }
+
+    @RequestMapping(value = "/{id}/deletePicture", method = RequestMethod.PUT)
+    Product deletePictureToProduct(@NotNull @PathVariable Long id, @RequestParam("pictureID") Long pictureID) {
+        return productService.getProduct(id);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Product updateProduct(@RequestBody Product data, @NotNull @PathVariable Long id) {
         Preconditions.checkArgument(id.compareTo(data.getId()) == 0);

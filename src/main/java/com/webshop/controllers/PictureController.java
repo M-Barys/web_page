@@ -1,5 +1,6 @@
 package com.webshop.controllers;
 
+import com.google.common.base.Preconditions;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,9 +30,11 @@ public class PictureController {
 
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
-    PictureRef addPicture(@RequestBody PictureRef picture, @RequestParam("file") MultipartFile file) {
-        //TODO
-        return pictureService.addPicture(null);
+    PictureRef addPicture(@RequestParam("file") MultipartFile file) throws IOException {
+        String contentType = file.getContentType();
+        Preconditions.checkState(contentType.compareTo("image/jpg") == 0);
+        //TODO use file information to extract filename, file type
+        return pictureService.addPicture(file.getBytes());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -38,8 +42,10 @@ public class PictureController {
         return pictureService.getPicture(id);
     }
 
+
+    //TODO test file retrieval
     @GetMapping(
-            value = "/file/{id}/{filename:.+}",
+            value = "/{id}/image.jpg",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     @ResponseBody

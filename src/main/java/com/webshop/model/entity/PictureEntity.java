@@ -20,6 +20,9 @@ public class PictureEntity {
     @Column(name = "pictureID")
     private Long pictureID;
 
-    //TODO research for storage schema for pictures.
+
+    //TODO add file name
+    //TODO add file type enumeration: png, jpg, gif
+
     private Blob imageData;
 }

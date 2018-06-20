@@ -49,7 +49,7 @@ public class ProductMapping {
                 .data(configuration.getGson().fromJson(productEntity.getProductData(), ProductData.class))
                 .info(info.get(language))
                 .pictures(
-                        pictureMapping.mapToRef(productEntity.getPictureEntities())
+                        pictureMapping.mapToUrlInfo(productEntity.getPictureEntities())
                 ).build();
     }
 
@@ -61,9 +61,9 @@ public class ProductMapping {
                 .id(product.getId())
                 .productData(jsonCategory)
                 .productInfoBlob(infoJson)
-                .pictureEntities(
-                        pictureMapping.mapToEntity(product.getPictures())
-                )
+//                .pictureEntities(
+//                        pictureMapping.mapToEntity(product.getPictures())
+//                ) //TODO
                 .build();
     }
 

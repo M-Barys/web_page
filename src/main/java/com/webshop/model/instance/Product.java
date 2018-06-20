@@ -18,7 +18,7 @@ public class Product {
     private Long id;
     private ProductData data;
     private ProductInfo info;
-    private List<PictureRef> pictures;
+    private List<PictureUrlInfo> pictures;
 
     public static final Product CATEGORY_ROOT = Product.builder()
             .id(0L)

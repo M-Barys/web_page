@@ -25,4 +25,6 @@ public class WebShopIT {
 
     private String productEndpoint = "/products";
     private String productByIDEndpoint = "/products/{id}";
+
+    //TODO Create tests from use cases.
 }
