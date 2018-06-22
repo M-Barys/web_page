@@ -1,5 +1,6 @@
 package com.webshop.model.entity;
 
+import com.webshop.model.PictureFileType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,9 @@ public class PictureEntity {
 
 
     //TODO add file name
+    private String pictureName;
     //TODO add file type enumeration: png, jpg, gif
+    private PictureFileType pictureType;
 
     private Blob imageData;
 }

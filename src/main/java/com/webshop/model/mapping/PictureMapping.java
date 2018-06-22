@@ -17,6 +17,8 @@ public class PictureMapping {
     public PictureRef loadFromEntity(PictureEntity pictureEntity) {
         return PictureRef.builder()
                 .pictureID(pictureEntity.getPictureID())
+                .pictureName(pictureEntity.getPictureName())
+                .pictureType(pictureEntity.getPictureType())
                 .build();
     }
 
