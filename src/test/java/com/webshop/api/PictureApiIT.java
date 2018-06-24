@@ -8,6 +8,7 @@ import com.webshop.model.instance.PictureRef;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -47,11 +48,12 @@ public class PictureApiIT {
     public void addPictureTest() {
         //given
         URL resource = Resources.getResource("baseball.jpg");
-
+        String resourcePath = resource.getPath();
         String filePath = resource.getFile();
+
         File file = new File(filePath);
         PictureRef pictureAdded = given()
-                .multiPart("file", file, "image/jpg")
+                .multiPart("file", file, resourcePath)
                 .when()
                 .post(pictureEndpoint)
                 .then()

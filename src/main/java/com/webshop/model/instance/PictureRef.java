@@ -1,10 +1,7 @@
 package com.webshop.model.instance;
 
 import com.webshop.model.PictureFileType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.activation.MimeType;
 
@@ -20,4 +17,5 @@ public class PictureRef {
     private String pictureName;
     //TODO add file type enumeration: png, jpg, gif
     private PictureFileType pictureType;
+    
 }

@@ -32,9 +32,9 @@ public class PictureController {
     public @ResponseBody
     PictureRef addPicture(@RequestParam("file") MultipartFile file) throws IOException {
         String contentType = file.getContentType();
-        Preconditions.checkState(contentType.compareTo("image/jpg") == 0);
+        //Preconditions.checkState(contentType.compareTo("image/jpg") == 0);
         //TODO use file information to extract filename, file type
-        return pictureService.addPicture(file.getBytes());
+        return pictureService.addPicture(file);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

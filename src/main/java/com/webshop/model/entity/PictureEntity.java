@@ -1,10 +1,7 @@
 package com.webshop.model.entity;
 
 import com.webshop.model.PictureFileType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -26,6 +23,7 @@ public class PictureEntity {
     private String pictureName;
     //TODO add file type enumeration: png, jpg, gif
     private PictureFileType pictureType;
+
 
     private Blob imageData;
 }
