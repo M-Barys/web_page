@@ -17,5 +17,5 @@ public class PictureRef {
     private String pictureName;
     //TODO add file type enumeration: png, jpg, gif
     private PictureFileType pictureType;
-    
+
 }

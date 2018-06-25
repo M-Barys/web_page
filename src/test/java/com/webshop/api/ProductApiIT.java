@@ -1,9 +1,11 @@
 package com.webshop.api;
 
 
+import com.google.common.io.Resources;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.ProductDataTest;
 import com.webshop.model.StoreLanguage;
+import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -13,9 +15,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.io.File;
+import java.net.URL;
 
 import static com.webshop.api.ApiEndpointSpecification.*;
 import static io.restassured.RestAssured.*;
@@ -39,16 +45,20 @@ public class ProductApiIT {
                 );
     }
 
-
     @Test
     public void managePictureRelation() {
         Product newProduct = productDataTest.createRandomProduct();
         Product created = createNewProduct(newProduct);
 
         //TODO create picture on database. Add util method to use here and on PictureTests
+        //Add picture to database
+        URL resource1 = Resources.getResource("baseball.jpg");
+        //Load picture from data base
+        PictureRef picture1 = createNewPicture(resource1);
+        PictureRef loadedPicture1 = loadPicByID(picture1.getPictureID());
 
         Product updated = given()
-                .queryParam("pictureID", 1l) //TODO use pictureID from database
+                .queryParam("pictureID", loadedPicture1.getPictureID()) //TODO use pictureID from database
                 .when()
                 .put(productByIDAddPictureEndpoint, created.getId())
                 .then()
@@ -58,7 +68,32 @@ public class ProductApiIT {
         Assertions.assertThat(updated.getPictures()).hasSize(1);
 
         //TODO Add 1 more picture
+        //Add second picture to database
+        URL resource2 = Resources.getResource("cnc_milling_machine.jpg");
+        //Load second picture from data base
+        PictureRef picture2 = createNewPicture(resource1);
+        PictureRef loadedPicture2 = loadPicByID(picture1.getPictureID());
+
+        Product addedSecondPic = given()
+                .queryParam("pictureID", loadedPicture2.getPictureID()) //TODO use pictureID from database
+                .when()
+                .put(productByIDAddPictureEndpoint, updated.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(addedSecondPic.getPictures()).hasSize(2);
+
         //TODO Delete one picture
+        Product deletedPic = given()
+                .queryParam("pictureID", loadedPicture1.getPictureID())
+                .when()
+                .put(productByIDDeletePictureEndpoint, addedSecondPic.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(deletedPic.getPictures()).hasSize(1);
     }
 
     @Test
@@ -142,6 +177,27 @@ public class ProductApiIT {
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Product.class);
+    }
+
+    private PictureRef createNewPicture(URL resource) {
+        String filePath = resource.getFile();
+        File file = new File(filePath);
+
+        return given()
+                .multiPart("file", file, filePath)
+                .when()
+                .post(pictureEndpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(PictureRef.class);
+    }
+
+    private PictureRef loadPicByID(Long pictureID) {
+        return when()
+                .get(pictureByIDEndpoint, pictureID)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(PictureRef.class);
     }
 
 

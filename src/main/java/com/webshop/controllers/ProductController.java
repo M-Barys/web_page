@@ -34,12 +34,12 @@ public class ProductController {
 
     @RequestMapping(value = "/{id}/addPicture", method = RequestMethod.PUT)
     Product addPictureToProduct(@NotNull @PathVariable Long id, @RequestParam("pictureID") Long pictureID) {
-        return productService.getProduct(id);
+        return productService.addPictureToProduct(id, pictureID);
     }
 
     @RequestMapping(value = "/{id}/deletePicture", method = RequestMethod.PUT)
     Product deletePictureToProduct(@NotNull @PathVariable Long id, @RequestParam("pictureID") Long pictureID) {
-        return productService.getProduct(id);
+        return productService.deletePicture(id, pictureID);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

@@ -18,12 +18,10 @@ public class PictureEntity {
     @Column(name = "pictureID")
     private Long pictureID;
 
-
     //TODO add file name
     private String pictureName;
     //TODO add file type enumeration: png, jpg, gif
     private PictureFileType pictureType;
-
 
     private Blob imageData;
 }

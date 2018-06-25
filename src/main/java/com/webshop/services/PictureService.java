@@ -17,8 +17,6 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.webshop.model.PictureFileType.jpg;
-
 @Service
 public class PictureService {
 
@@ -38,6 +36,10 @@ public class PictureService {
         return pictureMapping.loadFromEntity(
                 pictureRepository.findById(id).get()
         );
+    }
+
+    public PictureEntity getPictureEntity(Long id) {
+        return pictureRepository.findById(id).get();
     }
 
     //TODO migrate to streams
