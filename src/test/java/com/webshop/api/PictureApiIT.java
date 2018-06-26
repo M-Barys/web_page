@@ -16,7 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
 import static com.webshop.api.ApiEndpointSpecification.*;
 import static io.restassured.RestAssured.*;
@@ -24,7 +26,7 @@ import static io.restassured.RestAssured.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PictureApiIT {
+public class PictureApiIT extends AbstractApiTest {
 
     @Value("${local.server.port}")
     private int serverPort;
@@ -41,7 +43,7 @@ public class PictureApiIT {
     }
 
     @Test
-    public void crudTests() {
+    public void crudTests() throws IOException {
         //given
         URL resource1 = Resources.getResource("baseball.jpg");
         URL resource2 = Resources.getResource("cnc_milling_machine.jpg");
@@ -63,7 +65,7 @@ public class PictureApiIT {
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
 
-        PictureRef pictureLoadedById = loadByID(picture1.getPictureID());
+        PictureRef pictureLoadedById = loadPictureByID(picture1.getPictureID());
         Assertions.assertThat(pictureLoadedById.getPictureID()).isEqualTo(picture1.getPictureID());
         Assertions.assertThat(pictureLoadedById.getPictureName()).isEqualTo(picture1.getPictureName());
         Assertions.assertThat(pictureLoadedById.getPictureType()).isEqualTo(picture1.getPictureType());
@@ -71,27 +73,6 @@ public class PictureApiIT {
     }
 
 
-
-    private PictureRef createNewPicture(URL resource) {
-        String filePath = resource.getFile();
-        File file = new File(filePath);
-
-        return given()
-                .multiPart("file", file, filePath)
-                .when()
-                .post(pictureEndpoint)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PictureRef.class);
-        }
-
-    private PictureRef loadByID(Long pictureID) {
-        return when()
-                .get(pictureByIDEndpoint, pictureID)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PictureRef.class);
-    }
 
 
 }

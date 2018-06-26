@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,10 +39,6 @@ public class PictureService {
         );
     }
 
-    public PictureEntity getPictureEntity(Long id) {
-        return pictureRepository.findById(id).get();
-    }
-
     //TODO migrate to streams
     public byte[] getPictureContent(Long id) {
         PictureEntity pictureEntity = pictureRepository.findById(id).get();
@@ -59,8 +56,8 @@ public class PictureService {
         try {
             PictureEntity pictureEntity = PictureEntity.builder()
                     .imageData(new SerialBlob(file.getBytes()))
-                    .pictureName(FilenameUtils.getBaseName(file.getContentType()))
-                    .pictureType(PictureFileType.valueOf(FilenameUtils.getExtension(file.getContentType())))
+                    .pictureName(FilenameUtils.getBaseName(file.getOriginalFilename()))
+                    .pictureType(PictureFileType.getFromMimeType(file.getContentType()))
                     .build();
             return pictureMapping.loadFromEntity(
                     pictureRepository.save(pictureEntity)

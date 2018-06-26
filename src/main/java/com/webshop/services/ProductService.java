@@ -8,6 +8,7 @@ import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Product;
 import com.webshop.model.mapping.ProductMapping;
+import com.webshop.repositories.PictureRepository;
 import com.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,8 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    PictureService pictureService;
+    private PictureRepository pictureRepository;
+
 
     public List<Product> getAllProducts() {
         return Streams.stream(productRepository.findAll())
@@ -60,18 +62,18 @@ public class ProductService {
         return mapping.fromEntity(stored);
     }
 
-    public Product addPictureToProduct(Long id, Long pictureID){
+    public Product addPictureToProduct(Long id, Long pictureID) {
         ProductEntity productEntity = productRepository.findById(id).get();
         List<PictureEntity> newPictureList = productEntity.getPictureEntities();
-        newPictureList.add(pictureService.getPictureEntity(pictureID));
+        newPictureList.add(pictureRepository.findById(pictureID).get());
         productEntity.setPictureEntities(newPictureList);
         return mapping.fromEntity(productRepository.save(productEntity));
     }
 
-    public Product deletePicture(Long id, Long pictureID){
+    public Product deletePicture(Long id, Long pictureID) {
         ProductEntity productEntity = productRepository.findById(id).get();
         List<PictureEntity> newPictureList = productEntity.getPictureEntities();
-        newPictureList.remove(pictureService.getPictureEntity(pictureID));
+        newPictureList.remove(pictureRepository.findById(pictureID).get());
         productEntity.setPictureEntities(newPictureList);
         return mapping.fromEntity(productRepository.save(productEntity));
     }
