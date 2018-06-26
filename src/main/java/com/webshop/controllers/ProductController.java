@@ -21,6 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    //TODO test or delete
     @RequestMapping(method = RequestMethod.GET)
     public List<Product> getAllProduct() {
         return productService.getAllProducts();

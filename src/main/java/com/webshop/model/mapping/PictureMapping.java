@@ -6,8 +6,6 @@ import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.PictureUrlInfo;
 import org.springframework.stereotype.Component;
 
-import javax.sql.rowset.serial.SerialBlob;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,21 +20,6 @@ public class PictureMapping {
                 .build();
     }
 
-//    public PictureEntity createEntity(PictureRef pictureRef) {
-//        try {
-//            return PictureEntity.builder()
-//                    .pictureID(pictureRef.getPictureID())
-//                    .imageData(
-//                            new SerialBlob(pictureRef.getPictureData())
-//                    )
-//                    .build();
-//        } catch (SQLException e) {
-//            //TODO error handle
-//            e.printStackTrace();
-//            throw new IllegalStateException("TODO");
-//        }
-//    }
-
     public PictureUrlInfo urlInfoFromEntity(PictureEntity pictureEntity) {
         return PictureUrlInfo.builder()
                 .alternative("TODO")
@@ -44,6 +27,7 @@ public class PictureMapping {
                 .build();
     }
 
+    //TODO test or delete
     public List<PictureRef> mapToRef(List<PictureEntity> pictureEntities) {
         return pictureEntities.stream()
                 .map(this::loadFromEntity)
@@ -59,7 +43,4 @@ public class PictureMapping {
                 .collect(Collectors.toList());
     }
 
-//    public List<PictureEntity> mapToEntity(List<PictureRef> pictures) {
-//        return pictures.stream().map(this::createEntity).collect(Collectors.toList());
-//    }
 }

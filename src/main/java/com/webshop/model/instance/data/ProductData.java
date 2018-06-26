@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Map;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,5 +18,7 @@ public class ProductData {
 
     private String slug;
     private Status status;
+    //TODO add data on tests
+    private Map<Currency,BigDecimal> prices;
 
 }

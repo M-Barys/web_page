@@ -29,6 +29,7 @@ public class CategoryRelationshipsController {
         return categoryRelationshipService.getTree();
     }
 
+    //TODO migrate to abstract controller
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})
     public void handleNotFound() {

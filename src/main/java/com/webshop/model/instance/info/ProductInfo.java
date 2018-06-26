@@ -13,5 +13,4 @@ public class ProductInfo {
     private String description;
     private String name;
 
-
 }

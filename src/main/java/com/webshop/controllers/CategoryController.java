@@ -21,6 +21,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    //TODO test or delete
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();

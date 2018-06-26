@@ -23,6 +23,7 @@ public class PictureController {
     @Autowired
     private PictureService pictureService;
 
+    //TODO test or delete
     @RequestMapping(method = RequestMethod.GET)
     public List<PictureRef> getAllPicture() {
         return pictureService.getAllPicture();
@@ -31,9 +32,6 @@ public class PictureController {
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     PictureRef addPicture(@RequestParam("file") MultipartFile file) throws IOException {
-        String contentType = file.getContentType();
-        //Preconditions.checkState(contentType.compareTo("image/jpg") == 0);
-        //TODO use file information to extract filename, file type
         return pictureService.addPicture(file);
     }
 
