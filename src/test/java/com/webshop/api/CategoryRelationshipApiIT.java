@@ -43,7 +43,6 @@ public class CategoryRelationshipApiIT {
                 );
     }
 
-
     @Test
     public void createCategoryTree() {
         //given

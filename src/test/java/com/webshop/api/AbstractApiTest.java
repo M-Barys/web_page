@@ -1,6 +1,8 @@
 package com.webshop.api;
 
+import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.StoreLanguage;
+import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import io.restassured.http.ContentType;
@@ -68,4 +70,26 @@ public abstract class AbstractApiTest {
                 .extract().body().as(Product.class);
     }
 
+    protected Category createNewCategory(Category newCategory) {
+        return given()
+                .body(newCategory)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post(categoriesEndpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+    }
+
+    protected void createNewCategoryRelationship(RelationParams relation, Category children){
+        given()
+                .body(relation)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, children.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK);
+    }
 }
