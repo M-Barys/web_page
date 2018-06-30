@@ -1,5 +1,6 @@
 package com.webshop.api;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryDataTest;
@@ -8,15 +9,19 @@ import com.webshop.controllers.params.ModelObjectReference;
 import com.webshop.controllers.params.ModelObjectType;
 import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.Status;
+import com.webshop.model.StoreLanguage;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;
+import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
+import io.restassured.internal.assertion.Assertion;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.IOException;
 import java.net.URL;
 
+import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddProductEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.productByIDAddPictureEndpoint;
 import static com.webshop.model.instance.Category.CATEGORY_ROOT;
 import static io.restassured.RestAssured.config;
@@ -65,7 +71,7 @@ public class WebShopIT extends AbstractApiTest {
         PictureRef picture1 = createNewPicture(resource1);
         PictureRef loadedPicture1 = loadPictureByID(picture1.getPictureID());
 
-        Product pictureAddedToProduct = given()
+        Product productWithPicture = given()
                 .queryParam("pictureID", loadedPicture1.getPictureID())
                 .when()
                 .put(productByIDAddPictureEndpoint, frezarka.getId())
@@ -73,7 +79,7 @@ public class WebShopIT extends AbstractApiTest {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Product.class);
 
-        Assertions.assertThat(pictureAddedToProduct.getPictures()).hasSize(1);
+        Assertions.assertThat(productWithPicture.getPictures()).hasSize(1);
 
         //Add categories
         Category frezarki = Category.builder()
@@ -137,6 +143,12 @@ public class WebShopIT extends AbstractApiTest {
         Category addedWrzeciona = createNewCategory(wrzeciona);
         Category addedFrezy = createNewCategory(frezy);
 
+        Category loadedFrezarki = loadCategoryByID(addedFrezarki.getId(), StoreLanguage.PL);
+        Category loadedLasery = loadCategoryByID(addedLasery.getId(), StoreLanguage.PL);
+        Category loadedAkcesoria = loadCategoryByID(addedAkcesoria.getId(), StoreLanguage.PL);
+        Category loadedWrzeciona = loadCategoryByID(addedWrzeciona.getId(), StoreLanguage.PL);
+        Category loadedFrezy = loadCategoryByID(addedFrezy.getId(), StoreLanguage.PL);
+
         RelationParams relationRoot = RelationParams.builder()
                 .parent(ModelObjectReference.builder()
                         .objectID(CATEGORY_ROOT.getId())
@@ -179,11 +191,38 @@ public class WebShopIT extends AbstractApiTest {
                         .build())
                 .build();
 
-        createNewCategoryRelationship(relationRoot, addedFrezarki);
-        createNewCategoryRelationship(relationRoot, addedLasery);
-        createNewCategoryRelationship(relationRoot, addedAkcesoria);
-        createNewCategoryRelationship(relationAkcesoria, addedWrzeciona);
-        createNewCategoryRelationship(relationAkcesoria, addedFrezy);
+        createNewCategoryRelationship(relationRoot, loadedFrezarki);
+        createNewCategoryRelationship(relationRoot, loadedLasery);
+        createNewCategoryRelationship(relationRoot, loadedAkcesoria);
+        createNewCategoryRelationship(relationAkcesoria, loadedWrzeciona);
+        createNewCategoryRelationship(relationAkcesoria, loadedFrezy);
+
+        //Then
+        CategoryTreeNode expected = CategoryTreeNode.builder()
+                .value(CATEGORY_ROOT)
+                .childrens(ImmutableList.of(
+                        CategoryTreeNode.builder().value(loadedFrezarki).build(),
+                        CategoryTreeNode.builder().value(loadedLasery).build(),
+                        CategoryTreeNode.builder().value(loadedAkcesoria).childrens(ImmutableList.of(
+                                CategoryTreeNode.builder().value(loadedWrzeciona).build(),
+                                CategoryTreeNode.builder().value(loadedFrezy).build()))
+                                .build()))
+                .build();
+
+
+        CategoryTreeNode categoryTree = getCategoryTree();
+        Assertions.assertThat(categoryTree).isEqualToComparingFieldByFieldRecursively(expected);
+
+        //Add product to category
+        Category productAddedToCategory = given()
+                .queryParam("productID", productWithPicture.getId())
+                .when()
+                .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+
+        Assertions.assertThat(productAddedToCategory.getProducts()).hasSize(1);
 
     }
 }

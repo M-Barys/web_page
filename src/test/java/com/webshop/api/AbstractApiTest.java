@@ -5,6 +5,7 @@ import com.webshop.model.StoreLanguage;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
+import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 
@@ -82,6 +83,18 @@ public abstract class AbstractApiTest {
                 .extract().body().as(Category.class);
     }
 
+    protected Category loadCategoryByID(Long id, StoreLanguage language) {
+        return given()
+                .contentType(ContentType.JSON)
+                .header(StoreLanguage.languageHeader, language.name())
+                .accept(ContentType.JSON)
+                .when()
+                .get(categoryByIDEndpoint, id)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+    }
+
     protected void createNewCategoryRelationship(RelationParams relation, Category children){
         given()
                 .body(relation)
@@ -91,5 +104,14 @@ public abstract class AbstractApiTest {
                 .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, children.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
+    }
+
+    protected CategoryTreeNode getCategoryTree(){
+    return given()
+            .when()
+            .get(ApiEndpointSpecification.categoriesTreeEndpoint)
+            .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract().body().as(CategoryTreeNode.class);
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,5 +26,8 @@ public class CategoryEntity {
     //Internal Map<StoreLanguage, CategoryInfo> blob store
     @Lob
     private String categoryInfoBlob;
+
+    @OneToMany
+    private List<ProductEntity> productEntities;
 
 }

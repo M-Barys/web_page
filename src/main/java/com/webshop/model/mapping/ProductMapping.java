@@ -1,8 +1,11 @@
 package com.webshop.model.mapping;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.reflect.TypeToken;
 import com.webshop.model.StoreLanguage;
+import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.entity.ProductEntity;
+import com.webshop.model.instance.PictureUrlInfo;
 import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.ProductInfo;
@@ -14,7 +17,9 @@ import org.springframework.web.context.annotation.RequestScope;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @RequestScope
@@ -71,6 +76,24 @@ public class ProductMapping {
         Type typeOfHashMap = new TypeToken<Map<StoreLanguage, ProductInfo>>() {
         }.getType();
         return configuration.getGson().fromJson(productEntity.getProductInfoBlob(), typeOfHashMap);
+    }
+
+    public List<Product> mapToProductList(List<ProductEntity> productEntities) {
+        if (productEntities == null) {
+            return ImmutableList.of();
+        }
+        return productEntities.stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductEntity> mapToProductEntityList(List<Product> products) {
+        if (products == null) {
+            return ImmutableList.of();
+        }
+        return products.stream()
+                .map(this::createEntity)
+                .collect(Collectors.toList());
     }
 
 }

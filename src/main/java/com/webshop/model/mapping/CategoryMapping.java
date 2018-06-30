@@ -3,6 +3,7 @@ package com.webshop.model.mapping;
 import com.google.common.reflect.TypeToken;
 import com.webshop.model.StoreLanguage;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;
@@ -24,10 +25,13 @@ public class CategoryMapping {
 
     private final ConfigurationService configuration;
 
+    private final ProductMapping productMapping;
+
     @Autowired
-    public CategoryMapping(ConfigurationService configuration, HttpServletRequest request) {
+    public CategoryMapping(ConfigurationService configuration, HttpServletRequest request, ProductMapping productMapping) {
         this.configuration = configuration;
         this.language = StoreLanguage.fromHeader(request.getHeader("X-API-Lang"));
+        this.productMapping = productMapping;
     }
 
     public CategoryEntity createEntity(Category category) {
@@ -45,6 +49,7 @@ public class CategoryMapping {
                 .id(categoryEntity.getId())
                 .data(configuration.getGson().fromJson(categoryEntity.getCategoryData(), CategoryData.class))
                 .info(info.get(language))
+                .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
                 .build();
     }
 
@@ -56,6 +61,7 @@ public class CategoryMapping {
                 .id(category.getId())
                 .categoryData(jsonCategory)
                 .categoryInfoBlob(infoJson)
+                .productEntities(productMapping.mapToProductEntityList(category.getProducts()))
                 .build();
     }
 

@@ -2,10 +2,13 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Streams;
+import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
+import com.webshop.model.instance.Product;
 import com.webshop.model.mapping.CategoryMapping;
 import com.webshop.repositories.CategoryRepository;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public List<Category> getAllCategories() {
         return Streams.stream(categoryRepository.findAll())
@@ -52,6 +58,22 @@ public class CategoryService {
         CategoryEntity updated = mapping.updateEntity(oldValue, category);
         CategoryEntity stored = categoryRepository.save(updated);
         return mapping.fromEntity(stored);
+    }
+
+    public Category addProductToCategory(Long id, Long productID) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).get();
+        List<ProductEntity> newProductList = categoryEntity.getProductEntities();
+        newProductList.add(productRepository.findById(productID).get());
+        categoryEntity.setProductEntities(newProductList);
+        return mapping.fromEntity(categoryRepository.save(categoryEntity));
+    }
+
+    public Category deleteProduct(Long id, Long pictureID) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).get();
+        List<ProductEntity> newProductList = categoryEntity.getProductEntities();
+        newProductList.remove(productRepository.findById(pictureID).get());
+        categoryEntity.setProductEntities(newProductList);
+        return mapping.fromEntity(categoryRepository.save(categoryEntity));
     }
 
 }

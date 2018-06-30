@@ -5,6 +5,8 @@ public class ApiEndpointSpecification {
     public static String categoriesTreeEndpoint = "/categories/tree";
     public static String categoryByIDEndpoint = "/categories/{id}";
     public static String categoryByIDRelationEndpoint = "/categories/{mainCategoryId}/relationships/categories";
+    public static String categoryByIDAddProductEndpoint = "/categories/{id}/addProduct";
+    public static String categoryByIDAddDeleteEndpoint = "/categories/{id}/deleteProduct";
 
     public static String productEndpoint = "/products";
     public static String productByIDEndpoint = "/products/{id}";

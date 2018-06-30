@@ -39,6 +39,18 @@ public class CategoryController {
         return categoryService.updateCategory(data);
     }
 
+    @RequestMapping(value = "/{id}/addProduct", method = RequestMethod.PUT)
+    Category addProductToCategory(@NotNull @PathVariable Long id, @RequestParam("productID") Long productID) {
+        return categoryService.addProductToCategory(id, productID);
+    }
+
+    @RequestMapping(value = "/{id}/deleteProduct", method = RequestMethod.PUT)
+    Category deleteProductToCategory(@NotNull @PathVariable Long id, @RequestParam("productID") Long productID) {
+        return categoryService.deleteProduct(id, productID);
+    }
+
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Category getCategory(@PathVariable Long id) {
         return categoryService.getCategory(id);
