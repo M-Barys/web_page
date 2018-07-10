@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/categories")
-public class CategoryController {
+public class CategoryController extends WebShopAbstractController{
 
     @Autowired
     private CategoryService categoryService;
@@ -44,6 +44,7 @@ public class CategoryController {
         return categoryService.addProductToCategory(id, productID);
     }
 
+    //TODO test or delete
     @RequestMapping(value = "/{id}/deleteProduct", method = RequestMethod.PUT)
     Category deleteProductToCategory(@NotNull @PathVariable Long id, @RequestParam("productID") Long productID) {
         return categoryService.deleteProduct(id, productID);

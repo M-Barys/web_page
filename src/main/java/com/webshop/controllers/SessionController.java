@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/session")
-public class SessionController {
+public class SessionController extends WebShopAbstractController{
 
     private final UUID adminRandomSessionToken = UUID.randomUUID();
 
@@ -26,6 +26,7 @@ public class SessionController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/token")
     public boolean displayAdminToken() {
+        //TODO implement administration
         System.err.print("admin token:" + adminRandomSessionToken.toString());
         return true;
     }

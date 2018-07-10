@@ -4,19 +4,16 @@ import com.google.common.base.Preconditions;
 import com.webshop.model.instance.Product;
 import com.webshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @RestController
 @RequestMapping("/products")
-public class ProductController {
+public class ProductController extends WebShopAbstractController{
 
     @Autowired
     private ProductService productService;
@@ -60,9 +57,4 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class,
-            NoSuchElementException.class})
-    public void handleNotFound() {
-    }
 }

@@ -24,10 +24,10 @@ public class CategoryRelationshipService {
 
     public void createRelation(Long mainCategoryId, RelationParams relation) {
         Preconditions.checkArgument(relation.getParent().getType().compareTo(ModelObjectType.CATEGORY) == 0);
-        Preconditions.checkArgument(!mainCategoryId.equals(0L),"Root category cannot be a child");
+        Preconditions.checkArgument(!mainCategoryId.equals(0L), "Root category cannot be a child");
 
         Iterable<CategoryRelationship> relationsList = categoryRelationshipRepository.findAll();
-        for (CategoryRelationship o : relationsList){
+        for (CategoryRelationship o : relationsList) {
             Preconditions.checkArgument(!mainCategoryId.equals(o.getCategoryId()), "This category already is a parent.");
         }
 
@@ -52,7 +52,7 @@ public class CategoryRelationshipService {
 
         List<CategoryTreeNode> children = new ArrayList<>();
         for (CategoryRelationship o : relations) {
-            if (o.getParentId() == localRoot.getId()) {
+            if (o.getParentId().equals(localRoot.getId())) {
                 CategoryTreeNode child = CategoryTreeNode.builder()
                         .value(categoryService.getCategory(o.getCategoryId()))
                         .build();
