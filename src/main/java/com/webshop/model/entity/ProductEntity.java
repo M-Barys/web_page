@@ -27,7 +27,7 @@ public class ProductEntity {
     @Lob
     private String productInfoBlob;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<PictureEntity> pictureEntities;
 
 }

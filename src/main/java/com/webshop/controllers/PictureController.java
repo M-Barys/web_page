@@ -1,6 +1,5 @@
 package com.webshop.controllers;
 
-import com.google.common.base.Preconditions;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;

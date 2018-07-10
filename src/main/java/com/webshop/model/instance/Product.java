@@ -1,6 +1,5 @@
 package com.webshop.model.instance;
 
-import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.ProductInfo;
 import lombok.AllArgsConstructor;

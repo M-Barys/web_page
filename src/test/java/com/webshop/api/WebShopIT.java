@@ -14,26 +14,23 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
-import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
-import io.restassured.internal.assertion.Assertion;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
@@ -47,6 +44,7 @@ import static io.restassured.RestAssured.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext
 public class WebShopIT extends AbstractApiTest {
     @Value("${local.server.port}")
     private int serverPort;

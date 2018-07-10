@@ -27,7 +27,7 @@ public class CategoryEntity {
     @Lob
     private String categoryInfoBlob;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<ProductEntity> productEntities;
 
 }

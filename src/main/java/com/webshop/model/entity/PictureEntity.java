@@ -1,7 +1,10 @@
 package com.webshop.model.entity;
 
 import com.webshop.model.PictureFileType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Blob;

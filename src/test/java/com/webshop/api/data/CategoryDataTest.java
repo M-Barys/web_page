@@ -2,6 +2,7 @@ package com.webshop.api.data;
 
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.text.TextProducer;
+import com.google.common.collect.ImmutableList;
 import com.webshop.model.Status;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
@@ -22,6 +23,7 @@ public class CategoryDataTest {
     private Category.CategoryBuilder generate() {
         TextProducer text = fairy.textProducer();
         return Category.builder()
+                .products(ImmutableList.of())
                 .info(CategoryInfo.builder()
                         .description(text.paragraph())
                         .name(text.latinWord())

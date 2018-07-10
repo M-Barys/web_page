@@ -1,9 +1,10 @@
 package com.webshop.model.instance;
 
 import com.webshop.model.PictureFileType;
-import lombok.*;
-
-import javax.activation.MimeType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder

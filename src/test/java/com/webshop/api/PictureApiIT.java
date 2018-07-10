@@ -13,19 +13,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 
-import static com.webshop.api.ApiEndpointSpecification.*;
-import static io.restassured.RestAssured.*;
+import static com.webshop.api.ApiEndpointSpecification.pictureByIDEndpoint;
+import static io.restassured.RestAssured.config;
+import static io.restassured.RestAssured.when;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext
 public class PictureApiIT extends AbstractApiTest {
 
     @Value("${local.server.port}")

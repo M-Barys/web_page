@@ -2,12 +2,11 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Streams;
+import com.webshop.model.entity.CategoryEntity;
 import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
-import com.webshop.model.instance.Product;
 import com.webshop.model.mapping.CategoryMapping;
 import com.webshop.repositories.CategoryRepository;
-import com.webshop.model.entity.CategoryEntity;
 import com.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

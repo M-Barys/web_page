@@ -4,9 +4,9 @@ package com.webshop.api;
 import com.google.common.collect.ImmutableList;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryDataTest;
-import com.webshop.controllers.params.RelationParams;
 import com.webshop.controllers.params.ModelObjectReference;
 import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.instance.Category;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static com.webshop.model.instance.Category.CATEGORY_ROOT;
@@ -27,6 +28,7 @@ import static io.restassured.RestAssured.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext
 public class CategoryRelationshipApiIT {
 
     @Value("${local.server.port}")

@@ -1,8 +1,6 @@
 package com.webshop.services;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Streams;
 import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.entity.ProductEntity;

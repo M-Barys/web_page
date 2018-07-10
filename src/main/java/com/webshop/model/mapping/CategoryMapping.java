@@ -3,7 +3,6 @@ package com.webshop.model.mapping;
 import com.google.common.reflect.TypeToken;
 import com.webshop.model.StoreLanguage;
 import com.webshop.model.entity.CategoryEntity;
-import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;

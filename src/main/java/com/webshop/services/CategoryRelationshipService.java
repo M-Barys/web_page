@@ -1,10 +1,9 @@
 package com.webshop.services;
 
 import com.google.common.base.Preconditions;
-import com.webshop.controllers.params.RelationParams;
-import com.webshop.model.entity.CategoryEntity;
-import com.webshop.model.entity.CategoryRelationship;
 import com.webshop.controllers.params.ModelObjectType;
+import com.webshop.controllers.params.RelationParams;
+import com.webshop.model.entity.CategoryRelationship;
 import com.webshop.model.instance.Category;
 import com.webshop.model.view.CategoryTreeNode;
 import com.webshop.repositories.CategoryRelationshipRepository;
