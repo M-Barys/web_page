@@ -14,6 +14,7 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
+import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
@@ -30,7 +31,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddProductEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.productByIDAddPictureEndpoint;
@@ -62,6 +69,16 @@ public class WebShopIT extends AbstractApiTest {
 
         //Add product
         Product newFrezarka = productDataTest.createRandomProduct();
+
+        //Add price to product
+        Locale enUSLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
+        Currency currencyInstance = Currency.getInstance(enUSLocale);
+        Map<Currency,BigDecimal> pricelist = new HashMap<>();
+        pricelist.put(currencyInstance, BigDecimal.valueOf(8000));
+
+        newFrezarka.getData().setPrices(pricelist);
+
+        // Add product to database
         Product frezarka = createNewProduct(newFrezarka);
 
         //Add picture to product
@@ -81,7 +98,7 @@ public class WebShopIT extends AbstractApiTest {
 
         Assertions.assertThat(productWithPicture.getPictures()).hasSize(1);
 
-        //Add categories
+        //Create and add categories
         Category frezarki = Category.builder()
                 .info(CategoryInfo.builder()
                         .name("Mini Frezarki CNC")

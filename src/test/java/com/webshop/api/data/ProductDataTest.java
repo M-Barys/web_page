@@ -10,7 +10,8 @@ import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.ProductInfo;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class ProductDataTest {
 
@@ -26,6 +27,7 @@ public class ProductDataTest {
 
     private Product.ProductBuilder generate() {
         TextProducer text = fairy.textProducer();
+
         return Product.builder()
                 .info(ProductInfo.builder()
                         .description(text.paragraph())

@@ -49,8 +49,6 @@ public class CategoryController {
         return categoryService.deleteProduct(id, productID);
     }
 
-
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Category getCategory(@PathVariable Long id) {
         return categoryService.getCategory(id);
