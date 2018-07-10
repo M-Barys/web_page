@@ -106,6 +106,17 @@ public abstract class AbstractApiTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
+    protected void loopingCategories(RelationParams relation, Category children){
+        given()
+                .body(relation)
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post(ApiEndpointSpecification.categoryByIDRelationEndpoint, children.getId())
+                .then()
+                .statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+    }
+
     protected CategoryTreeNode getCategoryTree(){
     return given()
             .when()

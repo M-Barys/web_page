@@ -199,18 +199,17 @@ public class WebShopIT extends AbstractApiTest {
                         .build())
                 .build();
 
-        RelationParams relationFrezy = RelationParams.builder()
-                .parent(ModelObjectReference.builder()
-                        .objectID(addedFrezy.getId())
-                        .type(ModelObjectType.CATEGORY)
-                        .build())
-                .build();
 
         createNewCategoryRelationship(relationRoot, loadedFrezarki);
         createNewCategoryRelationship(relationRoot, loadedLasery);
         createNewCategoryRelationship(relationRoot, loadedAkcesoria);
         createNewCategoryRelationship(relationAkcesoria, loadedWrzeciona);
         createNewCategoryRelationship(relationAkcesoria, loadedFrezy);
+
+        //Check whether category looping is not possible
+        loopingCategories(relationWrzeciona, CATEGORY_ROOT );
+        loopingCategories(relationWrzeciona, loadedAkcesoria );
+
 
         //Then
         CategoryTreeNode expected = CategoryTreeNode.builder()
@@ -240,4 +239,6 @@ public class WebShopIT extends AbstractApiTest {
         Assertions.assertThat(productAddedToCategory.getProducts()).hasSize(1);
 
     }
+
+
 }
