@@ -29,7 +29,7 @@ import static io.restassured.RestAssured.given;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext
-public class CategoryRelationshipApiIT {
+public class CategoryRelationshipApiIT extends AbstractApiTest {
 
     @Value("${local.server.port}")
     private int serverPort;
@@ -102,9 +102,17 @@ public class CategoryRelationshipApiIT {
 
         Assertions.assertThat(result).isEqualToComparingFieldByFieldRecursively(expected);
 
-    }
+        //Check whether category looping is not possible
+        RelationParams relation3 = RelationParams.builder()
+                .parent(ModelObjectReference.builder()
+                        .objectID(c1.getId())
+                        .type(ModelObjectType.CATEGORY)
+                        .build())
+                .build();
 
-    //TODO make test case to check that cycles are not allowed.
+        loopingCategories(relation2, CATEGORY_ROOT );
+        loopingCategories(relation3, c2);
+    }
 
     private Category createCategory(Category categoryData) {
         return given()

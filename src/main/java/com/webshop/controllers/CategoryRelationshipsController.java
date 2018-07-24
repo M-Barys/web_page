@@ -4,17 +4,12 @@ import com.webshop.controllers.params.RelationParams;
 import com.webshop.model.view.CategoryTreeNode;
 import com.webshop.services.CategoryRelationshipService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.NoSuchElementException;
 
 
 @RestController
 @RequestMapping("/categories")
-public class CategoryRelationshipsController {
+public class CategoryRelationshipsController extends AbstractControllerExceptionHandler {
 
     @Autowired
     private CategoryRelationshipService categoryRelationshipService;
@@ -27,12 +22,6 @@ public class CategoryRelationshipsController {
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     public CategoryTreeNode getTree(){
         return categoryRelationshipService.getTree();
-    }
-
-    //TODO migrate to abstract controller
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class, NoSuchElementException.class})
-    public void handleNotFound() {
     }
 
 }

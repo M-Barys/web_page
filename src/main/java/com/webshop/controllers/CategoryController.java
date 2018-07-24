@@ -4,24 +4,20 @@ import com.google.common.base.Preconditions;
 import com.webshop.model.instance.Category;
 import com.webshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 @RestController
 @RequestMapping("/categories")
-public class CategoryController {
+public class CategoryController extends AbstractControllerExceptionHandler {
 
     @Autowired
     private CategoryService categoryService;
 
-    //TODO test or delete
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
@@ -58,12 +54,6 @@ public class CategoryController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class,
-            NoSuchElementException.class})
-    public void handleNotFound() {
     }
 
 }

@@ -206,11 +206,6 @@ public class WebShopIT extends AbstractApiTest {
         createNewCategoryRelationship(relationAkcesoria, loadedWrzeciona);
         createNewCategoryRelationship(relationAkcesoria, loadedFrezy);
 
-        //Check whether category looping is not possible
-        loopingCategories(relationWrzeciona, CATEGORY_ROOT );
-        loopingCategories(relationWrzeciona, loadedAkcesoria );
-
-
         //Then
         CategoryTreeNode expected = CategoryTreeNode.builder()
                 .value(CATEGORY_ROOT)

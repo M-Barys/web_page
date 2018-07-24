@@ -17,13 +17,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static com.webshop.api.ApiEndpointSpecification.categoriesEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.categoryByIDEndpoint;
 import static io.restassured.RestAssured.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CategoryApiIT {
 
     @Value("${local.server.port}")
@@ -96,7 +100,32 @@ public class CategoryApiIT {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    private Category createNewCategory(Category newCategory) {
+    @Test
+    public void getAllCategories() {
+
+        //given
+        Category newCategory1 = categoryDataTest.createRandomCategory();
+        Category newCategory2 = categoryDataTest.createRandomCategory();
+        //Create
+        Category created1 = createNewCategory(newCategory1);
+        Category created2 = createNewCategory(newCategory2);
+
+       //GetAllCategories
+        List<Category> expectedCategoryList = new ArrayList<>();
+        expectedCategoryList.add(created1);
+        expectedCategoryList.add(created2);
+
+        List<Category> categoriesList = Arrays.asList(when()
+                .get(categoriesEndpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category[].class));
+
+        Assertions.assertThat(categoriesList).isEqualTo(expectedCategoryList);
+
+    }
+
+        private Category createNewCategory(Category newCategory) {
         return given()
                 .body(newCategory)
                 .contentType(ContentType.JSON)

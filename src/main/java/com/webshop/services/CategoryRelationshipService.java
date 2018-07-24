@@ -52,7 +52,7 @@ public class CategoryRelationshipService {
 
         List<CategoryTreeNode> children = new ArrayList<>();
         for (CategoryRelationship o : relations) {
-            if (o.getParentId() == localRoot.getId()) {
+            if (o.getParentId().equals(localRoot.getId())) {
                 CategoryTreeNode child = CategoryTreeNode.builder()
                         .value(categoryService.getCategory(o.getCategoryId()))
                         .build();

@@ -4,25 +4,21 @@ import com.webshop.model.instance.PictureRef;
 import com.webshop.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/pictures")
-public class PictureController {
+public class PictureController extends AbstractControllerExceptionHandler {
 
     @Autowired
     private PictureService pictureService;
 
-    //TODO test or delete
     @RequestMapping(method = RequestMethod.GET)
     public List<PictureRef> getAllPicture() {
         return pictureService.getAllPicture();
@@ -56,10 +52,4 @@ public class PictureController {
         pictureService.deletePicture(id);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, EntityNotFoundException.class,
-            NoSuchElementException.class})
-    public void handleNotFound() {
-    }
-
-}
+ }

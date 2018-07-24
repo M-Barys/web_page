@@ -22,6 +22,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.webshop.api.ApiEndpointSpecification.*;
 import static io.restassured.RestAssured.*;
@@ -29,7 +32,7 @@ import static io.restassured.RestAssured.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ProductApiIT extends AbstractApiTest {
 
     @Value("${local.server.port}")
@@ -147,6 +150,31 @@ public class ProductApiIT extends AbstractApiTest {
                 .get(productByIDEndpoint, createdId)
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
+    }
+
+    @Test
+    public void getAllCategories() {
+
+        //given
+        Product newProduct1 = productDataTest.createRandomProduct();
+        Product newProduct2 = productDataTest.createRandomProduct();
+        //Create
+        Product created1 = createNewProduct(newProduct1);
+        Product created2 = createNewProduct(newProduct2);
+
+        //GetAllPictures
+        List<Product> expectedProductList = new ArrayList<>();
+        expectedProductList.add(created1);
+        expectedProductList.add(created2);
+
+        List<Product> productsList = Arrays.asList(when()
+                .get(productEndpoint)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product[].class));
+
+        Assertions.assertThat(productsList).isEqualTo(expectedProductList);
+
     }
 
 
