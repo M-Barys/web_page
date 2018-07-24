@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pictures")
+
 public class PictureController extends AbstractControllerExceptionHandler {
 
     @Autowired
@@ -52,4 +53,5 @@ public class PictureController extends AbstractControllerExceptionHandler {
         pictureService.deletePicture(id);
     }
 
- }
+}
+

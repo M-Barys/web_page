@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
+        //TODO change withDefaultPasswordEncoder
         UserDetails user =
                 User.withDefaultPasswordEncoder()
                         .username("admin")

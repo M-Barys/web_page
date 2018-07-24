@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+
 public class CategoryController extends AbstractControllerExceptionHandler {
 
     @Autowired
@@ -40,6 +41,7 @@ public class CategoryController extends AbstractControllerExceptionHandler {
         return categoryService.addProductToCategory(id, productID);
     }
 
+    //TODO test or delete
     @RequestMapping(value = "/{id}/deleteProduct", method = RequestMethod.PUT)
     Category deleteProductToCategory(@NotNull @PathVariable Long id, @RequestParam("productID") Long productID) {
         return categoryService.deleteProduct(id, productID);
