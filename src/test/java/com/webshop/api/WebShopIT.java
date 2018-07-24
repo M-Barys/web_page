@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddDeleteEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddProductEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.productByIDAddPictureEndpoint;
 import static com.webshop.model.instance.Category.CATEGORY_ROOT;
@@ -233,6 +234,34 @@ public class WebShopIT extends AbstractApiTest {
 
         Assertions.assertThat(productAddedToCategory.getProducts()).hasSize(1);
 
+        //Add second product
+        Product newFrezarka2 = productDataTest.createRandomProduct();
+
+        // Add second product to database
+        Product frezarka2 = createNewProduct(newFrezarka2);
+
+        //Add product to category
+        Category product2AddedToCategory = given()
+                .queryParam("productID", frezarka2.getId())
+                .when()
+                .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+
+        Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(2);
+
+        //TODO create method deleting pictures from category
+        //Delete product to category
+        Category deleteProductToCategory = given()
+                .queryParam("productID", frezarka2.getId())
+                .when()
+                .delete(categoryByIDAddDeleteEndpoint, loadedFrezarki.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+
+        Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(1);
     }
 
 
