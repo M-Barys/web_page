@@ -79,6 +79,7 @@ public class WebShopIT extends AbstractApiTest {
 
         // Add product to database
         Product frezarka = createNewProduct(newFrezarka);
+        Assertions.assertThat(frezarka).isEqualToIgnoringGivenFields(newFrezarka,"id");
 
         //Add picture to product
         //Add picture to database

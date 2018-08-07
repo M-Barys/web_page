@@ -18,7 +18,6 @@ public class ProductData {
 
     private String slug;
     private Status status;
-    //TODO add data on tests
     private Map<Currency,BigDecimal> prices;
 
 }

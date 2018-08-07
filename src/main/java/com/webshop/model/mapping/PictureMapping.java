@@ -27,7 +27,6 @@ public class PictureMapping {
                 .build();
     }
 
-    //TODO test or delete
     public List<PictureRef> mapToRef(List<PictureEntity> pictureEntities) {
         return pictureEntities.stream()
                 .map(this::loadFromEntity)

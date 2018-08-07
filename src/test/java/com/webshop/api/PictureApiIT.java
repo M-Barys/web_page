@@ -119,7 +119,6 @@ public class PictureApiIT extends AbstractApiTest {
                     .extract().body().as(PictureRef[].class));
 
             Assertions.assertThat(pictureList).isEqualTo(expectedPictureList);
-
         }
 
 }
