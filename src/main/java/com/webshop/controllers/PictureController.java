@@ -37,8 +37,7 @@ public class PictureController extends AbstractControllerExceptionHandler {
     }
 
 
-    //TODO test file retrieval
-    @GetMapping(
+   @GetMapping(
             value = "/{id}/image.jpg",
             produces = MediaType.IMAGE_JPEG_VALUE
     )

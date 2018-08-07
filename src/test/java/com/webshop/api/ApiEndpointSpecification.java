@@ -15,4 +15,5 @@ public class ApiEndpointSpecification {
 
     public static String pictureEndpoint = "/pictures";
     public static String pictureByIDEndpoint = "/pictures/{id}";
+    public static String pictureFileRetrievalJPG = "/pictures/{id}/image.jpg";
 }

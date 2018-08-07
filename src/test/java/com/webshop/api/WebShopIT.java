@@ -88,6 +88,7 @@ public class WebShopIT extends AbstractApiTest {
         PictureRef loadedPicture1 = loadPictureByID(picture1.getPictureID());
 
         Product productWithPicture = given()
+                .log().all()
                 .queryParam("pictureID", loadedPicture1.getPictureID())
                 .when()
                 .put(productByIDAddPictureEndpoint, frezarka.getId())
@@ -225,6 +226,7 @@ public class WebShopIT extends AbstractApiTest {
 
         //Add product to category
         Category productAddedToCategory = given()
+                .log().all()
                 .queryParam("productID", productWithPicture.getId())
                 .when()
                 .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
@@ -242,6 +244,7 @@ public class WebShopIT extends AbstractApiTest {
 
         //Add product to category
         Category product2AddedToCategory = given()
+                .log().all()
                 .queryParam("productID", frezarka2.getId())
                 .when()
                 .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
@@ -251,17 +254,17 @@ public class WebShopIT extends AbstractApiTest {
 
         Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(2);
 
-        //TODO create method deleting pictures from category
         //Delete product to category
         Category deleteProductToCategory = given()
+                .log().all()
                 .queryParam("productID", frezarka2.getId())
                 .when()
-                .delete(categoryByIDAddDeleteEndpoint, loadedFrezarki.getId())
+                .put(categoryByIDAddDeleteEndpoint, loadedFrezarki.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);
 
-        Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(1);
+        Assertions.assertThat(deleteProductToCategory.getProducts()).hasSize(1);
     }
 
 

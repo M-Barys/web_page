@@ -13,17 +13,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.webshop.api.ApiEndpointSpecification.pictureByIDEndpoint;
 import static com.webshop.api.ApiEndpointSpecification.pictureEndpoint;
+import static com.webshop.api.ApiEndpointSpecification.pictureFileRetrievalJPG;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.when;
 
@@ -48,7 +54,7 @@ public class PictureApiIT extends AbstractApiTest {
     }
 
     @Test
-    public void crudTests() throws IOException {
+    public void crudTests() throws IOException, URISyntaxException {
         //given
         URL resource1 = Resources.getResource("baseball.jpg");
         URL resource2 = Resources.getResource("cnc_milling_machine.jpg");
@@ -75,36 +81,45 @@ public class PictureApiIT extends AbstractApiTest {
         Assertions.assertThat(pictureLoadedById.getPictureName()).isEqualTo(picture1.getPictureName());
         Assertions.assertThat(pictureLoadedById.getPictureType()).isEqualTo(picture1.getPictureType());
 
-    }
 
-    @Test
-    public void getAllPictures() throws IOException {
-
-        //given
-        URL resource1 = Resources.getResource("baseball.jpg");
-        URL resource2 = Resources.getResource("cnc_milling_machine.jpg");
-
-        //Add first pictures
-        PictureRef picture1 = createNewPicture(resource1);
-        Assertions.assertThat(picture1.getPictureID()).isNotNull();
-
-        //Add second picture
-        PictureRef picture2 = createNewPicture(resource2);
-        Assertions.assertThat(picture2.getPictureID()).isNotNull();
-
-        //GetAllPictures
-        List<PictureRef> expectedPictureList = new ArrayList<>();
-        expectedPictureList.add(picture1);
-        expectedPictureList.add(picture2);
-
-        List<PictureRef> pictureList = Arrays.asList(when()
-                .get(pictureEndpoint)
+        //Picture file retrieval
+        byte[] file1Content = Files.readAllBytes(Paths.get(resource1.toURI()));
+        byte[] byteArray = when()
+                .get(pictureFileRetrievalJPG,picture1.getPictureID())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PictureRef[].class));
-
-        Assertions.assertThat(pictureList).isEqualTo(expectedPictureList);
-
+                .extract().asByteArray();
+        Assertions.assertThat(file1Content).containsExactly(byteArray);
     }
+
+        @Test
+        public void getAllPictures() throws IOException {
+
+            //given
+            URL resource1 = Resources.getResource("baseball.jpg");
+            URL resource2 = Resources.getResource("cnc_milling_machine.jpg");
+
+            //Add first pictures
+            PictureRef picture1 = createNewPicture(resource1);
+            Assertions.assertThat(picture1.getPictureID()).isNotNull();
+
+            //Add second picture
+            PictureRef picture2 = createNewPicture(resource2);
+            Assertions.assertThat(picture2.getPictureID()).isNotNull();
+
+            //GetAllPictures
+            List<PictureRef> expectedPictureList = new ArrayList<>();
+            expectedPictureList.add(picture1);
+            expectedPictureList.add(picture2);
+
+            List<PictureRef> pictureList = Arrays.asList(when()
+                    .get(pictureEndpoint)
+                    .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .extract().body().as(PictureRef[].class));
+
+            Assertions.assertThat(pictureList).isEqualTo(expectedPictureList);
+
+        }
 
 }

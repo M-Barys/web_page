@@ -26,6 +26,7 @@ public abstract class AbstractApiTest {
         String mimetype = Files.probeContentType(file.toPath());
 
         return given()
+                .log().all()
                 .multiPart("file", file, mimetype)
                 .when()
                 .post(pictureEndpoint)
@@ -45,6 +46,7 @@ public abstract class AbstractApiTest {
 
     protected Product createNewProduct(Product newProduct) {
         return given()
+                .log().all()
                 .body(newProduct)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -61,6 +63,7 @@ public abstract class AbstractApiTest {
 
     protected Product loadProductByID(Long id, StoreLanguage language) {
         return given()
+                .log().all()
                 .contentType(ContentType.JSON)
                 .header(StoreLanguage.languageHeader, language.name())
                 .accept(ContentType.JSON)
@@ -73,6 +76,7 @@ public abstract class AbstractApiTest {
 
     protected Category createNewCategory(Category newCategory) {
         return given()
+                .log().all()
                 .body(newCategory)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -85,6 +89,7 @@ public abstract class AbstractApiTest {
 
     protected Category loadCategoryByID(Long id, StoreLanguage language) {
         return given()
+                .log().all()
                 .contentType(ContentType.JSON)
                 .header(StoreLanguage.languageHeader, language.name())
                 .accept(ContentType.JSON)
@@ -97,6 +102,7 @@ public abstract class AbstractApiTest {
 
     protected void createNewCategoryRelationship(RelationParams relation, Category children){
         given()
+                .log().all()
                 .body(relation)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -108,6 +114,7 @@ public abstract class AbstractApiTest {
 
     protected void loopingCategories(RelationParams relation, Category children){
         given()
+                .log().all()
                 .body(relation)
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
@@ -119,6 +126,7 @@ public abstract class AbstractApiTest {
 
     protected CategoryTreeNode getCategoryTree(){
     return given()
+            .log().all()
             .when()
             .get(ApiEndpointSpecification.categoriesTreeEndpoint)
             .then()
