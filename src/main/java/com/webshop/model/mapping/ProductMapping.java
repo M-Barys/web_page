@@ -64,9 +64,6 @@ public class ProductMapping {
                 .id(product.getId())
                 .productData(jsonCategory)
                 .productInfoBlob(infoJson)
-//                .pictureEntities(
-//                        pictureMapping.mapToEntity(product.getPictures())
-//                ) //TODO
                 .build();
     }
 
