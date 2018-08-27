@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public WebSecurityConfig() {
         adminRandomSessionToken = UUID.randomUUID();
         System.err.print(adminRandomSessionToken.toString());
-        //TODO create proper logging
+        //TODO create proper logging. minor priority.
     }
 
     @Override
@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        //TODO change withDefaultPasswordEncoder
+        //TODO change withDefaultPasswordEncoder minor priority.
         UserDetails user =
                 User.withDefaultPasswordEncoder()
                         .username("admin")

@@ -38,14 +38,13 @@ public class PictureService {
         );
     }
 
-    //TODO migrate to streams
     public byte[] getPictureContent(Long id) {
         PictureEntity pictureEntity = pictureRepository.findById(id).get();
         Blob imageData = pictureEntity.getImageData();
         try {
             return imageData.getBytes(1, (int) imageData.length());
         } catch (SQLException e) {
-            //TODO handle
+            //TODO make a real exception and error handler to 500
             e.printStackTrace();
             throw new IllegalStateException("TODO");
         }
@@ -63,7 +62,7 @@ public class PictureService {
             );
         } catch (SQLException e) {
             e.printStackTrace();
-            //TODO
+            //TODO make a real exception and error handler to 500
             throw new IllegalStateException("TODO");
         }
     }

@@ -26,7 +26,7 @@ public class SessionController extends WebShopAbstractController{
 
     @RequestMapping(method = RequestMethod.GET, value = "/token")
     public boolean displayAdminToken() {
-        //TODO implement administration
+        //TODO implement administration. minor priority.
         System.err.print("admin token:" + adminRandomSessionToken.toString());
         return true;
     }

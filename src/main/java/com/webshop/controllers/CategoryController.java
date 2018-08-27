@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
+//TODO Add cache. minor priority.
+
 @RestController
 @RequestMapping("/categories")
 
