@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,15 +39,12 @@ public class PictureService {
         );
     }
 
-    public byte[] getPictureContent(Long id) {
+    public InputStream getPictureContent(Long id) {
         PictureEntity pictureEntity = pictureRepository.findById(id).get();
-        Blob imageData = pictureEntity.getImageData();
         try {
-            return imageData.getBytes(1, (int) imageData.length());
+            return pictureEntity.getImageData().getBinaryStream();
         } catch (SQLException e) {
-            //TODO make a real exception and error handler to 500
-            e.printStackTrace();
-            throw new IllegalStateException("TODO");
+            throw new RuntimeException("error on sql stream",e);
         }
     }
 

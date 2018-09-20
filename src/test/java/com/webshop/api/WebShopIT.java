@@ -36,9 +36,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddDeleteEndpoint;
-import static com.webshop.api.ApiEndpointSpecification.categoryByIDAddProductEndpoint;
-import static com.webshop.api.ApiEndpointSpecification.productByIDAddPictureEndpoint;
+import static com.webshop.api.ApiEndpointSpecification.*;
 import static com.webshop.model.instance.Category.CATEGORY_ROOT;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
@@ -255,6 +253,8 @@ public class WebShopIT extends AbstractApiTest {
 
         Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(2);
 
+        logJsonRequestForCategoryData(loadedFrezarki.getId());
+
         //Delete product to category
         Category deleteProductToCategory = given()
                 .log().all()
@@ -266,6 +266,17 @@ public class WebShopIT extends AbstractApiTest {
                 .extract().body().as(Category.class);
 
         Assertions.assertThat(deleteProductToCategory.getProducts()).hasSize(1);
+    }
+
+    private void logJsonRequestForCategoryData(Long categoryId) {
+        String json = given()
+                .log().all()
+                .when()
+                .get(categoryByIDEndpoint, categoryId)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().response().asString();
+        System.err.println(json);
     }
 
 

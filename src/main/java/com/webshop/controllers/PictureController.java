@@ -3,7 +3,8 @@ package com.webshop.controllers;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -42,12 +43,8 @@ public class PictureController extends AbstractControllerExceptionHandler {
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     @ResponseBody
-    public ByteArrayResource serveFile(@PathVariable("id") Long id) {
-        //TODO Change to Resource. references:
-        // https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/ResourceHttpMessageConverter.html
-        // https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/io/Resource.html
-
-        return new ByteArrayResource(pictureService.getPictureContent(id));
+    public Resource serveFile(@PathVariable("id") Long id) {
+        return new InputStreamResource(pictureService.getPictureContent(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

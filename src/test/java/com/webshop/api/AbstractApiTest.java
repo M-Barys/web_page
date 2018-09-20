@@ -127,6 +127,8 @@ public abstract class AbstractApiTest {
     protected CategoryTreeNode getCategoryTree(){
     return given()
             .log().all()
+            .contentType(ContentType.JSON)
+            .accept(ContentType.JSON)
             .when()
             .get(ApiEndpointSpecification.categoriesTreeEndpoint)
             .then()
