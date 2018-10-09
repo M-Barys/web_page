@@ -23,6 +23,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -50,6 +52,8 @@ public class WebShopIT extends AbstractApiTest {
 
     private final ProductDataTest productDataTest = new ProductDataTest();
     private final CategoryDataTest categoryDataTest = new CategoryDataTest();
+
+    Logger log = LoggerFactory.getLogger(WebShopIT.class);
 
     @Before
     public void setUp() {
@@ -254,6 +258,13 @@ public class WebShopIT extends AbstractApiTest {
         Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(2);
 
         logJsonRequestForCategoryData(loadedFrezarki.getId());
+        logJsonRequestForCategoryData(loadedLasery.getId());
+        logJsonRequestForCategoryData(loadedAkcesoria.getId());
+        logJsonRequestForCategoryData(loadedWrzeciona.getId());
+        logJsonRequestForCategoryData(loadedFrezy.getId());
+
+        logJsonRequestForProductData(frezarka2.getId());
+        logJsonRequestForProductData(productWithPicture.getId());
 
         //Delete product to category
         Category deleteProductToCategory = given()
@@ -276,7 +287,18 @@ public class WebShopIT extends AbstractApiTest {
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().response().asString();
-        System.err.println(json);
+        log.info(json);
+    }
+
+    private void logJsonRequestForProductData(Long productId) {
+        String json = given()
+                .log().all()
+                .when()
+                .get(productByIDEndpoint, productId)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().response().asString();
+        log.info(json);
     }
 
 
