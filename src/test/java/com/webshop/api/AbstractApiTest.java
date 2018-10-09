@@ -96,6 +96,7 @@ public abstract class AbstractApiTest {
                 .when()
                 .get(categoryByIDEndpoint, id)
                 .then()
+                .log().all()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);
     }
