@@ -1,6 +1,7 @@
 package com.webshop.api;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.webshop.WebShopApplication;
 import com.webshop.api.data.CategoryDataTest;
@@ -14,7 +15,9 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
+import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.CategoryInfo;
+import com.webshop.model.instance.info.ProductInfo;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
@@ -64,33 +67,54 @@ public class XFrame extends AbstractApiTest {
     @Test
     public void createProduct() throws IOException {
 
-        //Add product
-        Product newFrezarka = productDataTest.createRandomProduct();
+        //Create product
+        Product frezarka1 = Product.builder()
+                .info(ProductInfo.builder()
+                        .name("Mini Frezarka CNC 30x40 500W")
+                        .description("Najnowszy model mini frezarki XFrame Z2 posiada pole robocze o wymiarach " +
+                                "300mm x 400mm. Urządzenie zostało zaprojektowane i wyprodukowane z myślą o uzyskaniu " +
+                                "jak największej dokładności oraz prędkości pracy z jednoczesną eliminacją drgań w " +
+                                "trakcie obróbki. Wykorzystano do tego wzmocnioną konstrukcję oraz użyto najlepszej " +
+                                "jakości materiały oraz podzespoły. Maszyna przystosowana jest do obróbki materiałów " +
+                                "niemetalowych np. ABS, pleksi, drewno, inne tworzywa sztuczne. \n" +
+                                "\n" +
+                                "Idealna do grawerowania oraz cięcia na powierzchniach płaskich jak i przedmiotach " +
+                                "obrotowych, dzięki czwartej osi w opcjonalnym wyposażeniu. Jej dużym atutem jest " +
+                                "możliwość pracy w opcji 3D.\n" +
+                                "Maszyna sterowana jest z poziomu komputera za pomocą programu Mach 3, obsługującego " +
+                                "format G-code.")
+                        .build())
+                .data(ProductData.builder()
+                        .slug("")
+                        .status(Status.draft)
+                        .build())
+                .pictures(Lists.newArrayList())
+                .build();
 
         //Add price to product
-        Locale enUSLocale = new Locale.Builder().setLanguage("en").setRegion("US").build();
-        Currency currencyInstance = Currency.getInstance(enUSLocale);
+        Locale plPLLocale = new Locale.Builder().setLanguage("pl").setRegion("PL").build();
+        Currency currencyInstance = Currency.getInstance(plPLLocale);
         Map<Currency,BigDecimal> pricelist = new HashMap<>();
-        pricelist.put(currencyInstance, BigDecimal.valueOf(8000));
+        pricelist.put(currencyInstance, BigDecimal.valueOf(5690.00));
 
-        newFrezarka.getData().setPrices(pricelist);
+        frezarka1.getData().setPrices(pricelist);
 
         // Add product to database
-        Product frezarka = createNewProduct(newFrezarka);
-        Assertions.assertThat(frezarka).isEqualToIgnoringGivenFields(newFrezarka,"id");
+        Product AddFrezarka1 = createNewProduct(frezarka1);
+        Assertions.assertThat(frezarka1).isEqualToIgnoringGivenFields(AddFrezarka1,"id");
 
         //Add picture to product
         //Add picture to database
-        URL resource1 = Resources.getResource("baseball.jpg");
+        URL resourceFrezarka1 = Resources.getResource("frezarka1.jpg");
         //Load picture from data base
-        PictureRef picture1 = createNewPicture(resource1);
-        PictureRef loadedPicture1 = loadPictureByID(picture1.getPictureID());
+        PictureRef picture1 = createNewPicture(resourceFrezarka1);
+        PictureRef loadedFrezarka1Picture1 = loadPictureByID(picture1.getPictureID());
 
         Product productWithPicture = given()
                 .log().all()
-                .queryParam("pictureID", loadedPicture1.getPictureID())
+                .queryParam("pictureID", loadedFrezarka1Picture1.getPictureID())
                 .when()
-                .put(productByIDAddPictureEndpoint, frezarka.getId())
+                .put(productByIDAddPictureEndpoint, AddFrezarka1.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Product.class);
@@ -101,7 +125,7 @@ public class XFrame extends AbstractApiTest {
         Category stronaGlowna = Category.builder()
                 .info(CategoryInfo.builder()
                         .name("STRONA GŁÓWNA")
-                        .description("Frezarki")
+                        .description("Strona główna")
                         .build())
                 .data(CategoryData.builder()
                         .slug("po co jest?")
