@@ -67,6 +67,9 @@ public class XFrame extends AbstractApiTest {
     @Test
     public void createProduct() throws IOException {
 
+        //noumber of products
+        int in=2;
+
         //Create product
         Product frezarka1 = Product.builder()
                 .info(ProductInfo.builder()
@@ -82,7 +85,341 @@ public class XFrame extends AbstractApiTest {
                                 "obrotowych, dzięki czwartej osi w opcjonalnym wyposażeniu. Jej dużym atutem jest " +
                                 "możliwość pracy w opcji 3D.\n" +
                                 "Maszyna sterowana jest z poziomu komputera za pomocą programu Mach 3, obsługującego " +
-                                "format G-code.")
+                                "format G-code."+
+                                "Podana kwota jest ceną brutto, dotyczy frezarki XFrame Z2 30x40 z podstawowym wyposażeniem."+
+                                "Pole robocze                               300 x 400 mm\n" +
+                                "\n" +
+                                "Prześwit bramy                           80 mm\n" +
+                                "\n" +
+                                "Prędkość przejazdów                 do 3,5 m/min\n" +
+                                "\n" +
+                                "Moc wrzeciona                            500 W (opcja do 2,2 kW)\n" +
+                                "\n" +
+                                "Obroty wrzeciona                       11000 obr/min\n" +
+                                " Dokładność pozycjonowania     0,03 mm\n" +
+                                "\n" +
+                                "Waga                                             28 kg\n" +
+                                "\n" +
+                                "Średnica trzpienia frezu              do 7,5 mm\n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "- Frezarka XFrame Z2 30x40\n" +
+                                "\n" +
+                                "- Sterownik wraz z okablowaniem\n" +
+                                "\n" +
+                                "- Wrzeciono 500 W chłodzone powietrzem\n" +
+                                "\n" +
+                                "- Tuleja mocująca frez (3,175 mm)\n" +
+                                "\n" +
+                                "- Podstawowy zestaw frezów\n" +
+                                "\n" +
+                                "- Uchwyty mocujące obrabiany przedmiot\n" +
+                                "\n" +
+                                "- Instrukcja obsługi\n" +
+                                "\n" +
+                                "Dodatkowo zapewniamy szkolenie z obsługi maszyny oraz programów niezbędnych do pracy.\n" +
+                                "\n" +
+                                "Pełne wsparcie podczas uruchomienia urządzenia.\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "- Oś obrotowa\n" +
+                                "\n" +
+                                "- System chłodzenia narzędzia\n" +
+                                "\n" +
+                                "- Stół podciśnieniowy\n" +
+                                "\n" +
+                                "- Kontroler DSP\n" +
+                                "\n" +
+                                "- Oprogramowanie sterujące\n" +
+                                "\n" +
+                                "- Obudowa frezarki\n" +
+                                "\n" +
+                                "- Wrzeciono 230 W, 800 W, 1,5 kW lub 2,2 kW\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .build())
+                .data(ProductData.builder()
+                        .slug("")
+                        .status(Status.draft)
+                        .build())
+                .pictures(Lists.newArrayList())
+                .build();
+
+
+        Product frezarka2 = Product.builder()
+                .info(ProductInfo.builder()
+                        .name("Mini Frezarka CNC 30x40 1500 W")
+                        .description("Najnowszy model mini frezarki XFrame Z2 posiada pole robocze o wymiarach " +
+                                "300mm x 400mm. Urządzenie zostało zaprojektowane i wyprodukowane z myślą o uzyskaniu " +
+                                "jak największej dokładności oraz prędkości pracy z jednoczesną eliminacją drgań w " +
+                                "trakcie obróbki. Wykorzystano do tego wzmocnioną konstrukcję oraz użyto najlepszej " +
+                                "jakości materiały oraz podzespoły. Maszyna przystosowana jest do obróbki materiałów " +
+                                "niemetalowych np. ABS, pleksi, drewno, inne tworzywa sztuczne. \n" +
+                                "\n" +
+                                "Idealna do grawerowania oraz cięcia na powierzchniach płaskich jak i przedmiotach " +
+                                "obrotowych, dzięki czwartej osi w opcjonalnym wyposażeniu. Jej dużym atutem jest " +
+                                "możliwość pracy w opcji 3D.\n" +
+                                "Maszyna sterowana jest z poziomu komputera za pomocą programu Mach 3, obsługującego " +
+                                "format G-code."+
+                                "Podana kwota jest ceną brutto, dotyczy frezarki XFrame Z2 30x40 z podstawowym wyposażeniem."+
+                                "Pole robocze                               300 x 400 mm\n" +
+                                "\n" +
+                                "Prześwit bramy                           80 mm\n" +
+                                "\n" +
+                                "Prędkość przejazdów                 do 3,5 m/min\n" +
+                                "\n" +
+                                "Moc wrzeciona                            1500 W (opcja do 2,2 kW)\n" +
+                                "\n" +
+                                "Obroty wrzeciona                       24000 obr/min\n" +
+                                " Dokładność pozycjonowania     0,03 mm\n" +
+                                "\n" +
+                                "Waga                                             30 kg\n" +
+                                "\n" +
+                                "Średnica trzpienia frezu              do 7,5 mm\n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "- Frezarka XFrame Z2 30x40\n" +
+                                "\n" +
+                                "- Sterownik wraz z okablowaniem\n" +
+                                "\n" +
+                                "- Wrzeciono 1500 W chłodzone powietrzem\n" +
+                                "\n" +
+                                "- Tuleja mocująca frez (3,175 mm)\n" +
+                                "\n" +
+                                "- Podstawowy zestaw frezów\n" +
+                                "\n" +
+                                "- Uchwyty mocujące obrabiany przedmiot\n" +
+                                "\n" +
+                                "- Instrukcja obsługi\n" +
+                                "\n" +
+                                "Dodatkowo zapewniamy szkolenie z obsługi maszyny oraz programów niezbędnych do pracy.\n" +
+                                "\n" +
+                                "Pełne wsparcie podczas uruchomienia urządzenia.\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "- Oś obrotowa\n" +
+                                "\n" +
+                                "- System chłodzenia narzędzia\n" +
+                                "\n" +
+                                "- Stół podciśnieniowy\n" +
+                                "\n" +
+                                "- Kontroler DSP\n" +
+                                "\n" +
+                                "- Oprogramowanie sterujące\n" +
+                                "\n" +
+                                "- Obudowa frezarki\n" +
+                                "\n" +
+                                "- Wrzeciono 230 W, 800 W, 1,5 kW lub 2,2 kW\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .build())
+                .data(ProductData.builder()
+                        .slug("")
+                        .status(Status.draft)
+                        .build())
+                .pictures(Lists.newArrayList())
+                .build();
+
+        Product frezarka3 = Product.builder()
+                .info(ProductInfo.builder()
+                        .name("Mini Frezarka CNC 20x30 800W")
+                        .description("Najnowszy model mini frezarki XFrame Z2 posiada pole robocze o wymiarach " +
+                                "200mm x 300mm. Urządzenie zostało zaprojektowane i wyprodukowane z myślą o uzyskaniu " +
+                                "jak największej dokładności oraz prędkości pracy z jednoczesną eliminacją drgań w " +
+                                "trakcie obróbki. Wykorzystano do tego wzmocnioną konstrukcję oraz użyto najlepszej " +
+                                "jakości materiały oraz podzespoły. Maszyna przystosowana jest do obróbki materiałów " +
+                                "niemetalowych np. ABS, pleksi, drewno, inne tworzywa sztuczne. \n" +
+                                "\n" +
+                                "Idealna do grawerowania oraz cięcia na powierzchniach płaskich jak i przedmiotach " +
+                                "obrotowych, dzięki czwartej osi w opcjonalnym wyposażeniu. Jej dużym atutem jest " +
+                                "możliwość pracy w opcji 3D.\n" +
+                                "Maszyna sterowana jest z poziomu komputera za pomocą programu Mach 3, obsługującego " +
+                                "format G-code."+
+                                "Podana kwota jest ceną brutto, dotyczy frezarki XFrame Z2 20x30 z podstawowym wyposażeniem."+
+                                "Pole robocze                               200 x 300 mm\n" +
+                                "\n" +
+                                "Prześwit bramy                           60 mm\n" +
+                                "\n" +
+                                "Prędkość przejazdów                 do 3,5 m/min\n" +
+                                "\n" +
+                                "Moc wrzeciona                            800 W (opcja do 2,2 kW)\n" +
+                                "\n" +
+                                "Obroty wrzeciona                       24000 obr/min\n" +
+                                " Dokładność pozycjonowania     0,03 mm\n" +
+                                "\n" +
+                                "Waga                                             23 kg\n" +
+                                "\n" +
+                                "Średnica trzpienia frezu              do 7 mm\n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "- Frezarka XFrame Z2 20x30\n" +
+                                "\n" +
+                                "- Sterownik wraz z okablowaniem\n" +
+                                "\n" +
+                                "- Wrzeciono 800 W chłodzone powietrzem\n" +
+                                "\n" +
+                                "- Tuleja mocująca frez (3,175 mm)\n" +
+                                "\n" +
+                                "- Podstawowy zestaw frezów\n" +
+                                "\n" +
+                                "- Uchwyty mocujące obrabiany przedmiot\n" +
+                                "\n" +
+                                "- Instrukcja obsługi\n" +
+                                "\n" +
+                                "Dodatkowo zapewniamy szkolenie z obsługi maszyny oraz programów niezbędnych do pracy.\n" +
+                                "\n" +
+                                "Pełne wsparcie podczas uruchomienia urządzenia.\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "- Oś obrotowa\n" +
+                                "\n" +
+                                "- System chłodzenia narzędzia\n" +
+                                "\n" +
+                                "- Stół podciśnieniowy\n" +
+                                "\n" +
+                                "- Kontroler DSP\n" +
+                                "\n" +
+                                "- Oprogramowanie sterujące\n" +
+                                "\n" +
+                                "- Obudowa frezarki\n" +
+                                "\n" +
+                                "- Wrzeciono 230 W, 800 W, 1,5 kW lub 2,2 kW\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .build())
+                .data(ProductData.builder()
+                        .slug("")
+                        .status(Status.draft)
+                        .build())
+                .pictures(Lists.newArrayList())
+                .build();
+
+        Product frezarka4 = Product.builder()
+                .info(ProductInfo.builder()
+                        .name("Mini Frezarka CNC 30x40 800W")
+                        .description("Najnowszy model mini frezarki XFrame Z2 posiada pole robocze o wymiarach " +
+                                "300mm x 400mm. Urządzenie zostało zaprojektowane i wyprodukowane z myślą o uzyskaniu " +
+                                "jak największej dokładności oraz prędkości pracy z jednoczesną eliminacją drgań w " +
+                                "trakcie obróbki. Wykorzystano do tego wzmocnioną konstrukcję oraz użyto najlepszej " +
+                                "jakości materiały oraz podzespoły. Maszyna przystosowana jest do obróbki materiałów " +
+                                "niemetalowych np. ABS, pleksi, drewno, inne tworzywa sztuczne. \n" +
+                                "\n" +
+                                "Maszynę dzięki dodatkowemu uchwytowi można dostosować do grawerowania obrączek" +
+                                "(wewnątrz oraz na zewnątrz obrączki). Grawer wykonywany jest diamentowym rysikiem." +
+                                "Oprócz tego frezarka świetnie nadaję się do wycinania wzorów w srebrze oraz złocie " +
+                                "doskonale zastępując drogie lasery."+
+                                "\n"+
+                                "Frezarka XFrame jest to wielofunkcyjne urządzenie które z powodzeniem  sprawdzi się w" +
+                                "branży jubilerskiej. Bez problemu wykona każdy grawer oraz wytnie dowolny kształt, " +
+                                "nawet ten najmniejszy. Zapewniamy również frezy do takich materiałów jak srebro i " +
+                                "złoto pozwalających uzyskać wysokie jakości wykonania." +
+                                "Podana kwota jest ceną brutto, dotyczy frezarki XFrame Z2 30x40 z podstawowym wyposażeniem."+
+                                "Pole robocze                               300 x 400 mm\n" +
+                                "\n" +
+                                "Prześwit bramy                           60 mm\n" +
+                                "\n" +
+                                "Prędkość przejazdów                 do 3,5 m/min\n" +
+                                "\n" +
+                                "Moc wrzeciona                            800 W (opcja do 2,2 kW)\n" +
+                                "\n" +
+                                "Obroty wrzeciona                       24000 obr/min\n" +
+                                " Dokładność pozycjonowania     0,03 mm\n" +
+                                "\n" +
+                                "Waga                                             28 kg\n" +
+                                "\n" +
+                                "Średnica trzpienia frezu              do 7 mm\n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "- Frezarka XFrame Z2 30x40\n" +
+                                "\n" +
+                                "- Sterownik wraz z okablowaniem\n" +
+                                "\n" +
+                                "- Wrzeciono 800 W chłodzone powietrzem\n" +
+                                "\n" +
+                                "- Tuleja mocująca frez (3,175 mm)\n" +
+                                "\n" +
+                                "- Podstawowy zestaw frezów\n" +
+                                "\n" +
+                                "- Uchwyty mocujące obrabiany przedmiot\n" +
+                                "\n" +
+                                "- Instrukcja obsługi\n" +
+                                "\n" +
+                                "Dodatkowo zapewniamy szkolenie z obsługi maszyny oraz programów niezbędnych do pracy.\n" +
+                                "\n" +
+                                "Pełne wsparcie podczas uruchomienia urządzenia.\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "- Oś obrotowa\n" +
+                                "\n" +
+                                "- System chłodzenia narzędzia\n" +
+                                "\n" +
+                                "- Stół podciśnieniowy\n" +
+                                "\n" +
+                                "- Kontroler DSP\n" +
+                                "\n" +
+                                "- Oprogramowanie sterujące\n" +
+                                "\n" +
+                                "- Obudowa frezarki\n" +
+                                "\n" +
+                                "- Wrzeciono 230 W, 800 W, 1,5 kW lub 2,2 kW\n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                " \n" +
+                                "\n" +
+                                "\n" +
+                                " \n" +
+                                "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
                         .build())
                 .data(ProductData.builder()
                         .slug("")
@@ -94,23 +431,50 @@ public class XFrame extends AbstractApiTest {
         //Add price to product
         Locale plPLLocale = new Locale.Builder().setLanguage("pl").setRegion("PL").build();
         Currency currencyInstance = Currency.getInstance(plPLLocale);
-        Map<Currency,BigDecimal> pricelist = new HashMap<>();
-        pricelist.put(currencyInstance, BigDecimal.valueOf(5690.00));
+        Map<Currency,BigDecimal> pricefrezarka1 = new HashMap<>();
+        pricefrezarka1.put(currencyInstance, BigDecimal.valueOf(5690.00));
 
-        frezarka1.getData().setPrices(pricelist);
+        Map<Currency,BigDecimal> pricefrezarka2 = new HashMap<>();
+        pricefrezarka2.put(currencyInstance, BigDecimal.valueOf(8790.00));
+
+        Map<Currency,BigDecimal> pricefrezarka3 = new HashMap<>();
+        pricefrezarka3.put(currencyInstance, BigDecimal.valueOf(7690.00));
+
+        Map<Currency,BigDecimal> pricefrezarka4 = new HashMap<>();
+        pricefrezarka4.put(currencyInstance, BigDecimal.valueOf(8090.00));
+
+        frezarka1.getData().setPrices(pricefrezarka1);
+        frezarka2.getData().setPrices(pricefrezarka2);
+        frezarka3.getData().setPrices(pricefrezarka3);
+        frezarka4.getData().setPrices(pricefrezarka4);
 
         // Add product to database
         Product AddFrezarka1 = createNewProduct(frezarka1);
+        Product AddFrezarka2 = createNewProduct(frezarka2);
+        Product AddFrezarka3 = createNewProduct(frezarka3);
+        Product AddFrezarka4 = createNewProduct(frezarka4);
         Assertions.assertThat(frezarka1).isEqualToIgnoringGivenFields(AddFrezarka1,"id");
+        Assertions.assertThat(frezarka2).isEqualToIgnoringGivenFields(AddFrezarka2,"id");
+        Assertions.assertThat(frezarka3).isEqualToIgnoringGivenFields(AddFrezarka3,"id");
+        Assertions.assertThat(frezarka4).isEqualToIgnoringGivenFields(AddFrezarka4,"id");
 
         //Add picture to product
         //Add picture to database
         URL resourceFrezarka1 = Resources.getResource("frezarka1.jpg");
+        URL resourceFrezarka2 = Resources.getResource("frezarka2.jpg");
+        URL resourceFrezarka3 = Resources.getResource("frezarka3.jpg");
+        URL resourceFrezarka4 = Resources.getResource("frezarka4.jpg");
         //Load picture from data base
-        PictureRef picture1 = createNewPicture(resourceFrezarka1);
-        PictureRef loadedFrezarka1Picture1 = loadPictureByID(picture1.getPictureID());
+        PictureRef pictureFrezarka1 = createNewPicture(resourceFrezarka1);
+        PictureRef pictureFrezarka2 = createNewPicture(resourceFrezarka2);
+        PictureRef pictureFrezarka3 = createNewPicture(resourceFrezarka3);
+        PictureRef pictureFrezarka4 = createNewPicture(resourceFrezarka4);
+        PictureRef loadedFrezarka1Picture1 = loadPictureByID(pictureFrezarka1.getPictureID());
+        PictureRef loadedFrezarka2Picture1 = loadPictureByID(pictureFrezarka2.getPictureID());
+        PictureRef loadedFrezarka3Picture1 = loadPictureByID(pictureFrezarka3.getPictureID());
+        PictureRef loadedFrezarka4Picture1 = loadPictureByID(pictureFrezarka4.getPictureID());
 
-        Product productWithPicture = given()
+        Product frezarka1WithPicture = given()
                 .log().all()
                 .queryParam("pictureID", loadedFrezarka1Picture1.getPictureID())
                 .when()
@@ -119,7 +483,40 @@ public class XFrame extends AbstractApiTest {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Product.class);
 
-        Assertions.assertThat(productWithPicture.getPictures()).hasSize(1);
+        Assertions.assertThat(frezarka1WithPicture.getPictures()).hasSize(1);
+
+        Product frezarka2WithPicture = given()
+                .log().all()
+                .queryParam("pictureID", loadedFrezarka2Picture1.getPictureID())
+                .when()
+                .put(productByIDAddPictureEndpoint, AddFrezarka2.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(frezarka2WithPicture.getPictures()).hasSize(1);
+
+        Product frezarka3WithPicture = given()
+                .log().all()
+                .queryParam("pictureID", loadedFrezarka3Picture1.getPictureID())
+                .when()
+                .put(productByIDAddPictureEndpoint, AddFrezarka3.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(frezarka3WithPicture.getPictures()).hasSize(1);
+
+        Product frezarka4WithPicture = given()
+                .log().all()
+                .queryParam("pictureID", loadedFrezarka4Picture1.getPictureID())
+                .when()
+                .put(productByIDAddPictureEndpoint, AddFrezarka4.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Product.class);
+
+        Assertions.assertThat(frezarka4WithPicture.getPictures()).hasSize(1);
 
         //Create and add categories
         Category stronaGlowna = Category.builder()
@@ -364,61 +761,52 @@ public class XFrame extends AbstractApiTest {
         CategoryTreeNode categoryTree = getCategoryTree();
         Assertions.assertThat(categoryTree).isEqualToComparingFieldByFieldRecursively(expected);
 
-        //Add product to category
-        Category productAddedToCategory = given()
+       Category frezarka1AddedToCategory = given()
                 .log().all()
-                .queryParam("productID", productWithPicture.getId())
+                .queryParam("productID", frezarka1WithPicture.getId())
                 .when()
                 .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);
 
-        Assertions.assertThat(productAddedToCategory.getProducts()).hasSize(1);
+        Assertions.assertThat(frezarka1AddedToCategory.getProducts()).hasSize(1);
 
-        //Add second product
-        Product newFrezarka2 = productDataTest.createRandomProduct();
 
-        // Add second product to database
-        Product frezarka2 = createNewProduct(newFrezarka2);
+        Category frezarka2AddedToCategory = given()
+            .log().all()
+            .queryParam("productID", frezarka2WithPicture.getId())
+            .when()
+            .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
+            .then()
+            .statusCode(HttpStatus.SC_OK)
+            .extract().body().as(Category.class);
 
-        //Add product to category
-        Category product2AddedToCategory = given()
+        Assertions.assertThat(frezarka2AddedToCategory.getProducts()).hasSize(2);
+
+        Category frezarka3AddedToCategory = given()
                 .log().all()
-                .queryParam("productID", frezarka2.getId())
+                .queryParam("productID", frezarka3WithPicture.getId())
                 .when()
                 .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);
 
-        Assertions.assertThat(product2AddedToCategory.getProducts()).hasSize(2);
+        Assertions.assertThat(frezarka3AddedToCategory.getProducts()).hasSize(3);
 
-        logJsonRequestForCategoryData(loadedFrezarki.getId());
-
-        //Delete product to category
-        Category deleteProductToCategory = given()
+        Category frezarka4AddedToCategory = given()
                 .log().all()
-                .queryParam("productID", frezarka2.getId())
+                .queryParam("productID", frezarka4WithPicture.getId())
                 .when()
-                .put(categoryByIDAddDeleteEndpoint, loadedFrezarki.getId())
+                .put(categoryByIDAddProductEndpoint, loadedFrezarki.getId())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(Category.class);
 
-        Assertions.assertThat(deleteProductToCategory.getProducts()).hasSize(1);
+        Assertions.assertThat(frezarka4AddedToCategory.getProducts()).hasSize(4);
+
+
+
     }
-
-    private void logJsonRequestForCategoryData(Long categoryId) {
-        String json = given()
-                .log().all()
-                .when()
-                .get(categoryByIDEndpoint, categoryId)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().response().asString();
-        System.err.println(json);
-    }
-
-
 }
