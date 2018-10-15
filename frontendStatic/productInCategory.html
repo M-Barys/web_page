@@ -1,0 +1,12 @@
+<div>
+    <h1>{{productCtrl.product.info.name}}</h1>
+    <p>
+        {{productCtrl.product.info.description}}
+    </p>
+
+    <ul ng-repeat="picture in productCtrl.product.pictures">
+        <li><img href="{{picture.pictureUrlPath}}" alt="{{picture.alternative}}"/></li>
+    </ul>
+
+
+</div>

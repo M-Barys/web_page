@@ -1,0 +1,28 @@
+<div>
+    <h1>Simple category</h1>
+    <div>TODO: Drzewo nawigacji po categoriach</div>
+    <div>
+        id: {{catCtrl.category.id}}
+        name: {{catCtrl.category.info.name}}
+        desc: {{catCtrl.category.info.description}}
+    </div>
+    <div>
+        <h2>Producty</h2>
+        <table>
+            <tr>
+                <th>productId</th>
+                <th>link</th>
+                <th>name</th>
+                <th>description</th>
+            </tr>
+            <tr ng-repeat="prod in catCtrl.category.products">
+                <td>{{prod.id}}</td>
+                <td><a ui-sref="root.categories.singleCategoryView.productInCategory({categoryId: '{{catCtrl.category.id}}', productID: '{{prod.id}}'})">See more</a></td>
+                <td><a ui-sref="root.productView({productID: '{{prod.id}}'})">Product page</a></td>
+                <td>{{prod.info.name}}</td>
+                <td>{{prod.info.description}}</td>
+            </tr>
+        </table>
+    </div>
+    <div ui-view="productDetailsUI"> Select a product please </div>
+</div>
