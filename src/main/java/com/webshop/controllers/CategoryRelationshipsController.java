@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 
 public class CategoryRelationshipsController extends AbstractControllerExceptionHandler {
 

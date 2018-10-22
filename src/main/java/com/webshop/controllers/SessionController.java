@@ -11,7 +11,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/api/session")
 public class SessionController extends WebShopAbstractController{
 
     private final UUID adminRandomSessionToken = UUID.randomUUID();

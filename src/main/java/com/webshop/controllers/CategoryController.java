@@ -14,7 +14,7 @@ import java.util.List;
 //TODO Add cache. minor priority.
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 
 public class CategoryController extends AbstractControllerExceptionHandler {
 

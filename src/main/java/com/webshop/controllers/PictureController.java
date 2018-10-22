@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pictures")
+@RequestMapping("/api/pictures")
 
 public class PictureController extends AbstractControllerExceptionHandler {
 

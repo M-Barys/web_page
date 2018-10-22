@@ -1,0 +1,14 @@
+
+.lc {
+    border: 1px solid black;
+    padding: 10px;
+    background-color: aliceblue;
+}
+
+.lc .lc {
+    background-color: #008800;
+}
+
+.lc .lc .lc {
+    background-color: #660000;
+}

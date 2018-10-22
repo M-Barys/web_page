@@ -24,6 +24,7 @@ import io.restassured.config.LogConfig;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,15 +45,14 @@ import static com.webshop.model.instance.Category.CATEGORY_ROOT;
 import static io.restassured.RestAssured.config;
 import static io.restassured.RestAssured.given;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = WebShopApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext
-public class XFrame extends AbstractApiTest {
-    @Value("${local.server.port}")
-    private int serverPort;
 
-    private final ProductDataTest productDataTest = new ProductDataTest();
-    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
+@Ignore
+public class XFrame extends AbstractApiTest {
+
+    private int serverPort = 8080;
+
+//    private final ProductDataTest productDataTest = new ProductDataTest();
+//    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
 
     @Before
     public void setUp() {

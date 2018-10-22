@@ -1,19 +1,19 @@
 package com.webshop.api;
 
 public class ApiEndpointSpecification {
-    public static String categoriesEndpoint = "/categories";
-    public static String categoriesTreeEndpoint = "/categories/tree";
-    public static String categoryByIDEndpoint = "/categories/{id}";
-    public static String categoryByIDRelationEndpoint = "/categories/{mainCategoryId}/relationships/categories";
-    public static String categoryByIDAddProductEndpoint = "/categories/{id}/addProduct";
-    public static String categoryByIDAddDeleteEndpoint = "/categories/{id}/deleteProduct";
+    public static String categoriesEndpoint = "/api/categories";
+    public static String categoriesTreeEndpoint = "/api/categories/tree";
+    public static String categoryByIDEndpoint = "/api/categories/{id}";
+    public static String categoryByIDRelationEndpoint = "/api/categories/{mainCategoryId}/relationships/categories";
+    public static String categoryByIDAddProductEndpoint = "/api/categories/{id}/addProduct";
+    public static String categoryByIDAddDeleteEndpoint = "/api/categories/{id}/deleteProduct";
 
-    public static String productEndpoint = "/products";
-    public static String productByIDEndpoint = "/products/{id}";
-    public static String productByIDAddPictureEndpoint = "/products/{id}/addPicture";
-    public static String productByIDDeletePictureEndpoint = "/products/{id}/deletePicture";
+    public static String productEndpoint = "/api/products";
+    public static String productByIDEndpoint = "/api/products/{id}";
+    public static String productByIDAddPictureEndpoint = "/api/products/{id}/addPicture";
+    public static String productByIDDeletePictureEndpoint = "/api/products/{id}/deletePicture";
 
-    public static String pictureEndpoint = "/pictures";
-    public static String pictureByIDEndpoint = "/pictures/{id}";
-    public static String pictureFileRetrievalJPG = "/pictures/{id}/image.jpg";
+    public static String pictureEndpoint = "/api/pictures";
+    public static String pictureByIDEndpoint = "/api/pictures/{id}";
+    public static String pictureFileRetrievalJPG = "/api/pictures/{id}/image.jpg";
 }
