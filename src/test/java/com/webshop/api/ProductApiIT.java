@@ -153,7 +153,7 @@ public class ProductApiIT extends AbstractApiTest {
     }
 
     @Test
-    public void getAllPictures() {
+    public void getAllProducts() {
 
         //given
         Product newProduct1 = productDataTest.createRandomProduct();
