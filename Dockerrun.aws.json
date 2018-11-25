@@ -1,12 +1,12 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "mateuszbarys/webshop",
+    "Name": "mbarys/webshop:0.1",
     "Update": "true"
   },
   "Ports": [
     {
-      "ContainerPort": "8080"
+      "ContainerPort": "8081"
     }
   ]
 }

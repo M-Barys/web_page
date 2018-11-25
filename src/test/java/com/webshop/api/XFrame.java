@@ -49,14 +49,15 @@ import static io.restassured.RestAssured.given;
 @Ignore
 public class XFrame extends AbstractApiTest {
 
-    private int serverPort = 8080;
+    private int serverPort = 8081;
 
-//    private final ProductDataTest productDataTest = new ProductDataTest();
-//    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
+//   private final ProductDataTest productDataTest = new ProductDataTest();
+ //   private final CategoryDataTest categoryDataTest = new CategoryDataTest();
 
     @Before
     public void setUp() {
         RestAssured.port = serverPort;
+        //RestAssured.baseURI = "http://webshopdocker.us-east-2.elasticbeanstalk.com";
         config = config()
                 .logConfig(LogConfig
                         .logConfig()

@@ -23,7 +23,7 @@ public class PictureMapping {
     public PictureUrlInfo urlInfoFromEntity(PictureEntity pictureEntity) {
         return PictureUrlInfo.builder()
                 .alternative("TODO")
-                .pictureUrlPath("/pictures/image" + pictureEntity.getPictureID() + ".jpg")
+                .pictureUrlPath("/api/pictures/" + pictureEntity.getPictureID() + "/image.jpg")
                 .build();
     }
 
