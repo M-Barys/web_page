@@ -1,0 +1,306 @@
+
+/*html {*/
+    /*background: url(/img/sgl.png) no-repeat center center fixed;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+/*}*/
+
+body {
+    background-color: transparent;
+}
+
+.welcome {
+    background-color: #D61F27;
+    color:white;
+}
+.welcome .jumbotron {
+    background-color: transparent;
+}
+
+.productCard:hover {
+    background-color: red;
+}
+
+.subcategory {
+    padding-left: 15px;
+}
+
+/*.gal-item{*/
+	/*overflow: hidden;*/
+	/*padding: 8px;*/
+/*}*/
+/*.gal-item .box{*/
+	/*height: 100%;*/
+	/*overflow: hidden;*/
+/*}*/
+/*.box img{*/
+	/*height: 100%;*/
+	/*width: auto;*/
+	/*object-fit:cover;*/
+/*}*/
+
+/*.welcome-container {*/
+    /*position: relative;*/
+    /*color: #ffffff;*/
+    /*width: 100%;*/
+    /*height: 700px;*/
+    /*padding: 15px;*/
+
+/*}*/
+
+/*.bg-left {*/
+    /*//position: absolute;*/
+    /*//background: #fff url(/img/sgl.png) no-repeat left top;*/
+
+/*}*/
+
+/*.shopbody {*/
+    /*background:  url(/img/sgl.png) no-repeat left top;*/
+
+    /*background: #fff url(/img/sgpr.png) no-repeat right top;*/
+    /*//right: 0px;*/
+    /*//bottom: 0px;*/
+    /*z-index: -1;*/
+/*}*/
+/*.content-container {*/
+        /*position: absolute;*/
+        /*background: rgba(255, 0, 0, 0.9);*/
+        /*width: 100%;*/
+        /*top: 50px;*/
+        /*bottom: 50px;*/
+        /*display: flex;*/
+        /*justify-content: space-evenly;*/
+        /*left: 50%;*/
+        /*margin-left: -50%;*/
+/*}*/
+
+/*.content-left {*/
+    /*text-align: left;*/
+    /*border-bottom: 10px solid #FFFF00;*/
+    /*top: 50px;*/
+    /*left: 150px;*/
+    /*width: 100%;*/
+    /*margin-top: 100px;*/
+    /*margin-left: 40px;*/
+/*}*/
+
+/*.content-right {*/
+    /*margin-top: 150px;*/
+    /*width: 460px;*/
+    /*text-align: right;*/
+    /*margin-right: 90px;*/
+/*}*/
+
+/*.content-right h1 {*/
+        /*font-weight: 600;*/
+/*}*/
+
+/*#products {*/
+    /*margin-top: 60px;*/
+
+/*}*/
+
+/*.xxx-12 {*/
+    /*width: 900px;*/
+    /*height: 15px;*/
+    /*background: #D61F27;*/
+    /*margin-bottom: 60px;*/
+
+/*}*/
+
+/*.product {*/
+    /*background: #D61F27;*/
+    /*//margin-left: 120px;*/
+    /*width: 300px;*/
+
+/*}*/
+
+/*.productName {*/
+    /*//margin-top: 20px;*/
+    /*//margin-left: 60px;*/
+/*}*/
+
+/*.categoryname:hover {*/
+    /*background-color: #EEEEEE;*/
+/*}*/
+
+/*.product:hover {*/
+    /*background-color: #ff0000;*/
+/*}*/
+
+/*.xxxx-3 {*/
+    /*width: 200px;*/
+    /*height: 15px;*/
+    /*background: #ffffff;*/
+/*}*/
+
+/*.product:hover .xxx-3 {*/
+    /*background-color: #FFFF00;*/
+/*}*/
+
+/*.categoryTree {*/
+    /*//min-height: 90vh;*/
+/*}*/
+
+/*.categoryName {*/
+    /*//margin-top: 80px;*/
+    /*margin-left: 60px;*/
+/*}*/
+
+/*.xxx-2 {*/
+    /*width: 578px;*/
+    /*height: 12px;*/
+    /*margin-left: 2px;*/
+    /*background: #D61F27;*/
+/*}*/
+
+/*.xxx-4 {*/
+    /*width: 200px;*/
+    /*height: 12px;*/
+    /*margin-left: -4px;*/
+    /*background: #D61F27;*/
+
+/*}*/
+
+/*.productButton {*/
+    /*margin-top: 60px;*/
+/*}*/
+
+/*.cardTree {*/
+    /*width: 19rem;*/
+    /*margin-top: 30px;*/
+    /*padding-left: 80px;*/
+    /*justify-content: space-evenly;*/
+/*}*/
+
+/*.categoryTree h4 {*/
+    /*color: #00403B;*/
+/*}*/
+
+/*.categoryTree h2 {*/
+    /*margin: 30px;*/
+/*}*/
+
+/*.xxx-5 {*/
+    /*height: 15px;*/
+    /*background: #ffffff;*/
+/*}*/
+
+/*.lc {*/
+    /*!*border: 1px solid black;*!*/
+    /*!*padding: 10px;*!*/
+    /*!*background-color: aliceblue;*!*/
+/*}*/
+
+/*.lc .lc {*/
+    /*!*background-color: #008800;*!*/
+/*}*/
+
+/*.lc .lc .lc {*/
+    /*!*background-color: #660000;*!*/
+/*}*/
+
+/*.header {*/
+    /*!*height: 10vh;*!*/
+/*}*/
+
+/*!*.bg-menu {*/
+    /*position: fixed;*/
+    /*z-index: 9999;*/
+    /*height: 10vh;*/
+    /*width: 100%;*/
+/*}*!*/
+
+/*.shopbody .card {*/
+    /*background-color: transparent;*/
+/*}*/
+
+/*!*#welcome {*!*/
+/*!*color: white;*!*/
+/*!*background: #00A99D;*!*/
+/*!*background: #a91192;*!*/
+/*!*min-height: 90vh;*!*/
+/*!*}*!*/
+
+/*#about {*/
+    /*color: #00A99D;*/
+    /*font-size: 40px;*/
+    /*padding: 40px;*/
+    /*margin-bottom: .4rem;*/
+    /*font-weight: bolder;*/
+/*}*/
+
+/*.service {*/
+    /*color: #00A99D;*/
+    /*font-size: 40px;*/
+    /*padding: 20px;*/
+    /*margin-bottom: .4rem;*/
+    /*font-weight: bolder;*/
+/*}*/
+
+/*.xxx-1 {*/
+    /*width: 500px;*/
+    /*background: #00A99D;*/
+/*}*/
+
+/*!**/
+ /*.welcome {*/
+    /*color: #FFFFFF;*/
+    /*font-size: 40px;*/
+    /*padding: .4px;*/
+    /*margin bottom: .1rem;*/
+    /*font-weight: bolder;*/
+/*} *!*/
+
+/*#grad {*/
+    /*background-image: linear-gradient(#00A99D, #000000);*/
+    /*width: 1600px;*/
+    /*height: 700px;*/
+/*}*/
+
+/*.btn.btn-rounded {*/
+    /*border-radius: 35px;*/
+    /*font-weight: 900;*/
+    /*font-size: 1.2rem;*/
+    /*width: 190px;*/
+    /*text-color: #00403B;*/
+    /*background: #00FFED;*/
+    /*height: 50px;*/
+/*}*/
+
+/*.butt{*/
+   /*border: 1px;*/
+   /*background-color: red;*/
+   /*color: white;*/
+   /*width: 150px;*/
+   /*height: 40px;*/
+/*}*/
+
+/*.butt2{*/
+   /*border: 1px;*/
+   /*background-color: black;*/
+   /*color: white;*/
+   /*width: 150px;*/
+   /*height: 40px;*/
+   /*margin-left: 20px;*/
+/*}*/
+/*.butt3{*/
+   /*border: 1px;*/
+   /*background-color: black;*/
+   /*color: white;*/
+   /*width: 150px;*/
+   /*height: 40px;*/
+   /*margin-left: 500px;*/
+/*}*/
+
+/*.form-group {*/
+     /*width: 50%;*/
+     /*margin-left: 300px;*/
+/*}*/
+
+/*textarea.form-control {*/
+    /*height: 200px;*/
+/*}*/
+

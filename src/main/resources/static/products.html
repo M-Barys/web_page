@@ -1,0 +1,14 @@
+<div class="row">
+    <div id="products" class="col-sm-12">
+        <h2 class="text-center ">PRODUKTY</h2>
+        <hr class="">
+    </div>
+    <div class="col-hov col-md-4" ng-repeat="rootCat in app.categoryTree.childrens">
+        <div class="card productCard" ui-sref="root.categories.singleCategoryView({categoryId: '{{rootCat.value.id}}'})">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{rootCat.value.info.name}}</h5>
+            </div>
+            <img class="card-img-bottom" src="/img/freazarka-03.png" alt="Categoria">
+        </div>
+    </div>
+</div>

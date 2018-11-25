@@ -1,30 +1,104 @@
-<div>
-    <h1>Simple category</h1>
-    <div>TODO: Drzewo nawigacji po categoriach</div>
-    <div>
-        id: {{catCtrl.category.id}}
-        name: {{catCtrl.category.info.name}}
-        desc: {{catCtrl.category.info.description}}
+<div class="row">
+    <div class="col-12">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Categoria: {{catCtrl.category.info.name}}</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+                    <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" ng-click="catCtrl.showImages()">Images</button>
+                        <button type="button" class="btn btn-secondary" ng-click="catCtrl.showIcon()">Icon</button>
+                        <button type="button" class="btn btn-secondary" ng-click="catCtrl.showTable()">Table</button>
+                    </div>
+                </form>
+            </div>
+        </nav>
     </div>
-    <div>
-        <h2>Producty</h2>
-        <table>
-            <tr>
-                <th>productId</th>
-                <th>link</th>
-                <th>name</th>
-                <th>description</th>
-            </tr>
-            <tr ng-repeat="prod in catCtrl.category.products">
-                <td>{{prod.id}}</td>
-                <td>
-                    <a ui-sref="root.categories.singleCategoryView.productInCategory({categoryId: '{{catCtrl.category.id}}', productID: '{{prod.id}}'})">See
-                        more</a></td>
-                <td><a ui-sref="root.productView({productID: '{{prod.id}}'})">Product page</a></td>
-                <td>{{prod.info.name}}</td>
-                <td>{{prod.info.description}}</td>
-            </tr>
-        </table>
+    <div class="col-2">
+        <ul ng-repeat="rootCat in app.categoryTree.childrens" class="nav flex-column">
+            <li class="nav-item">
+                <a ui-sref="root.categories.singleCategoryView({categoryId: '{{rootCat.value.id}}'})">{{rootCat.value.info.name}}</a>
+                <ul ng-repeat="subcat in rootCat.childrens" class="nav flex-column subcategory">
+                    <li class="nav-item">
+                        > <a ui-sref="root.categories.singleCategoryView({categoryId: '{{subcat.value.id}}'})">{{subcat.value.info.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-    <div class="lc" ui-view="productDetailsUI"> productDetailsUI</div>
+
+    <div class="col-10">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container-fluid" ng-show="catCtrl.toDisplay == 'images'">
+                    <div class="row">
+                        <div class="card col-4 productCard" ng-repeat="p in catCtrl.category.products">
+                            <div class="card-body">
+                                <div ui-sref="root.productView({productID: '{{p.id}}'})">
+                                    <h6 class="card-title text-center">{{p.info.name}}</h6>
+                                    <img class="card-img-top" src="/img/freazarka-03.png" alt="Pruct">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" ng-show="catCtrl.toDisplay == 'table'">
+                    <div class="row">
+                        <div class=" col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nazwa</th>
+                                    <th scope="col">Opis</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="productCard" ng-repeat="p in catCtrl.category.products"
+                                    ui-sref="root.productView({productID: '{{p.id}}'})">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <td>{{p.info.name}}</td>
+                                    <td>{{p.info.description}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" ng-show="catCtrl.toDisplay == 'icon'">
+                    <div class="row">
+                        <div class=" col-12">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Icon</th>
+                                    <th scope="col">Nazwa</th>
+                                    <th scope="col">Opis</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="productCard" ng-repeat="p in catCtrl.category.products"
+                                    ui-sref="root.productView({productID: '{{p.id}}'})">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <td><img holder="holder.js/70x70?theme=social"/></td>
+                                    <td>{{p.info.name}}</td>
+                                    <td>{{p.info.description}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+

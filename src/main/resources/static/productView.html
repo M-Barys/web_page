@@ -1,6 +1,64 @@
-<div>
-    Product!!! view TODO.
-
-    {{prodCtrl.productID}}
-    Nazwa: {{prodCtrl.product.info.name}}
+<div class="row">
+    <div class="col-12">
+        <h2>{{prodCtrl.product.info.name}}</h2>
+        <hr class="">
+    </div>
+</div>
+<div id="categoryView" class="row">
+    <div class="col-md-2">
+        <h4>Kategorie:</h4>
+        <ul ng-repeat="rootCat in app.categoryTree.childrens" class="nav flex-column">
+            <li class="nav-item">
+                <a ui-sref="root.categories.singleCategoryView({categoryId: '{{rootCat.value.id}}'})">{{rootCat.value.info.name}}</a>
+                <ul ng-repeat="subcat in rootCat.childrens" class="nav flex-column subcategory">
+                    <li class="nav-item">
+                        > <a ui-sref="root.categories.singleCategoryView({categoryId: '{{subcat.value.id}}'})">{{subcat.value.info.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class=" col-md-10 ">
+        <div class="row">
+            <div class=" col-md-5 ">
+                <div class="row">
+                    <div class="col-md-12 col-sm-6 co-xs-6 gal-item">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 co-xs-12 gal-item">
+                                <div class="box">
+                                    <img holder="holder.js/100px100?theme=social&text=SDSG">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6 col-sm-6 co-xs-12 gal-item">
+                                <div class="box">
+                                    <img holder="holder.js/100px80?theme=social&text=SDSG">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 co-xs-12 gal-item">
+                                <div class="box">
+                                    <img holder="holder.js/100px80?theme=social&text=SDSG">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <button type="button" class="btn btn-success"
+                        ui-sref="root.productOrder({productID: '{{prodCtrl.productID}}'})">ZAMAWIAM
+                </button>
+                <h2>Opis:{{prodCtrl.product.info.name}}</h2>
+                <p>{{prodCtrl.product.info.description}}</p>
+                <h3>Parametry</h3>
+                <table>
+                    <tr ng-repeat="p in prodCtrl.product.params">
+                        <td>{{p.name}}</td>
+                        <td>{{p.value}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

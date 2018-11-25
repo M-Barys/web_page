@@ -1,29 +1,23 @@
-<ul class="nav justify-content-center">
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" ui-sref="root.info.welcome"><img src="/img/logo-05.png"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <li class="nav-item">
-        <a class="nav-link disabled" ui-sref="root.info.welcome" ui-sref-active="active">Strona glowna</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" ui-sref="root.info.about" ui-sref-active="active">About</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" ui-sref="root.info.services" ui-sref-active="active">Services</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" ui-sref="root.info.references" ui-sref-active="active">References</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" ui-sref="root.info.contact" ui-sref-active="active">Contact</a>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" ui-sref="root.info.categories" id="navbarDropdownMenuLink"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Categories
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a ng-repeat="rootCat in app.categoryTree.childrens" class="dropdown-item"
-               ui-sref="root.categories.singleCategoryView({categoryId: '{{rootCat.value.id}}'})">{{rootCat.value.info.name}}</a>
-        </div>
-    </li>
-</ul>
-
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link disabled text-dark" ui-sref="root.info.services" ui-sref-active="active">Services</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a class="nav-link disabled text-dark" ui-sref="root.info.contact" ui-sref-active="active">Contact</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button ui-sref="root.info.products" ui-sref-active="active" type="button"
+                    class="btn btn-outline-danger text-dark">PRODUKTY
+            </button>
+        </form>
+    </div>
+</nav>

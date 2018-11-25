@@ -1,0 +1,16 @@
+<div class="row">
+    <div id="older" class=" col-sm-12">
+        <p>{{OrderCtrl.product.info.name}}</p>
+        <address>Wyślij E-mail na adres <a href="mailto:xframe@gmail.com">xframe@gmail.com </a> o następującej tresci</address>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Tresc wiadomosci</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1"
+                      rows="10">Prosze o informacje na temat producty: {{OrderCtrl.product.info.name}} o ID {{OrderCtrl.product.id}}
+
+                Opis producty to {{OrderCtrl.product.info.description}}
+            </textarea>
+        </div>
+        </form>
+        <input class="butt3" type="button" value="WYSLIJ"/>
+    </div>
+</div>
