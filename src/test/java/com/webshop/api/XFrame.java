@@ -17,6 +17,7 @@ import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.CategoryInfo;
+import com.webshop.model.instance.info.Parameters;
 import com.webshop.model.instance.info.ProductInfo;
 import com.webshop.model.view.CategoryTreeNode;
 import io.restassured.RestAssured;
@@ -35,10 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static com.webshop.api.ApiEndpointSpecification.*;
 import static com.webshop.model.instance.Category.CATEGORY_ROOT;
@@ -152,6 +150,7 @@ public class XFrame extends AbstractApiTest {
                                 "\n" +
                                 " \n" +
                                 "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .parameters(Lists.newArrayList())
                         .build())
                 .data(ProductData.builder()
                         .slug("")
@@ -241,6 +240,7 @@ public class XFrame extends AbstractApiTest {
                                 "\n" +
                                 " \n" +
                                 "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .parameters(Lists.newArrayList())
                         .build())
                 .data(ProductData.builder()
                         .slug("")
@@ -329,6 +329,7 @@ public class XFrame extends AbstractApiTest {
                                 "\n" +
                                 " \n" +
                                 "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .parameters(Lists.newArrayList())
                         .build())
                 .data(ProductData.builder()
                         .slug("")
@@ -421,6 +422,9 @@ public class XFrame extends AbstractApiTest {
                                 "\n" +
                                 " \n" +
                                 "Gwarancja maszyny udzielana jest na okres 12 miesięcy.")
+                        .parameters(Arrays.asList(
+                                new Parameters("Pole robocze", "60 mm")
+                        ))
                         .build())
                 .data(ProductData.builder()
                         .slug("")

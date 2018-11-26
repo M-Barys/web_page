@@ -27,6 +27,7 @@ public class ProductDataTest {
                 .info(ProductInfo.builder()
                         .description(text.paragraph())
                         .name(text.latinWord())
+                        .parameters(Lists.newArrayList())
                         .build())
                 .data(ProductData.builder()
                         .slug(text.randomString(fairy.baseProducer().randomBetween(2, 20)))
