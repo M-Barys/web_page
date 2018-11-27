@@ -7,6 +7,8 @@ public class ApiEndpointSpecification {
     public static String categoryByIDRelationEndpoint = "/api/categories/{mainCategoryId}/relationships/categories";
     public static String categoryByIDAddProductEndpoint = "/api/categories/{id}/addProduct";
     public static String categoryByIDAddDeleteEndpoint = "/api/categories/{id}/deleteProduct";
+    public static String categoryByIDAddPictureEndpoint = "/api/categories/{id}/setPicture";
+    public static String categoryByIDDeletePictureEndpoint = "/api/categories/{id}/deletePicture";
 
     public static String productEndpoint = "/api/products";
     public static String productByIDEndpoint = "/api/products/{id}";

@@ -30,4 +30,7 @@ public class CategoryEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<ProductEntity> productEntities;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PictureEntity pictureEntity;
+
 }

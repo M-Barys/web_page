@@ -21,6 +21,9 @@ public class PictureMapping {
     }
 
     public PictureUrlInfo urlInfoFromEntity(PictureEntity pictureEntity) {
+        if (pictureEntity == null) {
+            return null;
+        }
         return PictureUrlInfo.builder()
                 .alternative("TODO")
                 .pictureUrlPath("/api/pictures/" + pictureEntity.getPictureID() + "/image.jpg")
@@ -41,5 +44,6 @@ public class PictureMapping {
                 .map(this::urlInfoFromEntity)
                 .collect(Collectors.toList());
     }
+
 
 }

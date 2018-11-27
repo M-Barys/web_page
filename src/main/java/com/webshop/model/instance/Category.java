@@ -19,11 +19,13 @@ public class Category {
     private CategoryData data;
     private CategoryInfo info;
     private List<Product> products;
+    private PictureUrlInfo picture;
 
     public static final Category CATEGORY_ROOT = Category.builder()
             .id(0L)
             .data(null)
             .info(null)
             .products(null)
+            .picture(null)
             .build();
 }

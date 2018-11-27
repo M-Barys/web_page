@@ -10,6 +10,7 @@ import com.webshop.repositories.CategoryRelationshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +23,17 @@ public class CategoryRelationshipService {
     @Autowired
     private CategoryRelationshipRepository categoryRelationshipRepository;
 
+    @Transactional
     public void createRelation(Long mainCategoryId, RelationParams relation) {
         Preconditions.checkArgument(relation.getParent().getType().compareTo(ModelObjectType.CATEGORY) == 0);
         Preconditions.checkArgument(!mainCategoryId.equals(0L), "Root category cannot be a child");
 
-        Iterable<CategoryRelationship> relationsList = categoryRelationshipRepository.findAll();
-        for (CategoryRelationship o : relationsList) {
-            Preconditions.checkArgument(!mainCategoryId.equals(o.getCategoryId()), "This category already is a parent.");
-        }
+//        Iterable<CategoryRelationship> relationsList = categoryRelationshipRepository.findAll();
+//        for (CategoryRelationship o : relationsList) {
+//            Preconditions.checkArgument(!mainCategoryId.equals(o.getCategoryId()), "This category already is a parent.");
+//        }
+        categoryRelationshipRepository.deleteByCategoryId(mainCategoryId);
+
 
         CategoryRelationship data = CategoryRelationship.builder()
                 .categoryId(mainCategoryId)

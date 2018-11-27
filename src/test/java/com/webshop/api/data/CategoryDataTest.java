@@ -3,6 +3,7 @@ package com.webshop.api.data;
 import com.devskiller.jfairy.Fairy;
 import com.devskiller.jfairy.producer.text.TextProducer;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.webshop.model.Status;
 import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
@@ -31,7 +32,8 @@ public class CategoryDataTest {
                 .data(CategoryData.builder()
                         .slug(text.randomString(fairy.baseProducer().randomBetween(2, 20)))
                         .status(Status.draft)
-                        .build());
+                        .build())
+                .picture(null);
     }
 
 }

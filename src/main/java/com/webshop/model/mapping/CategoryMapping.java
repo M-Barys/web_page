@@ -26,11 +26,15 @@ public class CategoryMapping {
 
     private final ProductMapping productMapping;
 
+    private final PictureMapping pictureMapping;
+
     @Autowired
-    public CategoryMapping(ConfigurationService configuration, HttpServletRequest request, ProductMapping productMapping) {
+    public CategoryMapping(ConfigurationService configuration, HttpServletRequest request, ProductMapping productMapping,
+                           PictureMapping pictureMapping) {
         this.configuration = configuration;
         this.language = StoreLanguage.fromHeader(request.getHeader("X-API-Lang"));
         this.productMapping = productMapping;
+        this.pictureMapping = pictureMapping;
     }
 
     public CategoryEntity createEntity(Category category) {
@@ -49,6 +53,7 @@ public class CategoryMapping {
                 .data(configuration.getGson().fromJson(categoryEntity.getCategoryData(), CategoryData.class))
                 .info(info.get(language))
                 .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
+                .picture(pictureMapping.urlInfoFromEntity(categoryEntity.getPictureEntity()))
                 .build();
     }
 

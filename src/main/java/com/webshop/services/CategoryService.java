@@ -2,15 +2,25 @@ package com.webshop.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Streams;
+import com.webshop.model.PictureFileType;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
+import com.webshop.model.instance.PictureRef;
+import com.webshop.model.instance.Product;
 import com.webshop.model.mapping.CategoryMapping;
 import com.webshop.repositories.CategoryRepository;
+import com.webshop.repositories.PictureRepository;
 import com.webshop.repositories.ProductRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +36,9 @@ public class CategoryService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private PictureRepository pictureRepository;
 
     public List<Category> getAllCategories() {
         return Streams.stream(categoryRepository.findAll())
@@ -72,6 +85,18 @@ public class CategoryService {
         List<ProductEntity> newProductList = categoryEntity.getProductEntities();
         newProductList.remove(productRepository.findById(pictureID).get());
         categoryEntity.setProductEntities(newProductList);
+        return mapping.fromEntity(categoryRepository.save(categoryEntity));
+    }
+
+    public Category setupCategoryPicture(Long id, Long pictureID) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).get();
+        categoryEntity.setPictureEntity(pictureRepository.findById(pictureID).get());
+        return mapping.fromEntity(categoryRepository.save(categoryEntity));
+    }
+
+    public Category deleteCategoryPicture(Long cid) {
+        CategoryEntity categoryEntity = categoryRepository.findById(cid).get();
+        categoryEntity.setPictureEntity(null);
         return mapping.fromEntity(categoryRepository.save(categoryEntity));
     }
 

@@ -645,8 +645,19 @@ public class XFrame extends AbstractApiTest {
         Category addedStoly = createNewCategory(stoly);
         Category addedKontat = createNewCategory(kontakt);
 
+        Category addedFrezarkiPicture = given()
+                .log().all()
+                .queryParam("pictureID", loadedFrezarka1Picture1.getPictureID())
+                .when()
+                .put(categoryByIDAddPictureEndpoint, addedFrezarki.getId())
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().body().as(Category.class);
+
+
+
         Category loadedStronaGlowna = loadCategoryByID(addedStronaGlowna.getId(), StoreLanguage.PL);
-        Category loadedFrezarki = loadCategoryByID(addedFrezarki.getId(), StoreLanguage.PL);
+        Category loadedFrezarki = loadCategoryByID(addedFrezarkiPicture.getId(), StoreLanguage.PL);
         Category loadedLasery = loadCategoryByID(addedLasery.getId(), StoreLanguage.PL);
         Category loadedAkcesoria = loadCategoryByID(addedAkcesoria.getId(), StoreLanguage.PL);
         Category loadedWrzeciona = loadCategoryByID(addedWrzeciona.getId(), StoreLanguage.PL);
