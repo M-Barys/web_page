@@ -10,6 +10,8 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.PictureRef;
 import com.webshop.model.instance.Product;
 import com.webshop.model.mapping.CategoryMapping;
+import com.webshop.model.mapping.CategoryMappingWithDefault;
+import com.webshop.model.mapping.CategoryMappingWithLanguage;
 import com.webshop.repositories.CategoryRepository;
 import com.webshop.repositories.PictureRepository;
 import com.webshop.repositories.ProductRepository;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +32,10 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     @Autowired
-    private CategoryMapping mapping;
+    private CategoryMappingWithDefault mapping;
+
+    @Autowired
+    private CategoryMappingWithLanguage categoryMappingWithLanguage;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -52,11 +58,22 @@ public class CategoryService {
     }
 
     public Category addCategory(Category category) {
+        return addCategory(category, true);
+    }
+
+    @Transactional
+    public Category addCategory(Category category, boolean onRequest) {
         Preconditions.checkArgument(category.getId() == null, "A new product can not have a ID setup");
 
-        CategoryEntity entity = mapping.createEntity(category);
+        CategoryMapping mappingToUse;
+        if (onRequest) {
+            mappingToUse = categoryMappingWithLanguage;
+        } else {
+            mappingToUse = mapping;
+        }
+        CategoryEntity entity = mappingToUse.createEntity(category);
         CategoryEntity stored = categoryRepository.save(entity);
-        return mapping.fromEntity(stored);
+        return mappingToUse.fromEntity(stored);
 
     }
 

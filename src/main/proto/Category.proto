@@ -1,23 +1,28 @@
 syntax = "proto3";
 option java_multiple_files = true;
-package createCategory;
+package category;
 
-message CreateCategory {
-    string id = 1;
+message Category {
+    int64 id = 1;
     string data = 2;
     string info = 3;
-    repeated string products = 4;
-    string picture = 5;
+    repeated Product products = 4;
+    PictureUrlInfo picture = 5;
 }
 
-message CreateCategoryFromServer {
-    string id = 1;
-    string data = 2;
-    string info = 3;
-    repeated string products = 4;
-    string picture = 5;
+message Product {
+    int64 pid = 1;
 }
+
+message PictureUrlInfo {
+    string pictureUrlPath = 1;
+    string alternative = 2;
+}
+
+message CategoryCreated {
+    string respose = 1;
+ }
 
 service CategoryCreateService {
-    rpc create(CreateCategory) returns (CreateCategoryFromServer);
+    rpc createCategory(Category) returns (CategoryCreated);
 }

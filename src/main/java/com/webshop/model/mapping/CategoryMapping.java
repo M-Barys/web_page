@@ -7,17 +7,13 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.services.ConfigurationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-@RequestScope
 public class CategoryMapping {
 
     private final StoreLanguage language;
@@ -28,14 +24,13 @@ public class CategoryMapping {
 
     private final PictureMapping pictureMapping;
 
-    @Autowired
-    public CategoryMapping(ConfigurationService configuration, HttpServletRequest request, ProductMapping productMapping,
-                           PictureMapping pictureMapping) {
+    public CategoryMapping(StoreLanguage language, ConfigurationService configuration, ProductMapping productMapping, PictureMapping pictureMapping) {
+        this.language = language == null ? StoreLanguage.EN : language;
         this.configuration = configuration;
-        this.language = StoreLanguage.fromHeader(request.getHeader("X-API-Lang"));
         this.productMapping = productMapping;
         this.pictureMapping = pictureMapping;
     }
+
 
     public CategoryEntity createEntity(Category category) {
         return internalCreate(category, new HashMap<>());
@@ -52,7 +47,7 @@ public class CategoryMapping {
                 .id(categoryEntity.getId())
                 .data(configuration.getGson().fromJson(categoryEntity.getCategoryData(), CategoryData.class))
                 .info(info.get(language))
-                .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
+//                .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
                 .picture(pictureMapping.urlInfoFromEntity(categoryEntity.getPictureEntity()))
                 .build();
     }
@@ -65,7 +60,7 @@ public class CategoryMapping {
                 .id(category.getId())
                 .categoryData(jsonCategory)
                 .categoryInfoBlob(infoJson)
-                .productEntities(productMapping.mapToProductEntityList(category.getProducts()))
+//                .productEntities(productMapping.mapToProductEntityList(category.getProducts()))
                 .build();
     }
 
