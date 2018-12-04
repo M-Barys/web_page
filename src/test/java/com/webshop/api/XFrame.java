@@ -49,7 +49,7 @@ import static io.restassured.RestAssured.given;
 @Ignore
 public class XFrame extends AbstractApiTest {
 
-    private int serverPort = 8080;
+    private int serverPort = 8081;
 
 //    private final ProductDataTest productDataTest = new ProductDataTest();
 //    private final CategoryDataTest categoryDataTest = new CategoryDataTest();
@@ -57,6 +57,7 @@ public class XFrame extends AbstractApiTest {
     @Before
     public void setUp() {
         RestAssured.port = serverPort;
+        //RestAssured.baseURI = "http://192.168.0.31";
         config = config()
                 .logConfig(LogConfig
                         .logConfig()
