@@ -19,6 +19,31 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
     }
 
     @Override
+    public StreamObserver<ApiOperation> streamingApiOperations(StreamObserver<ApiOperationResult> responseObserver) {
+        return new StreamObserver<ApiOperation>(){
+
+            @Override
+            public void onNext(ApiOperation value) {
+                ApiOperationResult wynik = null;
+
+                responseObserver.onNext(wynik);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                responseObserver.onError(t);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+            }
+        };
+    }
+
+
+
+    @Override
     public void createCategory(Category category, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category categoryInstance = buildCategoryInstance(category);
         com.webshop.model.instance.Category created = categoryService.addCategory(categoryInstance, false);
