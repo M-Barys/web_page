@@ -7,6 +7,8 @@ import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.services.CategoryService;
 import io.grpc.stub.StreamObserver;
 
+import java.util.List;
+
 
 public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.CategoryCreateServiceImplBase {
 
@@ -17,29 +19,36 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
     }
 
     @Override
-    public void createCategory(Category category, StreamObserver<CategoryCreated> responseObserver) {
+    public void createCategory(Category category, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category categoryInstance = buildCategoryInstance(category);
         com.webshop.model.instance.Category created = categoryService.addCategory(categoryInstance, false);
         sendResponse(created, responseObserver);
     }
 
     @Override
-    public void getCategory(Category category, StreamObserver<CategoryCreated> responseObserver) {
+    public void getCategory(Category category, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category retrievedCategory = categoryService.getCategory(category.getId());
         sendResponse(retrievedCategory, responseObserver);
     }
 
     @Override
-    public void updateCategory(Category category, StreamObserver<CategoryCreated> responseObserver) {
+    public void updateCategory(Category category, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category categoryInstance = buildCategoryInstance(category);
         com.webshop.model.instance.Category updateCategory = categoryService.updateCategory(categoryInstance);
         sendResponse(updateCategory, responseObserver);
     }
 
     @Override
-    public void deleteCategory(Category category, StreamObserver<CategoryCreated> responseObserver) {
+    public void deleteCategory(Category category, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category deletedCategory = categoryService.deleteCategoryPicture(category.getId());
         sendResponse(deletedCategory, responseObserver);
+
+    }
+
+    @Override
+    public void addProductToCategory(CategoryProduct categoryProduct, StreamObserver<Category> responseObserver){
+        com.webshop.model.instance.Category categoryWithProduct = categoryService.addProductToCategory(categoryProduct
+                .getId(), categoryProduct.getPid());
 
     }
 
@@ -65,23 +74,35 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
         return com.webshop.model.Status.draft;
     }
 
-    private void sendResponse(com.webshop.model.instance.Category category,
-                              StreamObserver<CategoryCreated> responseObserver) {
+    private void sendResponse(com.webshop.model.instance.Category retrievedCategory,
+                              StreamObserver<Category> responseObserver) {
 
-        String receivedCategory = new StringBuilder()
-                .append(category.getId())
-                .append(category.getData())
-                .append(category.getInfo())
-                .append(category.getProducts())
-                .append(category.getPicture())
-                .toString();
+        Category.Builder response = Category.newBuilder()
+                .setId(retrievedCategory.getId())
+                .setData(category.CategoryData.newBuilder()
+                        .setSlug(retrievedCategory.getData().getSlug())
+                        .setStatus(mapResponseStatus(retrievedCategory.getData().getStatus()))
+                        .build())
+                        .setInfo(category.CategoryInfo.newBuilder()
+                        .setName(retrievedCategory.getInfo().getName())
+                        .setDescription(retrievedCategory.getInfo().getDescription()));
 
-        CategoryCreated response = CategoryCreated.newBuilder()
-                .setRespose(receivedCategory)
-                .build();
+//        List<com.webshop.model.instance.Product> products = retrievedCategory.getProducts();
+//        if( products != null) {
+//            products.forEach(p -> {
+//                response.addProducts(null);
+//            });
+//        }
 
-        responseObserver.onNext(response);
+        responseObserver.onNext(response.build());
         responseObserver.onCompleted();
+    }
+
+    private Status mapResponseStatus(com.webshop.model.Status status) {
+        if (status.equals(com.webshop.model.Status.live)){
+            return Status.live;
+        }
+        return Status.draft;
     }
 }
 

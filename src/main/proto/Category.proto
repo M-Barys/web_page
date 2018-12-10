@@ -28,6 +28,7 @@ message CategoryInfo{
 
 message Product {
     int64 pid = 1;
+    string name = 2;
 }
 
 message PictureUrlInfo {
@@ -35,13 +36,27 @@ message PictureUrlInfo {
     string alternative = 2;
 }
 
-message CategoryCreated {
-    string respose = 1;
+
+message CategoryProduct {
+    int64 id = 1;
+    int64 pid = 2;
  }
 
+message ApiOperation {
+    oneof operation {
+        Category createCategory = 1;
+        Category updateCategory = 2;
+        Product addProduct = 3;
+        CategoryProduct addProductToCategory = 4;
+    }
+}
+
 service CategoryCreateService {
-    rpc createCategory(Category) returns (CategoryCreated);
-    rpc updateCategory(Category) returns (CategoryCreated);
-    rpc getCategory(Category) returns (CategoryCreated);
-    rpc deleteCategory(Category) returns (CategoryCreated);
+    rpc createCategory(Category) returns (Category);
+    rpc updateCategory(Category) returns (Category);
+    rpc getCategory(Category) returns (Category);
+    rpc deleteCategory(Category) returns (Category);
+    rpc addPictureToCategory(PictureUrlInfo) returns (Category);
+    rpc addProductToCategory(CategoryProduct) returns (Category);
+    
 }
