@@ -46,7 +46,6 @@ public class CategoryController extends AbstractControllerExceptionHandler {
         return updated;
     }
 
-
     @CacheEvict(value="categoriesTree", allEntries=true)
     @RequestMapping(value = "/{id}/setPicture", method = RequestMethod.PUT)
     Category setupCategoryPicture(@NotNull @PathVariable Long id, @RequestParam("pictureID") Long pictureID) {

@@ -20,13 +20,42 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
 
     @Override
     public StreamObserver<ApiOperation> streamingApiOperations(StreamObserver<ApiOperationResult> responseObserver) {
-        return new StreamObserver<ApiOperation>(){
+        return new StreamObserver<ApiOperation>() {
 
             @Override
             public void onNext(ApiOperation value) {
-                ApiOperationResult wynik = null;
+                switch (value.getOperationCase()) {
+                    case CREATECATEGORY:
+                        com.webshop.model.instance.Category categoryInstance = buildCategoryInstance(value.getCreateCategory());
+                        com.webshop.model.instance.Category created = categoryService.addCategory(categoryInstance, false);
+                        ApiOperationResult categoryToSend = ApiOperationResult.newBuilder().setCreatedCategoryId(created.getId()).build();
+                        responseObserver.onNext(categoryToSend);
+                        break;
+                    case UPDATECATEGORY:
+                        com.webshop.model.instance.Category updatedCategoryInstance = buildCategoryInstance(value.getCreateCategory());
+                        com.webshop.model.instance.Category updatedCategory = categoryService.updateCategory(updatedCategoryInstance);
+                        ApiOperationResult updatedCategoryToSend = ApiOperationResult.newBuilder().setUpdatedCategory(updatedCategory.getId()).build();
+                        responseObserver.onNext(updatedCategoryToSend);
+                        break;
+                    case ADDPRODUCT:
 
-                responseObserver.onNext(wynik);
+                        break;
+                    case ADDPRODUCTTOCATEGORY:
+                        com.webshop.model.instance.Category categoryWithProduct = categoryService
+                                .addProductToCategory(value.getAddProductToCategory().getId(), value.getAddProductToCategory().getPid());
+                        ApiOperationResult categoryPicture = ApiOperationResult.newBuilder().setAddedProductToCategory(true).build();
+                        responseObserver.onNext(categoryPicture);
+                        break;
+                    case DELETEPRODUCTTOCATEGORY:
+                        com.webshop.model.instance.Category categoryWoProduct = categoryService
+                                .deleteProduct(value.getAddProductToCategory().getId(), value.getDeleteProductToCategory().getPid());
+                        ApiOperationResult categoryWoPicture = ApiOperationResult.newBuilder().setDeletedProductToCategory(true).build();
+                        responseObserver.onNext(categoryWoPicture);
+                        break;
+                    case OPERATION_NOT_SET:
+                        break;
+                }
+
             }
 
             @Override
@@ -40,7 +69,6 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
             }
         };
     }
-
 
 
     @Override
@@ -71,7 +99,7 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
     }
 
     @Override
-    public void addProductToCategory(CategoryProduct categoryProduct, StreamObserver<Category> responseObserver){
+    public void addProductToCategory(CategoryProduct categoryProduct, StreamObserver<Category> responseObserver) {
         com.webshop.model.instance.Category categoryWithProduct = categoryService.addProductToCategory(categoryProduct
                 .getId(), categoryProduct.getPid());
 
@@ -88,7 +116,7 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
                         .description(request.getInfo().getDescription())
                         .build())
                 .products(ImmutableList.of())
-                .picture(null)
+                //.picture(null)
                 .build();
     }
 
@@ -108,23 +136,33 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
                         .setSlug(retrievedCategory.getData().getSlug())
                         .setStatus(mapResponseStatus(retrievedCategory.getData().getStatus()))
                         .build())
-                        .setInfo(category.CategoryInfo.newBuilder()
+                .setInfo(category.CategoryInfo.newBuilder()
                         .setName(retrievedCategory.getInfo().getName())
-                        .setDescription(retrievedCategory.getInfo().getDescription()));
+                        .setDescription(retrievedCategory.getInfo().getDescription()))
+                .setPicture(category.PictureUrlInfo.newBuilder()
+                        .setPictureUrlPath(retrievedCategory.getPicture().getPictureUrlPath())
+                        .setAlternative(retrievedCategory.getPicture().getPictureUrlPath()));
 
-//        List<com.webshop.model.instance.Product> products = retrievedCategory.getProducts();
-//        if( products != null) {
-//            products.forEach(p -> {
-//                response.addProducts(null);
-//            });
-//        }
+        List<com.webshop.model.instance.Product> products = retrievedCategory.getProducts();
+        if (products != null) {
+            products.forEach(p -> {
+                response.addProducts(mapProduct(p));
+            });
+        }
 
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
     }
 
+    private Product mapProduct(com.webshop.model.instance.Product p) {
+        Product productGrpc = Product.newBuilder()
+                .setPid(p.getId())
+                .build();
+        return productGrpc;
+    }
+
     private Status mapResponseStatus(com.webshop.model.Status status) {
-        if (status.equals(com.webshop.model.Status.live)){
+        if (status.equals(com.webshop.model.Status.live)) {
             return Status.live;
         }
         return Status.draft;

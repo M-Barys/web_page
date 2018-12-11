@@ -2,16 +2,12 @@ package com.webshop.api.GrpcTest;
 
 import category.*;
 import com.google.common.collect.ImmutableList;
-import com.webshop.repositories.CategoryRepository;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.assertj.AssertableWebApplicationContext;
 
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -20,9 +16,11 @@ public class CategoryClientTest {
     volatile Long categoryId = null;
     volatile Long productId = null;
     StreamObserver<ApiOperation> response;
+
     @Test
     public void streamTest() throws InterruptedException {
         final CountDownLatch finishLatch = new CountDownLatch(1);
+
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8082)
                 .usePlaintext()
                 .build();
@@ -30,21 +28,25 @@ public class CategoryClientTest {
         CategoryCreateServiceGrpc.CategoryCreateServiceStub stub
                 = CategoryCreateServiceGrpc.newStub(channel);
 
-
         StreamObserver<ApiOperationResult> jakObsluzyc = new StreamObserver<ApiOperationResult>() {
+
             @Override
             public void onNext(ApiOperationResult value) {
-                switch(value.getOperationCase()){
+                switch (value.getOperationCase()) {
                     case CREATEDCATEGORYID:
                         categoryId = value.getCreatedCategoryId();
                         response.onNext(null); // Dodaj product
                         break;
                     case UPDATEDCATEGORY:
+                        categoryId = value.getUpdatedCategory();
                         break;
                     case ADDEDPRODUCT:
+                        productId = value.getAddedProduct();
                         break;
                     case ADDEDPRODUCTTOCATEGORY:
-                        System.out.print(" Hurra");
+                        if (value.getAddedProductToCategory()) {
+                            System.out.print("Product added successfully");
+                        }
                         break;
                     case OPERATION_NOT_SET:
                         break;
@@ -65,26 +67,7 @@ public class CategoryClientTest {
         };
         response = stub.streamingApiOperations(jakObsluzyc);
 
-        ApiOperation toSend = null;
-        response.onNext(toSend);
-        if (!finishLatch.await(1, TimeUnit.MINUTES)) {
-            throw new RuntimeException("recordRoute can not finish within 1 minutes");
-        }
-
-
-
-    }
-
-    @Test
-    public void sendRequest() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8082)
-                .usePlaintext()
-                .build();
-
-        CategoryCreateServiceGrpc.CategoryCreateServiceBlockingStub stub
-                = CategoryCreateServiceGrpc.newBlockingStub(channel);
-
-        Category categoryResponse = stub.createCategory(Category.newBuilder()
+        ApiOperation toSend = ApiOperation.newBuilder().setCreateCategory(Category.newBuilder()
                 .setData(CategoryData.newBuilder()
                         .setSlug("test")
                         .setStatus(Status.live)
@@ -93,15 +76,44 @@ public class CategoryClientTest {
                         .setName("Frezarki CNC")
                         .setDescription("Frezarki CNC")
                         .build())
-                .build());
+                .addProducts(Product.newBuilder().setPid(1).build())
+                .build())
+                .build();
 
-        Category retrievedCategory = stub.getCategory(categoryResponse);
-        Assertions.assertThat(retrievedCategory).isEqualTo(categoryResponse);
+        response.onNext(toSend);
 
-        Category deletedCategoryResponse = stub.deleteCategory(categoryResponse);
-        Assertions.assertThat(deletedCategoryResponse).isEqualTo(categoryResponse);
+        if (!finishLatch.await(30, TimeUnit.SECONDS)) {
+            throw new RuntimeException("recordRoute cannot finish within 1 minutes");
+        }
 
-
-        channel.shutdown();
     }
+
+//    @Test
+//    public void sendRequest() {
+//        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8082)
+//                .usePlaintext()
+//                .build();
+//
+//        CategoryCreateServiceGrpc.CategoryCreateServiceBlockingStub stub
+//                = CategoryCreateServiceGrpc.newBlockingStub(channel);
+//
+//        Category categoryResponse = stub.createCategory(Category.newBuilder()
+//                .setData(CategoryData.newBuilder()
+//                        .setSlug("test")
+//                        .setStatus(Status.live)
+//                        .build())
+//                .setInfo(CategoryInfo.newBuilder()
+//                        .setName("Frezarki CNC")
+//                        .setDescription("Frezarki CNC")
+//                        .build())
+//                .build());
+//
+//        Category retrievedCategory = stub.getCategory(categoryResponse);
+//        Assertions.assertThat(retrievedCategory).isEqualTo(categoryResponse);
+//
+//        Category deletedCategoryResponse = stub.deleteCategory(categoryResponse);
+//        Assertions.assertThat(deletedCategoryResponse).isEqualTo(categoryResponse);
+//
+//        channel.shutdown();
+//    }
 }

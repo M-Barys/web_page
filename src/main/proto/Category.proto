@@ -47,6 +47,7 @@ message ApiOperation {
         Category updateCategory = 2;
         Product addProduct = 3;
         CategoryProduct addProductToCategory = 4;
+        CategoryProduct deleteProductToCategory = 5;
     }
 }
 
@@ -56,6 +57,7 @@ message ApiOperationResult {
         int64 updatedCategory = 2;
         int64 addedProduct = 3;
         bool addedProductToCategory = 4;
+        bool deletedProductToCategory = 5;
     }
 }
 
