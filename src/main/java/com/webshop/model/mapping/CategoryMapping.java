@@ -7,8 +7,7 @@ import com.webshop.model.instance.Category;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.services.ConfigurationService;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
+
 
 import java.lang.reflect.Type;
 import java.util.HashMap;

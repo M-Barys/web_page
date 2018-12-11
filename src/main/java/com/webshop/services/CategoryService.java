@@ -89,6 +89,7 @@ public class CategoryService {
         return mapping.fromEntity(stored);
     }
 
+    @Transactional
     public Category addProductToCategory(Long id, Long productID) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).get();
         List<ProductEntity> newProductList = categoryEntity.getProductEntities();
@@ -97,10 +98,11 @@ public class CategoryService {
         return mapping.fromEntity(categoryRepository.save(categoryEntity));
     }
 
-    public Category deleteProduct(Long id, Long pictureID) {
+    @Transactional
+    public Category deleteProduct(Long id, Long productID) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).get();
         List<ProductEntity> newProductList = categoryEntity.getProductEntities();
-        newProductList.remove(productRepository.findById(pictureID).get());
+        newProductList.remove(productRepository.findById(productID).get());
         categoryEntity.setProductEntities(newProductList);
         return mapping.fromEntity(categoryRepository.save(categoryEntity));
     }

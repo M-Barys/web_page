@@ -3,19 +3,23 @@ package com.webshop;
 import category.*;
 import com.google.common.collect.ImmutableList;
 import com.webshop.model.instance.data.CategoryData;
+import com.webshop.model.instance.data.ProductData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.services.CategoryService;
+import com.webshop.services.ProductService;
 import io.grpc.stub.StreamObserver;
 
 import java.util.List;
 
 
-public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.CategoryCreateServiceImplBase {
+public class CategoryServiceImpl extends CategoryServiceGrpc.CategoryServiceImplBase {
 
     private final CategoryService categoryService;
+    private final ProductService productService;
 
-    public CategoryCreateServiceImpl(CategoryService categoryService) {
+    public CategoryServiceImpl(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
+        this.productService = productService;
     }
 
     @Override
@@ -38,7 +42,10 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
                         responseObserver.onNext(updatedCategoryToSend);
                         break;
                     case ADDPRODUCT:
-
+                        com.webshop.model.instance.Product productInstance = buildProductInstance(value.getAddProduct());
+                        com.webshop.model.instance.Product productCreated = productService.addProduct(productInstance, false);
+                        ApiOperationResult productToSend = ApiOperationResult.newBuilder().setAddedProduct(productCreated.getId()).build();
+                        responseObserver.onNext(productToSend);
                         break;
                     case ADDPRODUCTTOCATEGORY:
                         com.webshop.model.instance.Category categoryWithProduct = categoryService
@@ -48,7 +55,7 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
                         break;
                     case DELETEPRODUCTTOCATEGORY:
                         com.webshop.model.instance.Category categoryWoProduct = categoryService
-                                .deleteProduct(value.getAddProductToCategory().getId(), value.getDeleteProductToCategory().getPid());
+                                .deleteProduct(value.getDeleteProductToCategory().getId(), value.getDeleteProductToCategory().getPid());
                         ApiOperationResult categoryWoPicture = ApiOperationResult.newBuilder().setDeletedProductToCategory(true).build();
                         responseObserver.onNext(categoryWoPicture);
                         break;
@@ -69,7 +76,6 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
             }
         };
     }
-
 
     @Override
     public void createCategory(Category category, StreamObserver<Category> responseObserver) {
@@ -167,5 +173,21 @@ public class CategoryCreateServiceImpl extends CategoryCreateServiceGrpc.Categor
         }
         return Status.draft;
     }
-}
 
+    private com.webshop.model.instance.Product buildProductInstance(Product addProduct) {
+
+        return com.webshop.model.instance.Product.builder()
+                .data(ProductData.builder()
+                        .slug(addProduct.getData().getSlug())
+                        .status(mapStatus(addProduct.getData().getStatus()))
+                        .build())
+                .info(com.webshop.model.instance.info.ProductInfo.builder()
+                        .name(addProduct.getInfo().getName())
+                        .description(addProduct.getInfo().getDescription())
+                        //.parameters()
+                        .build())
+                //.products(ImmutableList.of())
+                //.picture(null)
+                .build();
+    }
+}

@@ -5,7 +5,10 @@ import com.google.common.collect.Streams;
 import com.webshop.model.entity.PictureEntity;
 import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Product;
+import com.webshop.model.mapping.CategoryMapping;
 import com.webshop.model.mapping.ProductMapping;
+import com.webshop.model.mapping.ProductMappingWithDefault;
+import com.webshop.model.mapping.ProductMappingWithLanguage;
 import com.webshop.repositories.PictureRepository;
 import com.webshop.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +21,19 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductMapping mapping;
+
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private PictureRepository pictureRepository;
+
+    @Autowired
+    private ProductMappingWithLanguage productMappingWithLanguage;
+
+    @Autowired
+    private ProductMappingWithDefault mapping;
 
 
     public List<Product> getAllProducts() {
@@ -40,11 +48,22 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
+        return addProduct(product,true);
+    }
+
+    public Product addProduct(Product product, boolean onRequest) {
         Preconditions.checkArgument(product.getId() == null, "A new product can not have a ID setup");
 
-        ProductEntity entity = mapping.createEntity(product);
+        ProductMapping mappingToUse;
+        if (onRequest) {
+            mappingToUse = productMappingWithLanguage;
+        } else {
+            mappingToUse = mapping;
+        }
+
+        ProductEntity entity = mappingToUse.createEntity(product);
         ProductEntity stored = productRepository.save(entity);
-        return mapping.fromEntity(stored);
+        return mappingToUse.fromEntity(stored);
 
     }
 

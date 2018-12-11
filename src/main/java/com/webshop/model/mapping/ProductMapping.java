@@ -30,9 +30,9 @@ public class ProductMapping {
     private final PictureMapping pictureMapping;
 
     @Autowired
-    public ProductMapping(ConfigurationService configuration, HttpServletRequest request, PictureMapping pictureMapping) {
+    public ProductMapping(StoreLanguage language, ConfigurationService configuration, PictureMapping pictureMapping) {
         this.configuration = configuration;
-        this.language = StoreLanguage.fromHeader(request.getHeader("X-API-Lang"));
+        this.language = language == null ? StoreLanguage.EN : language;
         this.pictureMapping = pictureMapping;
     }
 

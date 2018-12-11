@@ -25,8 +25,8 @@ public class CategoryClientTest {
                 .usePlaintext()
                 .build();
 
-        CategoryCreateServiceGrpc.CategoryCreateServiceStub stub
-                = CategoryCreateServiceGrpc.newStub(channel);
+        CategoryServiceGrpc.CategoryServiceStub stub
+                = CategoryServiceGrpc.newStub(channel);
 
         StreamObserver<ApiOperationResult> jakObsluzyc = new StreamObserver<ApiOperationResult>() {
 
@@ -35,18 +35,51 @@ public class CategoryClientTest {
                 switch (value.getOperationCase()) {
                     case CREATEDCATEGORYID:
                         categoryId = value.getCreatedCategoryId();
-                        response.onNext(null); // Dodaj product
+
+                        ApiOperation productToSend = ApiOperation.newBuilder().setAddProduct(Product.newBuilder()
+                                .setData(ProductData.newBuilder()
+                                        .setSlug("test")
+                                        .setStatus(Status.live)
+                                        .build())
+                                .setInfo(ProductInfo.newBuilder()
+                                        .setName("Frezarka CNC")
+                                        .setDescription("Frezarka")
+                                        .build())
+                                .build())
+                                .build();
+
+                        response.onNext(productToSend); // Dodaj product
                         break;
                     case UPDATEDCATEGORY:
                         categoryId = value.getUpdatedCategory();
                         break;
                     case ADDEDPRODUCT:
                         productId = value.getAddedProduct();
+                        ApiOperation addProductToCategory = ApiOperation.newBuilder().setAddProductToCategory(CategoryProduct.newBuilder()
+                                .setId(categoryId)
+                                .setPid(productId)
+                                .build())
+                                .build();
+
+                        response.onNext(addProductToCategory);
                         break;
                     case ADDEDPRODUCTTOCATEGORY:
                         if (value.getAddedProductToCategory()) {
                             System.out.print("Product added successfully");
                         }
+                        ApiOperation deleteProductToCategory = ApiOperation.newBuilder().setDeleteProductToCategory(CategoryProduct.newBuilder()
+                                .setId(categoryId)
+                                .setPid(productId)
+                                .build())
+                                .build();
+
+                        response.onNext(deleteProductToCategory);
+                        break;
+                    case DELETEDPRODUCTTOCATEGORY:
+                        if (value.getDeletedProductToCategory()) {
+                            System.out.print("Product deleted successfully");
+                        }
+                        onCompleted();
                         break;
                     case OPERATION_NOT_SET:
                         break;
@@ -80,9 +113,10 @@ public class CategoryClientTest {
                 .build())
                 .build();
 
+
         response.onNext(toSend);
 
-        if (!finishLatch.await(30, TimeUnit.SECONDS)) {
+        if (!finishLatch.await(50, TimeUnit.SECONDS)) {
             throw new RuntimeException("recordRoute cannot finish within 1 minutes");
         }
 

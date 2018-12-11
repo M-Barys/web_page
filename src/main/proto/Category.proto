@@ -26,9 +26,28 @@ message CategoryInfo{
     string name = 2;
 }
 
-message Product {
+message Product{
     int64 pid = 1;
+    ProductData data = 2;
+    ProductInfo info = 3;
+    repeated PictureUrlInfo pictures = 4;
+}
+
+message ProductData{
+    string slug = 1;
+    Status status = 2;
+    map<string,float> prices = 3;
+}
+
+message ProductInfo{
+    string description = 1;
     string name = 2;
+    repeated Parameters parameters = 3;
+}
+
+message Parameters {
+    string parameter = 1;
+    string value = 2;
 }
 
 message PictureUrlInfo {
@@ -55,13 +74,28 @@ message ApiOperationResult {
     oneof operation {
         int64 createdCategoryId = 1;
         int64 updatedCategory = 2;
-        int64 addedProduct = 3;
+        int64 addedProduct =3;
         bool addedProductToCategory = 4;
         bool deletedProductToCategory = 5;
     }
 }
 
-service CategoryCreateService {
+message Chunk {
+    bytes Content = 1;
+}
+
+enum UploadStatusCode {
+    Unknown = 0;
+    Ok = 1;
+    Failed = 2;
+}
+
+message UploadStatus {
+    string Message = 1;
+    UploadStatusCode Code = 2;
+}
+
+service CategoryService {
     rpc createCategory(Category) returns (Category);
     rpc updateCategory(Category) returns (Category);
     rpc getCategory(Category) returns (Category);
@@ -69,4 +103,8 @@ service CategoryCreateService {
     rpc addPictureToCategory(PictureUrlInfo) returns (Category);
     rpc addProductToCategory(CategoryProduct) returns (Category);
     rpc streamingApiOperations(stream ApiOperation) returns (stream ApiOperationResult);
+}
+
+service PictureService {
+    rpc uploadPicture(stream Chunk) returns (UploadStatus) {}
 }
