@@ -19,17 +19,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
-@RequestScope
+//@Component
+//@RequestScope
 public class ProductMapping {
 
     private final StoreLanguage language;
 
+//    @Autowired
     private final ConfigurationService configuration;
 
     private final PictureMapping pictureMapping;
 
-    @Autowired
+    //@Autowired
     public ProductMapping(StoreLanguage language, ConfigurationService configuration, PictureMapping pictureMapping) {
         this.configuration = configuration;
         this.language = language == null ? StoreLanguage.EN : language;

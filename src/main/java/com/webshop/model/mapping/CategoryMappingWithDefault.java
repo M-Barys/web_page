@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CategoryMappingWithDefault extends CategoryMapping {
 
     @Autowired
-    public CategoryMappingWithDefault(HttpServletRequest request, ConfigurationService configuration, ProductMapping productMapping, PictureMapping pictureMapping) {
+    public CategoryMappingWithDefault(HttpServletRequest request, ConfigurationService configuration, ProductMappingWithDefault productMapping, PictureMapping pictureMapping) {
         super(null, configuration, productMapping, pictureMapping);
     }
 }

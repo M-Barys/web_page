@@ -3,14 +3,19 @@ package com.webshop.model.mapping;
 import com.google.common.reflect.TypeToken;
 import com.webshop.model.StoreLanguage;
 import com.webshop.model.entity.CategoryEntity;
+import com.webshop.model.entity.ProductEntity;
 import com.webshop.model.instance.Category;
+import com.webshop.model.instance.Product;
 import com.webshop.model.instance.data.CategoryData;
 import com.webshop.model.instance.info.CategoryInfo;
 import com.webshop.services.ConfigurationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CategoryMapping {
@@ -46,7 +51,7 @@ public class CategoryMapping {
                 .id(categoryEntity.getId())
                 .data(configuration.getGson().fromJson(categoryEntity.getCategoryData(), CategoryData.class))
                 .info(info.get(language))
-//                .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
+                .products(productMapping.mapToProductList(categoryEntity.getProductEntities()))
                 .picture(pictureMapping.urlInfoFromEntity(categoryEntity.getPictureEntity()))
                 .build();
     }
@@ -59,7 +64,7 @@ public class CategoryMapping {
                 .id(category.getId())
                 .categoryData(jsonCategory)
                 .categoryInfoBlob(infoJson)
-//                .productEntities(productMapping.mapToProductEntityList(category.getProducts()))
+                .productEntities(productMapping.mapToProductEntityList(category.getProducts()))
                 .build();
     }
 

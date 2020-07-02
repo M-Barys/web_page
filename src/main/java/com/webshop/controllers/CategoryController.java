@@ -10,18 +10,20 @@ import com.webshop.services.CategoryRelationshipService;
 import com.webshop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 //TODO Add cache. minor priority.
 
 @RestController
 @RequestMapping("/api/categories")
-
 public class CategoryController extends AbstractControllerExceptionHandler {
 
     @Autowired
@@ -85,6 +87,8 @@ public class CategoryController extends AbstractControllerExceptionHandler {
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
+
+
 
 }
 

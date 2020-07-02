@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CategoryMappingWithLanguage extends CategoryMapping {
 
     @Autowired
-    public CategoryMappingWithLanguage(HttpServletRequest request, ConfigurationService configuration, ProductMapping productMapping, PictureMapping pictureMapping) {
+    public CategoryMappingWithLanguage(HttpServletRequest request, ConfigurationService configuration, ProductMappingWithLanguage productMapping, PictureMapping pictureMapping) {
         super(StoreLanguage.fromHeader(request.getHeader("X-API-Lang")), configuration, productMapping, pictureMapping);
     }
 }
